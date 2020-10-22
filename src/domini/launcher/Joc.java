@@ -1,4 +1,4 @@
-package launcher;
+package domini.launcher;
 
 public class Joc {
     // TODO

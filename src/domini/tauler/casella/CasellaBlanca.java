@@ -1,4 +1,4 @@
-package tauler.casella;
+package domini.tauler.casella;
 
 public class CasellaBlanca extends Casella{
     //TODO

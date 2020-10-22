@@ -1,4 +1,4 @@
-package ranking;
+package domini.ranking;
 
 public class RankingEntry {
     //TODO
