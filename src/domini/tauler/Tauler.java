@@ -2,6 +2,7 @@ package domini.tauler;
 
 import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
+import domini.tauler.casella.CasellaNegra;
 import domini.testing.Llibreria;
 
 
@@ -45,7 +46,7 @@ public abstract class Tauler {
                 System.out.printf("|");
                 tauler[i][j].print();
             }
-            System.out.printf("|");
+            System.out.printf("|\n");
         }
     }
     
@@ -55,18 +56,24 @@ public abstract class Tauler {
         System.out.printf("Numero de files (y): ");
         int y = Llibreria.llegirEnter();
         
-        Casella[][] t  = new Casella[x][y];
-        for (int i = 0; i < x; ++i)
-            for (int j = 0; j < y; ++j){
-                CasellaBlanca c;
-                System.out.printf("Valor fila=" + x + "], col=" + y +" :");
+        Casella[][] t  = new Casella[y][x];
+        for (int i = 0; i < y; ++i)
+            for (int j = 0; j < x; ++j){
+                Casella c;
+                System.out.printf("Valor fila= " + i + ", col= " + j +" : ");
                 char ch = Llibreria.llegirCaracter();
-                if (ch == '?'){
-                    c = new CasellaBlanca(x,y);
+                if (ch == '?'){ //Casella Blanca Buida
+                    c = new CasellaBlanca(x, y);
                 }
-                else{
+                else if (ch == '*'){ //Casella Negra Buida
+                    c = new CasellaNegra(x, y, null, null);
+                }
+                else if (ch == '.'){ //Trigger per llegir valors de Fila i Columna
+                    throw new UnsupportedOperationException("Keep calm");
+                }
+                else{ //Valor Casella Blanca
                     int v = Character.getNumericValue(ch);
-                    c = new CasellaBlanca(x,y,v);
+                    c = new CasellaBlanca(x, y, v);
                 }
                 t[i][j] = c;
             }
