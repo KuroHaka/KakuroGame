@@ -14,7 +14,7 @@ public abstract class Tauler {
     // private Dificultat dificultat; // TODO: Dificultat
 
     public Tauler(){
-        this.tauler = llegirTaulerNew(); //llegirTauler();
+        this.tauler = llegirTauler(); //llegirTauler();
         this.dimX = tauler[0].length;
         this.dimY = tauler.length;
         this.id = 0; // TODO
@@ -51,36 +51,6 @@ public abstract class Tauler {
     }
     
     private Casella[][] llegirTauler(){
-        System.out.printf("Numero de columnes (x): ");
-        int x = Llibreria.llegirEnter();
-        System.out.printf("Numero de files (y): ");
-        int y = Llibreria.llegirEnter();
-        
-        Casella[][] t  = new Casella[y][x];
-        for (int i = 0; i < y; ++i)
-            for (int j = 0; j < x; ++j){
-                Casella c;
-                System.out.printf("Valor fila= " + i + ", col= " + j +" : ");
-                char ch = Llibreria.llegirCaracter();
-                if (ch == '?'){ //Casella Blanca Buida
-                    c = new CasellaBlanca(x, y);
-                }
-                else if (ch == '*'){ //Casella Negra Buida
-                    c = new CasellaNegra(x, y, null, null);
-                }
-                else if (ch == '.'){ //Trigger per llegir valors de Fila i Columna
-                    throw new UnsupportedOperationException("Keep calm");
-                }
-                else{ //Valor Casella Blanca
-                    int v = Character.getNumericValue(ch);
-                    c = new CasellaBlanca(x, y, v);
-                }
-                t[i][j] = c;
-            }
-        return t;
-    }
-    
-    private Casella[][] llegirTaulerNew(){
         System.out.printf("Numero de columnes (x): ");
         int x = Llibreria.llegirEnter();
         System.out.printf("Numero de files (y): ");
