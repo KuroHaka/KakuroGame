@@ -5,8 +5,8 @@ import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Llibreria {
-	public Llibreria(){}
+public class Mock_Presentacio_stdio {
+	public Mock_Presentacio_stdio(){}
 	
 	//Llegir String
 	public static String llegirString(){
@@ -14,7 +14,7 @@ public class Llibreria {
             try {
                 retorn=new BufferedReader(new InputStreamReader(System.in)).readLine();
             } catch (IOException ex) {
-                Logger.getLogger(Llibreria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Mock_Presentacio_stdio.class.getName()).log(Level.SEVERE, null, ex);
             }
             return retorn;
 	}

@@ -23,4 +23,9 @@ public class CasellaBlanca extends Casella{
     public Integer getValor() {
         return valor;
     }
+
+    public String save_String() {
+        if (valor == null) return "?";
+        return valor.toString();
+    }
 }

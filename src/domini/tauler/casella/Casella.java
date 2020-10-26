@@ -19,6 +19,8 @@ public abstract class Casella {
     
     public abstract String to_String();
     
+    public abstract String save_String();
+    
     public void print(){
         System.out.print(this.to_String());
     }

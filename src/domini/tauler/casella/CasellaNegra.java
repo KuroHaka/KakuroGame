@@ -17,6 +17,14 @@ public class CasellaNegra extends Casella{
         this.columna = c;
     }
     
+    public Integer getFila() {
+        return fila;
+    }
+
+    public Integer getColumna() {
+        return columna;
+    }
+    
     public String to_String() {
         String str;
         if (this.fila != null)
@@ -28,11 +36,11 @@ public class CasellaNegra extends Casella{
         return str;
     }
 
-    public Integer getFila() {
-        return fila;
-    }
-
-    public Integer getColumna() {
-        return columna;
+    public String save_String() {
+        String ret = "";
+        if(columna!=null) ret = ret + "C" + columna.toString();
+        if(fila!=null) ret = ret + "F" + fila.toString();
+        if(fila==null && columna==null) ret = "*";
+        return ret;
     }
 }
