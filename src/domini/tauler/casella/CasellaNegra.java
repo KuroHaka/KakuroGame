@@ -2,8 +2,12 @@ package domini.tauler.casella;
 
 public class CasellaNegra extends Casella{
     
+    // ATRIBUTS PRIVATS
+    
     private Integer fila;
     private Integer columna;
+    
+    // CONSTRUCTORES
     
     public CasellaNegra(int x, int y) {
         super(x, y);
@@ -17,6 +21,8 @@ public class CasellaNegra extends Casella{
         this.columna = c;
     }
     
+    // ENCAPSULACIONS
+    
     public Integer getFila() {
         return fila;
     }
@@ -25,13 +31,15 @@ public class CasellaNegra extends Casella{
         return columna;
     }
     
+    // MÈTODES PÚBLICS
+    
     public String to_String() {
         String str;
-        if (this.fila != null)
-            str = "" + this.fila + "\\";
-        else str = "_\\";
         if (this.columna != null)
-            str += this.columna;
+            str = "" + this.columna + "\\";
+        else str = "_\\";
+        if (this.fila != null)
+            str += this.fila;
         else str += "_";
         return str;
     }

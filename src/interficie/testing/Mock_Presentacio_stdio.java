@@ -1,4 +1,4 @@
-package domini.testing;
+package interficie.testing;
 
 import java.io.IOException;
 import java.io.*;

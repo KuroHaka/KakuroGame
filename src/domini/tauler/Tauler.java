@@ -3,16 +3,21 @@ package domini.tauler;
 import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
-import domini.testing.Mock_Presentacio_stdio;
+import interficie.testing.Mock_Presentacio_stdio;
 
 
 public abstract class Tauler {
+    
+    // ATRIBUTS PRIVATS
+    
     private int id;
     private int dimX;
     private int dimY;
     private Casella[][] tauler;
-    // private Dificultat dificultat; // TODO: Dificultat
+    // private Dificultat dificultat;
 
+    // CONSTRUCTORES
+    
     public Tauler(){
         this.tauler = llegirTauler_interface(); //llegirTauler();
         this.dimX = tauler[0].length;
@@ -26,6 +31,12 @@ public abstract class Tauler {
         this.dimY = tauler.length;
         this.id = 0; // TODO
     }
+    
+    public Tauler(String t){
+        this(llegirTauler_String(t)); // Mètode Static que retorna en format matriu
+    }
+    
+    // ENCAPSULACIONS
     
     public int getId() {
         return id;
@@ -50,6 +61,54 @@ public abstract class Tauler {
         }
     }
     
+    // MÈTODES PÚBLICS
+    
+    public String format_Estandard(){
+        String ret = "";
+        ret = ret + dimY + "," + dimX + "\n";
+        for (int i = 0; i < dimY; ++i){
+            for (int j = 0; j < dimX; ++j){
+                ret += tauler[i][j].save_String();
+                if( j != dimX - 1 ) ret += ","; 
+            }
+            ret += "\n";
+        }
+        return ret;
+    }
+    
+    // MÈTODES PRIVATS
+    
+    private static Casella generaCasellaXYSegonsComanda(String comanda, int x, int y){
+        Casella c;
+        char ch = comanda.charAt(0);
+        if (ch == '?'){ //Casella Blanca Buida
+            c = new CasellaBlanca(x, y);
+        }
+        else if (ch == '*'){ //Casella Negra Buida
+            c = new CasellaNegra(x, y, null, null);
+        }
+        else if (ch == 'C'){
+            if(comanda.contains("F")){ // CxxFyy
+                int k = comanda.indexOf('F');
+                int Vcol = Integer.parseInt(comanda.substring(1, k));
+                int Vfila = Integer.parseInt(comanda.substring(k + 1));
+                c = new CasellaNegra(x, y, Vfila, Vcol);
+            } else { // Cxx
+                int Vcol = Integer.parseInt(comanda.substring(1));
+                c = new CasellaNegra(x, y, null, Vcol);
+            }
+        }
+        else if(ch == 'F'){ // Fyy
+            int Vfila = Integer.parseInt(comanda.substring(1));
+            c = new CasellaNegra(x, y, Vfila, null);
+        }
+        else{ //Valor Casella Blanca
+            int v = Character.getNumericValue(ch); // entre 0..9
+            c = new CasellaBlanca(x, y, v);
+        }
+        return c;
+    }
+    
     private Casella[][] llegirTauler_interface(){
         System.out.printf("Numero de columnes (x): ");
         int x = Mock_Presentacio_stdio.llegirEnter();
@@ -62,52 +121,37 @@ public abstract class Tauler {
                 Casella c;
                 System.out.printf("Valor fila= " + i + ", col= " + j +" : ");
                 String comanda = Mock_Presentacio_stdio.llegirString();
-                char ch = comanda.charAt(0);
-                if (ch == '?'){ //Casella Blanca Buida
-                    c = new CasellaBlanca(x, y);
-                }
-                else if (ch == '*'){ //Casella Negra Buida
-                    c = new CasellaNegra(x, y, null, null);
-                }
-                else if (ch == 'C'){
-                    if(comanda.contains("F")){ // CxxFyy
-                        int k = comanda.indexOf('F');
-                        int Vcol = Integer.parseInt(comanda.substring(1, k));
-                        int Vfila = Integer.parseInt(comanda.substring(k + 1));
-                        c = new CasellaNegra(x, y, Vfila, Vcol);
-                    } else { // Cxx
-                        int Vcol = Integer.parseInt(comanda.substring(1));
-                        c = new CasellaNegra(x, y, null, Vcol);
-                    }
-                }
-                else if(ch == 'F'){ // Fyy
-                    int Vfila = Integer.parseInt(comanda.substring(1));
-                    c = new CasellaNegra(x, y, Vfila, null);
-                }
-                else{ //Valor Casella Blanca
-                    int v = Character.getNumericValue(ch);
-                    c = new CasellaBlanca(x, y, v);
-                }
-                t[i][j] = c;
+                t[i][j] = generaCasellaXYSegonsComanda(comanda, x, y);
             }
         return t;
     }
     
-    private Casella[][] llegirTauler_String(String t){
-        //TODO
-        return null;
-    }
-    
-    public /*private*/ String guardarTauler_String(){
-        String ret = "";
-        ret = ret + dimY + "," + dimX + "\n";
-        for (int i = 0; i < dimY; ++i){
-            for (int j = 0; j < dimX; ++j){
-                ret += tauler[i][j].save_String();
-                if( j != dimX - 1 ) ret += ","; 
+    private static Casella[][] llegirTauler_String(String t){
+        int size = t.length();
+        int indexComa = 0;
+        int indexEntr = 0;
+        
+        //READ SIZE
+        int dimY = Integer.parseInt(t.substring(0, t.indexOf(',', indexComa))); 
+        System.out.println(" # Files:" + dimY);
+        int dimX = Integer.parseInt(t.substring(t.indexOf(',', indexComa) + 1, t.indexOf('\n', indexEntr)));
+        System.out.println(" # Colms:" + dimX);
+        
+        Casella[][] ret = new Casella[dimY][dimX];
+        
+        //READ TABLE
+        int pointer = t.indexOf('\n', 0) + 1;
+        String table = t.substring(pointer);
+        String[] lines = table.split("\n");
+        for (int y = 0; y < dimY; ++y){
+            System.out.println("Line " + y + ":" + lines[y]);
+            String[] reads = lines[y].split(",");
+            for(int x = 0; x < dimX; ++x){
+                String comanda = reads[x];
+                ret[y][x] = generaCasellaXYSegonsComanda(comanda, x, y);
             }
-            ret += "\n";
         }
         return ret;
     }
+    
 }
