@@ -127,15 +127,24 @@ public abstract class Tauler {
     }
     
     private static Casella[][] llegirTauler_String(String t){
-        int size = t.length();
-        int indexComa = 0;
-        int indexEntr = 0;
+
+        //if(t.contains("\r")) System.out.println("Carriage Return");
+        //if(t.contains("\n")) System.out.println("Line Feed");
+        //if(t.contains("\r\n")) System.out.println("End Of Line");
         
+        t = t.replace("\r\n", "\n"); //Windows format to Unix format
+        t = t.replace('\r', '\n'); //Remove Carriage Returns from old MacOS (also System)
+      
         //READ SIZE
-        int dimY = Integer.parseInt(t.substring(0, t.indexOf(',', indexComa))); 
-        System.out.println(" # Files:" + dimY);
-        int dimX = Integer.parseInt(t.substring(t.indexOf(',', indexComa) + 1, t.indexOf('\n', indexEntr)));
-        System.out.println(" # Colms:" + dimX);
+        String sY = t.substring(0, t.indexOf(','));
+        //System.out.println("\"" + sY + "\"");
+        int dimY = Integer.parseInt(sY); 
+        //System.out.println(" # Files:" + dimY);
+        
+        String sX = t.substring(t.indexOf(',') + 1, t.indexOf('\n') /*-1*/); // -1 should not be -> \r\n de windows... fak... \n java...
+        //System.out.println("\"" + sX + "\"");
+        int dimX = Integer.parseInt(sX);
+        //System.out.println(" # Colms:" + dimX);
         
         Casella[][] ret = new Casella[dimY][dimX];
         
@@ -144,7 +153,7 @@ public abstract class Tauler {
         String table = t.substring(pointer);
         String[] lines = table.split("\n");
         for (int y = 0; y < dimY; ++y){
-            System.out.println("Line " + y + ":" + lines[y]);
+            //System.out.println("Line " + y + ":" + lines[y]);
             String[] reads = lines[y].split(",");
             for(int x = 0; x < dimX; ++x){
                 String comanda = reads[x];
