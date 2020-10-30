@@ -14,7 +14,7 @@ public abstract class Tauler {
     
     // ATRIBUTS PRIVATS
     
-    private String id;
+    protected String id; // Protected perquè TaulerComençat ha de poder "actualitzar-lo"
     private static int dimX;
     private static int dimY;
     private Casella[][] tauler;
@@ -197,7 +197,7 @@ public abstract class Tauler {
         return sb.toString();
     }
     
-    private String calculaHash(String t){
+    protected String calculaHash(String t){
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");

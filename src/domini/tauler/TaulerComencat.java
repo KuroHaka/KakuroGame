@@ -1,5 +1,8 @@
 package domini.tauler;
 
 public class TaulerComencat extends Tauler{
-    //TODO
+    
+    private void recalculaId(){
+        this.id = calculaHash(format_Estandard());
+    }
 }
