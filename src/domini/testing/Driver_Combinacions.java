@@ -11,7 +11,7 @@ public class Driver_Combinacions {
         for (int suma : combinacions.getSum()) {
             for (int blanca : combinacions.getBlanques(suma)) {
                 System.out.println("suma:" + suma + " blanques:" + blanca);
-                System.out.println(Arrays.deepToString(combinacions.getCombinacios(suma, blanca)));
+                System.out.println(combinacions.getCombinacios(suma, blanca));
             }
         }
     }

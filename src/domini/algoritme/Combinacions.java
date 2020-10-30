@@ -4,13 +4,66 @@ import domini.tauler.TaulerEnunciat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import domini.tauler.casella.CasellaNegra;
 
 
 public class Combinacions {
     //sum->Squares->combianations
+
     private final ArrayList<ArrayList<int[][]>> combinacio = new ArrayList<>();
     private final int[] sums;
+
+    public Set<Set<Integer>> getCombinacios(int suma, int blanques){
+        Set<Set<Integer>> ret = new HashSet<>();
+        for(int[] j:this.combinacio.get(suma).get(blanques)){
+            Set<Integer> set = new HashSet<>();
+            for(int i:j){
+                set.add(i);
+            }
+            ret.add(set);
+        }
+        return ret;
+    }
+
+    public boolean noEstaBuit(int suma, int blanques){
+        try {
+            return this.combinacio.get(suma).get(blanques).length > 0;
+        }
+        catch (IndexOutOfBoundsException | NullPointerException i ){
+            return false;
+        }
+    }
+
+    public Set<Integer> getSum(){
+        Set<Integer> set = new HashSet<>();
+        for (int sum : this.sums) {
+            set.add(sum);
+        }
+        return set;
+    }
+
+    public Set<Integer> getBlanques(int sum){
+        if(sum<3 || sum>45){
+            return null;
+        }
+        boolean flag = true;
+        int i = 1;
+        while(flag){
+            i++;
+            if(this.noEstaBuit(sum, i)){
+                flag = false;
+            }
+        }
+        Set<Integer> blanques = new HashSet<>();
+        while(noEstaBuit(sum, i)){
+            blanques.add(i);
+            i++;
+        }
+        return blanques;
+    }
 
     public Combinacions() {
         for (int i = 0; i < 46; i++) {
@@ -189,54 +242,4 @@ public class Combinacions {
         this.combinacio.get(suma).add(blanques, combinacions);
     }
 
-    public int[][] getCombinacios(int suma, int blanques){
-        try {
-            return this.combinacio.get(suma).get(blanques);
-        }
-        catch (IndexOutOfBoundsException | NullPointerException i){
-            return null;
-        }
-    }
-
-    public boolean noEstaBuit(int suma, int blanques){
-        try {
-            return this.combinacio.get(suma).get(blanques).length > 0;
-        }
-        catch (IndexOutOfBoundsException | NullPointerException i ){
-            return false;
-        }
-    }
-
-    public int[] getSum(){
-        return sums;
-    }
-
-    public int[] getBlanques(int sum){
-        if(sum<3 || sum>45){
-            return null;
-        }
-        int n = 0;
-        boolean flag = true;
-        int i = 1;
-        while(flag){
-            i++;
-            if(this.noEstaBuit(sum, i)){
-                flag = false;
-            }
-        }
-        int tmp = i;
-        while(this.noEstaBuit(sum, tmp)){
-            n++;
-            tmp++;
-        }
-        int[] blanques = new int[n];
-        n = 0;
-        while(this.noEstaBuit(sum, i)){
-            blanques[n] = i;
-            n++;
-            i++;
-        }
-        return blanques;
-
-    }
 }

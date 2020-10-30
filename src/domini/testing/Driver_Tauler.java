@@ -11,7 +11,7 @@ public class Driver_Tauler {
     
     public static void main(String[] args){
 
-        
+        /*
         System.out.println("TAULER STANDARD INPUT: ");
         Tauler t = new TaulerEnunciat(); // LLegeix el tauler per std in
         
@@ -38,6 +38,8 @@ public class Driver_Tauler {
         String e1 = Dades.carregaArxiu("dades/test101.txt");
         Tauler t_exemple = new TaulerEnunciat(e1);
         t_exemple.print(); //Human friendly format
+
+         */
         
         System.out.println("TAULER EXEMPLE : ");
         String e2 = Dades.carregaArxiu("dades/exemple.txt");

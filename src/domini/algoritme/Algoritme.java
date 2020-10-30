@@ -6,6 +6,12 @@ import domini.tauler.TaulerEnunciat;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
 
+import java.util.Iterator;
+import java.util.Set;
+
+enum Direccio{
+    HORITZONTAL, VERTICAL
+}
 public class Algoritme {
     Combinacions combinacions = new Combinacions();
 
@@ -29,8 +35,7 @@ public class Algoritme {
         return null;
     }
 
-    private int numBlanquesHoritzontalsConsecuents(CasellaNegra casellaNegra, TaulerEnunciat te){
-        //falta comparar id casellaNegra amb TaulerEnunciat TODO
+    private void colocarBlanquesHoritzontals(CasellaNegra casellaNegra, TaulerEnunciat te){
         int y = casellaNegra.getCoordY();
         int x = casellaNegra.getCoordX() + 1;
         int cont = 0;
@@ -38,16 +43,21 @@ public class Algoritme {
             x++;
             cont++;
         }
-        return cont;
-    }
-
-    private void colocarBlanquesHoritzontals(CasellaNegra casellaNegra, TaulerEnunciat te){
-        int y = casellaNegra.getCoordY();
-        int x = casellaNegra.getCoordX() + 1;
-        int[] fila = combinacions.getCombinacios(casellaNegra.getFila(), numBlanquesHoritzontalsConsecuents(casellaNegra, te))[0];
-        for(int n = 0; n<fila.length; n++){
-            ((CasellaBlanca) te.getCasella(x, y)).setValor(fila[n]);
+        y = casellaNegra.getCoordY();
+        x = casellaNegra.getCoordX() + 1;
+        Set<Integer> fila = combinacions.getCombinacios(casellaNegra.getFila(), cont).stream().findFirst().get();
+        for (Integer integer : fila) {
+            ((CasellaBlanca) te.getCasella(x, y)).setValor(integer);
             x++;
         }
     }
+
+    //Donat una casella negra amb una pila de valors que ja en té, retorna les combinacions que no té els números de la pila
+    private Set<Integer> combinacionsSenseAlgunsNums(CasellaNegra casellaNegra, Set<Integer> set, Direccio direccio){
+        if(direccio == Direccio.HORITZONTAL){
+            //TODO
+        }
+        return null;
+    }
+
 }
