@@ -4,7 +4,7 @@ import domini.algoritme.Algoritme;
 import domini.tauler.TaulerEnunciat;
 import presistencia.Dades;
 
-public class Driver_Algoritme_SolucionarKakuro {
+public class Driver_Algoritme_resoldreKakuro {
     public static Algoritme algoritme = new Algoritme();
 
     public static void main(String[] args) {

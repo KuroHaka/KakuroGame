@@ -5,7 +5,6 @@ import domini.tauler.TaulerEnunciat;
 
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
-import presistencia.Dades;
 
 public class Algoritme {
     Combinacions combinacions = new Combinacions();

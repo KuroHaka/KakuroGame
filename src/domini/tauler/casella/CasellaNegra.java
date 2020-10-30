@@ -42,13 +42,13 @@ public class CasellaNegra extends Casella{
                 if (this.columna > 9)
                     str = "" + this.columna + "\\";
                 else
-                    str = "" + this.columna + " \\";
+                    str = " " + this.columna + "\\";
             } else str = "**\\";
             if (this.fila != null) {
                 if (this.fila > 9)
                     str += this.fila;
                 else
-                    str += " " + this.fila;
+                    str += this.fila + " ";
             } else str += "**";
         }
         return str;
