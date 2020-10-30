@@ -35,6 +35,4 @@ public abstract class Casella {
     public void print(){
         System.out.print(this.to_String());
     }
-    
-    
 }

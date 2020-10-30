@@ -24,24 +24,35 @@ public class CasellaNegra extends Casella{
     // ENCAPSULACIONS
     
     public Integer getFila() {
-        return fila;
+        return this.fila;
     }
 
     public Integer getColumna() {
-        return columna;
+        return this.columna;
     }
     
     // MÈTODES PÚBLICS
     
     public String to_String() {
         String str;
-        if (this.columna != null)
-            str = "" + this.columna + "\\";
-        else str = "_\\";
-        if (this.fila != null)
-            str += this.fila;
-        else str += "_";
+        if (this.columna == null && this.fila == null)
+            str = "*****";
+        else {
+            if (this.columna != null) {
+                if (this.columna > 9)
+                    str = "" + this.columna + "\\";
+                else
+                    str = "" + this.columna + " \\";
+            } else str = "**\\";
+            if (this.fila != null) {
+                if (this.fila > 9)
+                    str += this.fila;
+                else
+                    str += " " + this.fila;
+            } else str += "**";
+        }
         return str;
+
     }
 
     public String save_String() {

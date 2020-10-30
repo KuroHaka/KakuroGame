@@ -31,13 +31,19 @@ public abstract class Tauler {
         this.dimY = tauler.length;
         this.id = 0; // TODO
     }
+
     
     public Tauler(String t){
         this(llegirTauler_String(t)); // Mètode Static que retorna en format matriu
     }
     
     // ENCAPSULACIONS
-    
+
+    public Casella getCasella(Integer x, Integer y){
+        return this.tauler[y][x];
+
+    }
+
     public int getId() {
         return id;
     }
@@ -54,14 +60,30 @@ public abstract class Tauler {
         System.out.println("Tauler id=" + this.id + ":");
         for (int i = 0; i < dimY; ++i){
             for (int j = 0; j < dimX; ++j){
-                System.out.printf("|");
+                System.out.print("|");
                 tauler[i][j].print();
             }
-            System.out.printf("|\n");
+            System.out.print("|\n");
         }
     }
     
     // MÈTODES PÚBLICS
+
+    public boolean esNegra(int x, int y){
+        if(x<this.tauler[0].length && y<this.tauler.length){
+            return this.tauler[y][x].getClass().equals(CasellaNegra.class);
+        }
+        else
+            return false;
+    }
+
+    public boolean esBlanca(int x, int y){
+        if(x<this.tauler[0].length && y<this.tauler.length){
+            return this.tauler[y][x].getClass().equals(CasellaBlanca.class);
+        }
+        else
+            return false;
+    }
     
     public String format_Estandard(){
         String ret = "";
@@ -110,16 +132,16 @@ public abstract class Tauler {
     }
     
     private Casella[][] llegirTauler_interface(){
-        System.out.printf("Numero de columnes (x): ");
+        System.out.print("Numero de columnes (x): ");
         int x = Mock_Presentacio_stdio.llegirEnter();
-        System.out.printf("Numero de files (y): ");
+        System.out.print("Numero de files (y): ");
         int y = Mock_Presentacio_stdio.llegirEnter();
         
         Casella[][] t  = new Casella[y][x];
         for (int i = 0; i < y; ++i)
             for (int j = 0; j < x; ++j){
                 Casella c;
-                System.out.printf("Valor fila= " + i + ", col= " + j +" : ");
+                System.out.print("Valor fila= " + i + ", col= " + j +" : ");
                 String comanda = Mock_Presentacio_stdio.llegirString();
                 t[i][j] = generaCasellaXYSegonsComanda(comanda, x, y);
             }

@@ -2,11 +2,17 @@ package domini.testing;
 
 import domini.tauler.Tauler;
 import domini.tauler.TaulerEnunciat;
+import domini.tauler.casella.Casella;
+import domini.tauler.casella.CasellaBlanca;
+import domini.tauler.casella.CasellaNegra;
 import presistencia.Dades;
 
 public class Driver_Tauler {
     
     public static void main(String[] args){
+
+
+        /*
         
         System.out.println("TAULER STANDARD INPUT: ");
         Tauler t = new TaulerEnunciat(); // LLegeix el tauler per std in
@@ -40,5 +46,7 @@ public class Driver_Tauler {
         //String exemple = Dades.carregaArxiu("dades/test101.txt");
         Tauler t_exemple2 = new TaulerEnunciat(e2);
         t_exemple2.print(); //Human friendly format
+
+         */
     }
 }

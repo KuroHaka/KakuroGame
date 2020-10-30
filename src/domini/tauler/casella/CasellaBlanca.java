@@ -25,11 +25,20 @@ public class CasellaBlanca extends Casella{
     }
     
     // MÈTODES PÚBLICS
-    
+
+    public void setValor(Integer valor) {
+        this.valor = valor;
+    }
+
     public String to_String() {
-        if (this.valor != null)
-            return " " + valor + " ";
-        return " ? ";
+        if (this.valor != null) {
+            if (this.valor > 9) {
+                return "  " + valor + " ";
+            } else {
+                return "  " + valor + "  ";
+            }
+        }
+        return "     ";
     }
 
     public String save_String() {

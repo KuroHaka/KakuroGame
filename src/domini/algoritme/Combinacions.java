@@ -1,6 +1,10 @@
 package domini.algoritme;
+import domini.tauler.TaulerComencat;
+import domini.tauler.TaulerEnunciat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import domini.tauler.casella.CasellaNegra;
 
 
 public class Combinacions {
