@@ -4,15 +4,19 @@ import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
 import interficie.testing.Mock_Presentacio_stdio;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public abstract class Tauler {
     
     // ATRIBUTS PRIVATS
     
-    private int id;
-    private int dimX;
-    private int dimY;
+    private String id;
+    private static int dimX;
+    private static int dimY;
     private Casella[][] tauler;
     // private Dificultat dificultat;
 
@@ -22,17 +26,16 @@ public abstract class Tauler {
         this.tauler = llegirTauler_interface(); //llegirTauler();
         this.dimX = tauler[0].length;
         this.dimY = tauler.length;
-        this.id = 0; // TODO
+        this.id = calculaHash(format_Estandard());
     }
     
     public Tauler(Casella[][] t){
         this.tauler = t;
         this.dimX = tauler[0].length;
         this.dimY = tauler.length;
-        this.id = 0; // TODO
+        this.id = calculaHash(format_Estandard());
     }
 
-    
     public Tauler(String t){
         this(llegirTauler_String(t)); // Mètode Static que retorna en format matriu
     }
@@ -44,7 +47,7 @@ public abstract class Tauler {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -97,6 +100,7 @@ public abstract class Tauler {
         }
         return ret;
     }
+    
     
     // MÈTODES PRIVATS
     
@@ -185,4 +189,23 @@ public abstract class Tauler {
         return ret;
     }
     
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+    
+    private String calculaHash(String t){
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Tauler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        byte[] input = t.getBytes();
+        byte[] result = md.digest(input);
+        return bytesToHex(result);
+    }
 }

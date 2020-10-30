@@ -11,8 +11,6 @@ public class Driver_Tauler {
     
     public static void main(String[] args){
 
-
-        /*
         
         System.out.println("TAULER STANDARD INPUT: ");
         Tauler t = new TaulerEnunciat(); // LLegeix el tauler per std in
@@ -47,6 +45,5 @@ public class Driver_Tauler {
         Tauler t_exemple2 = new TaulerEnunciat(e2);
         t_exemple2.print(); //Human friendly format
 
-         */
     }
 }
