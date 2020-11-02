@@ -5,7 +5,7 @@ import domini.tauler.TaulerEnunciat;
 import presistencia.Dades;
 
 public class Driver_Algoritme_resoldreKakuro {
-    public static Algoritme algoritme = new Algoritme();
+    public static Algoritme algoritme;
 
     public static void main(String[] args) {
 
@@ -13,10 +13,9 @@ public class Driver_Algoritme_resoldreKakuro {
         String e2 = Dades.carregaArxiu("dades/exemple.txt");
         TaulerEnunciat t = new TaulerEnunciat(e2);
         t.print();
-
+        algoritme = new Algoritme(t);
         System.out.println("\n\nTAULER RESOLT: ");
-        algoritme.resoldreKakuro(t);
+        algoritme.resoldreKakuro();
         t.print();
-
     }
 }
