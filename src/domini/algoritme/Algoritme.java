@@ -129,7 +129,7 @@ public class Algoritme {
         Set<Set<Integer>> ret = new HashSet<>();
         switch (direccio){
             case HORITZONTAL:
-                combinacions.getCombinacios(getSumConsecuent(casellaBlanca,direccio),getNumBlanquesConsecuents(casellaBlanca,direccio);
+                combinacions.getCombinacios(getSumConsecuent(casellaBlanca,direccio),getNumBlanquesConsecuents(casellaBlanca,direccio));
         }
         return null;
     }
