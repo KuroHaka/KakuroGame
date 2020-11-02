@@ -1,9 +1,15 @@
 package domini.tauler;
 
+import domini.tauler.casella.Casella;
+
 public class TaulerEnunciat extends Tauler{
     //TODO
     public TaulerEnunciat(){
         super();
+    }
+    
+    public TaulerEnunciat(Casella[][] t){
+        super(t);
     }
     
     public TaulerEnunciat(String t){
