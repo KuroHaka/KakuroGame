@@ -7,6 +7,7 @@ import domini.tauler.TaulerEnunciat;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class Algoritme {
                 }
             }
         }
-        System.out.println(getSumConsecuent(((CasellaBlanca)t.getCasella(3,6)),Direccio.HORITZONTAL));
+        System.out.println(combinacionsRestants(((CasellaBlanca)t.getCasella(3,5)),Direccio.VERTICAL));
         return null;
     }
 
@@ -56,6 +57,24 @@ public class Algoritme {
         for (Integer integer : fila) {
             ((CasellaBlanca) t.getCasella(x, y)).setValor(integer);
             x++;
+        }
+    }
+
+
+
+    //Retorna les combinacions possibles restants
+    private Set<Set<Integer>> combinacionsRestants(CasellaBlanca casellaBlanca, Direccio direccio){
+        Set<Set<Integer>> ret = new HashSet<>();
+        try {
+            for (Set<Integer> s : combinacions.getCombinacios(getSumConsecuent(casellaBlanca, direccio), getNumBlanquesConsecuents(casellaBlanca, direccio))) {
+                if (!getBlanquesUtilitzades(casellaBlanca, direccio).containsAll(s)) {
+                    ret.add(s);
+                }
+            }
+            return ret;
+        }
+        catch (NullPointerException e){
+            return null;
         }
     }
 
@@ -82,8 +101,7 @@ public class Algoritme {
         }
         return cont;
     }
-
-    public int getSumConsecuent(CasellaBlanca casellaBlanca, Direccio direccio){
+    private int getSumConsecuent(CasellaBlanca casellaBlanca, Direccio direccio){
         int x = casellaBlanca.getCoordX();
         int y = casellaBlanca.getCoordY();
         int suma = 0;
@@ -123,15 +141,4 @@ public class Algoritme {
         }
         return ret;
     }
-
-    //Donat una casella blanca amb una pila de valors que ja en té, retorna les combinacions que no té els números de la pila
-    private Set<Set<Integer>> combinacionsSenseAlgunsNums(CasellaBlanca casellaBlanca, Direccio direccio){
-        Set<Set<Integer>> ret = new HashSet<>();
-        switch (direccio){
-            case HORITZONTAL:
-                combinacions.getCombinacios(getSumConsecuent(casellaBlanca,direccio),getNumBlanquesConsecuents(casellaBlanca,direccio));
-        }
-        return null;
-    }
-
 }

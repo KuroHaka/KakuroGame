@@ -18,14 +18,19 @@ public class Combinacions {
 
     public Set<Set<Integer>> getCombinacios(int suma, int blanques){
         Set<Set<Integer>> ret = new HashSet<>();
-        for(int[] j:this.combinacio.get(suma).get(blanques)){
-            Set<Integer> set = new HashSet<>();
-            for(int i:j){
-                set.add(i);
+        try {
+            for (int[] j : this.combinacio.get(suma).get(blanques)) {
+                Set<Integer> set = new HashSet<>();
+                for (int i : j) {
+                    set.add(i);
+                }
+                ret.add(set);
             }
-            ret.add(set);
+            return ret;
         }
-        return ret;
+        catch (NullPointerException e){
+            return null;
+        }
     }
 
     public boolean noEstaBuit(int suma, int blanques){
