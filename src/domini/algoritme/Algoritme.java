@@ -7,6 +7,7 @@ import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -39,7 +40,7 @@ public class Algoritme {
                 }
             }
         }
-        System.out.println(getSumConsecuent(((CasellaBlanca)t.getCasella(3,6)),Direccio.HORITZONTAL));
+        System.out.println(combinacionsRestants(((CasellaBlanca)t.getCasella(3,5)),Direccio.VERTICAL));
         return null;
     }
 
@@ -57,6 +58,24 @@ public class Algoritme {
         for (Integer integer : fila) {
             ((CasellaBlanca) t.getCasella(x, y)).setValor(integer);
             x++;
+        }
+    }
+
+
+
+    //Retorna les combinacions possibles restants
+    private Set<Set<Integer>> combinacionsRestants(CasellaBlanca casellaBlanca, Direccio direccio){
+        Set<Set<Integer>> ret = new HashSet<>();
+        try {
+            for (Set<Integer> s : combinacions.getCombinacios(getSumConsecuent(casellaBlanca, direccio), getNumBlanquesConsecuents(casellaBlanca, direccio))) {
+                if (!getBlanquesUtilitzades(casellaBlanca, direccio).containsAll(s)) {
+                    ret.add(s);
+                }
+            }
+            return ret;
+        }
+        catch (NullPointerException e){
+            return null;
         }
     }
 
@@ -83,8 +102,7 @@ public class Algoritme {
         }
         return cont;
     }
-
-    public int getSumConsecuent(CasellaBlanca casellaBlanca, Direccio direccio){
+    private int getSumConsecuent(CasellaBlanca casellaBlanca, Direccio direccio){
         int x = casellaBlanca.getCoordX();
         int y = casellaBlanca.getCoordY();
         int suma = 0;
@@ -225,8 +243,8 @@ public class Algoritme {
                 int consecutive = 0;
                 int old = blanques;
                 while(blanques > numeroBlanques){
-                    int ranCol = (int) ((Math.random() * (cols-2)) + 1); // Colmna random entre 1..cols-1
-                    int ranFila = (int) ((Math.random() * (rows-2)) + 1);
+                    int ranCol = (int) ((Math.random() * (cols-1)) + 1); // Colmna random entre 1..cols-1
+                    int ranFila = (int) ((Math.random() * (rows-1)) + 1);
                     if (tauler[ranFila][ranCol].getClass() == CasellaBlanca.class && ((CasellaBlanca)tauler[ranFila][ranCol]).getValor()!=null){ // Nice lazy evaluation here
                         tauler[ranFila][ranCol] = new CasellaBlanca(ranCol, ranFila, null);
                         blanques --;
@@ -234,16 +252,16 @@ public class Algoritme {
                     //Control per no fer bucle forever (li costa massa eliminar fent random): eliminació pseudo-manual (assistida..)
                     consecutive = blanques == old ? consecutive + 1 : 0 ; // Nice optimització
                     old = blanques;
-                    System.out.println("Blanques = " + blanques + " Consec = " + consecutive);
+                    //System.out.println("Blanques = " + blanques + " Consec = " + consecutive);
                     if (consecutive > 10){
-                        System.out.println("Blanques = " + blanques + ", consecutive > 10 ...");
+                        //System.out.println("Blanques = " + blanques + ", consecutive > 10 ...");
                         // Possible algortime substitut de criba de blanques:
                         // Va fila a fila matant la primera que troba.
                         while(blanques > numeroBlanques){
                             int r = (int) ((Math.random() * (rows-1)) + 1); //random row // WTF: perquè rows-1 ? no hauria de ser rows-2? RandomNumber(int min, int max) := ((Math.random() * (max - min)) + min);
                             r = r % rows; // Wtf.. no entenc res. Han passat 15 minuts i ja no sé com funciona això. Però crec que no hauria de funcionar. who knows perquè funciona bé.
-                            System.out.println("Selected rand Row = " + r + " Blanques = " + blanques);
-                            int index = (int) ((Math.random() * (cols-2)) + 1);
+                            //System.out.println("Selected rand Row = " + r + " Blanques = " + blanques);
+                            int index = (int) ((Math.random() * (cols-1)) + 1);
                             for(int c = index; c < cols + index && blanques > numeroBlanques; ++c){
                                 if (tauler[r][c % cols].getClass() == CasellaBlanca.class && ((CasellaBlanca)tauler[r][c % cols]).getValor()!=null){
                                     tauler[r][c % cols] = new CasellaBlanca(c, r, null);
