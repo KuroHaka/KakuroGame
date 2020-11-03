@@ -18,6 +18,12 @@ public class Combinacions {
 
     public Set<Set<Integer>> getCombinacios(int suma, int blanques){
         Set<Set<Integer>> ret = new HashSet<>();
+        if(blanques==1 && suma<10 ){
+            Set<Integer> set = new HashSet<>();
+            set.add(suma);
+            ret.add(set);
+            return ret;
+        }
         try {
             for (int[] j : this.combinacio.get(suma).get(blanques)) {
                 Set<Integer> set = new HashSet<>();
