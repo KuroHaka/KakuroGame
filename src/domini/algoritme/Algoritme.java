@@ -7,10 +7,7 @@ import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 enum Direccio{
     HORITZONTAL, VERTICAL
@@ -30,17 +27,15 @@ public class Algoritme {
     // ALGORITME SOLVER
     
     public TaulerComencat resoldreKakuro(){
-        for(int j = 0; j<t.getDimY(); j++) {
-            for (int i = 0; i < t.getDimX(); i++) {
-                if(t.esNegra(i,j)){
-                    CasellaNegra casellaNegra= (CasellaNegra) t.getCasella(i,j);
-                    if(casellaNegra.getFila()!=null){
-                        colocarBlanquesHoritzontals(casellaNegra);
-                    }
+
+        for(int y = 0; y < t.getDimY(); y++) {
+            for (int x = 0; x < t.getDimX(); x++) {
+
+                if(t.esBlanca(x,y) && ((CasellaBlanca)t.getCasella(x,y)).getValor()==null && getPossiblesValors(t.getCasella(x,y),Direccio.HORITZONTAL)!=null) {
+                    ((CasellaBlanca)t.getCasella(x,y)).setValor(getPossiblesValors(t.getCasella(x,y),Direccio.HORITZONTAL).stream().findFirst().get());
                 }
             }
         }
-        System.out.println(combinacionsRestants(((CasellaBlanca)t.getCasella(3,5)),Direccio.VERTICAL));
         return null;
     }
 
@@ -61,14 +56,25 @@ public class Algoritme {
         }
     }
 
-
+    private Set<Integer> getPossiblesValors(Casella casella, Direccio direccio){
+        Set<Integer> ret = new HashSet<>();
+        try {
+            for(Set<Integer> s : Objects.requireNonNull(combinacionsRestants(casella, direccio))) {
+                ret.addAll(s);
+            }
+        }
+        catch (NullPointerException e){
+            return null;
+        }
+        return ret;
+    }
 
     //Retorna les combinacions possibles restants
-    private Set<Set<Integer>> combinacionsRestants(CasellaBlanca casellaBlanca, Direccio direccio){
+    private Set<Set<Integer>> combinacionsRestants(Casella casella, Direccio direccio){
         Set<Set<Integer>> ret = new HashSet<>();
         try {
-            for (Set<Integer> s : combinacions.getCombinacios(getSumConsecuent(casellaBlanca, direccio), getNumBlanquesConsecuents(casellaBlanca, direccio))) {
-                if (!getBlanquesUtilitzades(casellaBlanca, direccio).containsAll(s)) {
+            for (Set<Integer> s : combinacions.getCombinacios(getSumRestant(casella, direccio), getNumBlanquesRestants(casella, direccio))) {
+                if (!getBlanquesUtilitzades(casella, direccio).containsAll(s)) {
                     ret.add(s);
                 }
             }
@@ -79,79 +85,100 @@ public class Algoritme {
         }
     }
 
-    private int getNumBlanquesConsecuents(CasellaBlanca casellaBlanca, Direccio direccio){
-        int y = casellaBlanca.getCoordY();
-        int x = casellaBlanca.getCoordX();
+    private int getNumBlanquesRestants(Casella casella, Direccio direccio){
+        int y = casella.getCoordY();
+        int x = casella.getCoordX();
+        while (t.esBlanca(x,y)){
+            if (direccio == Direccio.HORITZONTAL)
+                x--;
+            else
+                y--;
+        }
+        while (t.esNegra(x,y)){
+            if (direccio == Direccio.HORITZONTAL)
+                x++;
+            else
+                y++;
+        }
         int cont = 0;
         switch (direccio){
             case HORITZONTAL:
-                x++;
-                while (t.esBlanca(x,y)){
-                    cont++;
+                while (t.esBlanca(x,y) && x<t.getDimX() && y<t.getDimY()){
+                    if(((CasellaBlanca)t.getCasella(x,y)).getValor()==null){
+                        cont++;
+                    }
                     x++;
-
                 }
                 break;
             case VERTICAL:
-                y++;
                 while (t.esBlanca(x,y)){
-                    cont++;
+                    if(((CasellaBlanca)t.getCasella(x,y)).getValor()==null){
+                        cont++;
+                    }
                     y++;
                 }
                 break;
         }
         return cont;
     }
-    private int getSumConsecuent(CasellaBlanca casellaBlanca, Direccio direccio){
-        int x = casellaBlanca.getCoordX();
-        int y = casellaBlanca.getCoordY();
+    private int getSumRestant(Casella casella, Direccio direccio){
+        int x = casella.getCoordX();
+        int y = casella.getCoordY();
         int suma = 0;
-        switch (direccio){
-            case HORITZONTAL:
-                while(t.esBlanca(x,y)) {
-                    suma += ((CasellaBlanca) t.getCasella(x, y)).getValor();
-                    x--;
-                }
-                return ((CasellaNegra)t.getCasella(x,y)).getFila()-suma;
-            case VERTICAL:
-                while(t.esBlanca(x,y)) {
-                    suma += ((CasellaBlanca) t.getCasella(x, y)).getValor();
-                    y--;
-                }
-                return ((CasellaNegra)t.getCasella(x,y)).getColumna()-suma;
+        if(t.esNegra(x,y)){
+            switch (direccio){
+                case HORITZONTAL: return ((CasellaNegra) t.getCasella(x, y)).getFila();
+                case VERTICAL: return ((CasellaNegra) t.getCasella(x, y)).getColumna();
+            }
         }
-        return 0;
+        while (t.esBlanca(x,y)){
+            if (direccio == Direccio.HORITZONTAL)
+                x--;
+            else
+                y--;
+        }
+        int i = x;
+        int j = y;
+        while (t.esNegra(x,y)){
+            if (direccio == Direccio.HORITZONTAL)
+                x++;
+            else
+                y++;
+        }
+        while (t.esBlanca(x, y) ) {
+            if(((CasellaBlanca) t.getCasella(x, y)).getValor()!=null)
+                suma += ((CasellaBlanca) t.getCasella(x, y)).getValor();
+            if (direccio == Direccio.HORITZONTAL)
+                x++;
+            else
+                y++;
+        }
+        if (direccio == Direccio.HORITZONTAL)
+            return ((CasellaNegra) t.getCasella(i, j)).getFila() - suma;
+        else
+            return ((CasellaNegra) t.getCasella(i, j)).getColumna() - suma;
     }
     
-    private Set<Integer> getBlanquesUtilitzades(CasellaBlanca casellaBlanca,Direccio direccio){
-        int x = casellaBlanca.getCoordX();
-        int y = casellaBlanca.getCoordY();
+    private Set<Integer> getBlanquesUtilitzades(Casella casella,Direccio direccio){
+        int x = casella.getCoordX();
+        int y = casella.getCoordY();
+        while (t.esBlanca(x,y)){
+            if (direccio == Direccio.HORITZONTAL)
+                x--;
+            else
+                y--;
+        }
         Set<Integer> ret = new HashSet<>();
-        switch (direccio){
-            case HORITZONTAL:
-                while (t.esBlanca(x,y)){
-                    ret.add(((CasellaBlanca)t.getCasella(x,y)).getValor());
-                    x--;
-                }
-                break;
-            case VERTICAL:
-                while (t.esBlanca(x,y)) {
-                    ret.add(((CasellaBlanca) t.getCasella(x, y)).getValor());
-                    y--;
-                }
-                break;
+        while (t.esBlanca(x,y) && x<t.getDimX() && y<t.getDimY()){
+            if(((CasellaBlanca)t.getCasella(x,y)).getValor()!=null) {
+                ret.add(((CasellaBlanca) t.getCasella(x, y)).getValor());
+                if(direccio == Direccio.HORITZONTAL)
+                    x++;
+                else
+                    y++;
+            }
         }
         return ret;
-    }
-
-    //Donat una casella blanca amb una pila de valors que ja en té, retorna les combinacions que no té els números de la pila
-    private Set<Set<Integer>> combinacionsSenseAlgunsNums(CasellaBlanca casellaBlanca, Direccio direccio){
-        Set<Set<Integer>> ret = new HashSet<>();
-        switch (direccio){
-            case HORITZONTAL:
-                combinacions.getCombinacios(getSumConsecuent(casellaBlanca,direccio),getNumBlanquesConsecuents(casellaBlanca,direccio));
-        }
-        return null;
     }
 
     // ALGORITME DE GENERACIO
@@ -180,12 +207,7 @@ public class Algoritme {
         for(int r = 1; r < rows; ++r){
             int hist[] = new int[]{-1,0,0,0,0,0,0,0,0,0,0};
             for(int c = 1; c < cols; ++c){
-                int valor = ((CasellaBlanca) tauler[r][c]).getValor();
-                hist[valor]++;
-                if (hist[valor] > 1){
-                    tauler[r][c] = new CasellaNegra(c, r, null, null); // TODO: ara sempre són les ultimes
-                    hist = new int[]{-1,0,0,0,0,0,0,0,0,0,0};
-                }
+                hist = getInts(tauler, r, hist, c);
             }
         }
         //Anar columna per columna i busquem valors de blanca repetits en els blocs consecutius i els posem negre
@@ -195,12 +217,7 @@ public class Algoritme {
                 if (tauler[r][c].getClass() == CasellaNegra.class){
                     hist = new int[]{-1,0,0,0,0,0,0,0,0,0,0};
                 }else{
-                    int valor = ((CasellaBlanca) tauler[r][c]).getValor();
-                    hist[valor]++;
-                    if (hist[valor] > 1){ 
-                        tauler[r][c] = new CasellaNegra(c, r, null, null);
-                        hist = new int[]{-1,0,0,0,0,0,0,0,0,0,0};
-                    }
+                    hist = getInts(tauler, r, hist, c);
                 }
             }
         }
@@ -286,5 +303,15 @@ public class Algoritme {
         TaulerEnunciat t = new TaulerEnunciat(tauler);
         return t;
     }
-    
+
+    private int[] getInts(Casella[][] tauler, int r, int[] hist, int c) {
+        int valor = ((CasellaBlanca) tauler[r][c]).getValor();
+        hist[valor]++;
+        if (hist[valor] > 1){
+            tauler[r][c] = new CasellaNegra(c, r, null, null); // TODO: ara sempre són les ultimes
+            hist = new int[]{-1,0,0,0,0,0,0,0,0,0,0};
+        }
+        return hist;
+    }
+
 }
