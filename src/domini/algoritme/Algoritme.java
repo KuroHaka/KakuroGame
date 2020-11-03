@@ -168,7 +168,7 @@ public class Algoritme {
             CasellaNegra ca = new CasellaNegra(c, 0, null, null);
             tauler[0][c] = ca;
         }
-        //Emplenar random
+        //Emplenar amb caselles blanques de valor random
         for(int r = 1; r < rows; ++r){
             for(int c = 1; c < cols; ++c){
                 int ran = (int) ((Math.random() * 9) + 1);
@@ -273,9 +273,8 @@ public class Algoritme {
                     }
                 }
             } else return generarKakuroSimple(rows, cols, numeroBlanques); // Potser s'ha de fer un numeroBlanques-- ? Per assegurar que podrá generar...
-        }
-        //Si numeroBlanques == null, eliminem totes les caselles blanques pertinents.
-        if(numeroBlanques == null){
+        }else{
+        //Si numeroBlanques == null, o és impossible de cumplir... eliminem totes les caselles blanques.
             for(int r = 1; r < rows; ++r){
                 for(int c = 1; c < cols; ++c){
                     if (tauler[r][c].getClass() == CasellaBlanca.class)
