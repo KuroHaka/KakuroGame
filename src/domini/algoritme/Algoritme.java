@@ -121,6 +121,7 @@ public class Algoritme {
         }
         return cont;
     }
+    
     private int getSumRestant(Casella casella, Direccio direccio){
         int x = casella.getCoordX();
         int y = casella.getCoordY();
@@ -182,6 +183,82 @@ public class Algoritme {
     }
 
     // ALGORITME DE GENERACIO
+    
+    public TaulerComencat generarKakuroSolucionat(int rows, int cols){
+
+        // x = nºCols ; y = nºFiles
+        Casella[][] tauler = new Casella[rows][cols];
+        //Negres a dalt i esquerra
+        for(int r = 0; r < rows; ++r){
+            CasellaNegra ca = new CasellaNegra(0, r, null, null);
+            tauler[r][0] = ca;
+        }
+        for(int c = 0; c < cols; ++c){
+            CasellaNegra ca = new CasellaNegra(c, 0, null, null);
+            tauler[0][c] = ca;
+        }
+        //Emplenar amb caselles blanques de valor random
+        for(int r = 1; r < rows; ++r){
+            for(int c = 1; c < cols; ++c){
+                int ran = (int) ((Math.random() * 9) + 1);
+                CasellaBlanca ca = new CasellaBlanca(c, r, ran);
+                tauler[r][c] = ca;
+            }
+        }
+        //Anar fila per fila i busquem valors de blanca repetits en els blocs consecutius i els posem negre 
+        for(int r = 1; r < rows; ++r){
+            int hist[] = new int[]{-1,0,0,0,0,0,0,0,0,0,0};
+            for(int c = 1; c < cols; ++c){
+                hist = getInts(tauler, r, hist, c);
+            }
+        }
+        //Anar columna per columna i busquem valors de blanca repetits en els blocs consecutius i els posem negre
+        for(int c = 1; c < cols; ++c){
+            int hist[] = new int[]{-1,0,0,0,0,0,0,0,0,0,0};
+            for(int r = 1; r < rows; ++r){
+                if (tauler[r][c].getClass() == CasellaNegra.class){
+                    hist = new int[]{-1,0,0,0,0,0,0,0,0,0,0};
+                }else{
+                    hist = getInts(tauler, r, hist, c);
+                }
+            }
+        }
+        //Finalment, anar a cada casella negra i posar els valors corresponents de suma de columna\fila
+        // De pas comptem el numer ode caselles blanques.
+        int blanques = 0;
+        //Check de files
+        for(int r = 1; r < rows; ++r){
+            int acum_fila = 0;
+            for(int c = cols - 1; c >= 0; --c){
+                if (tauler[r][c].getClass() == CasellaNegra.class){
+                    if (acum_fila > 0){
+                        tauler[r][c] = new CasellaNegra(c, r, acum_fila, null);
+                        acum_fila = 0;
+                    }
+                } else {
+                    acum_fila += ((CasellaBlanca) tauler[r][c]).getValor();
+                    blanques ++;
+                }
+            }
+        }
+        //Check de columnes
+        for(int c = 1; c < cols; ++c){
+            int acum_col = 0;
+            for(int r = rows - 1; r >= 0; --r){
+                if (tauler[r][c].getClass() == CasellaNegra.class){
+                    if (acum_col > 0){
+                        Integer valor_f = ((CasellaNegra)tauler[r][c]).getFila();
+                        tauler[r][c] = new CasellaNegra(c, r, valor_f, acum_col);
+                        acum_col = 0;
+                    }
+                } else {
+                    acum_col += ((CasellaBlanca) tauler[r][c]).getValor();
+                }
+            }
+        }
+        TaulerComencat t = new TaulerComencat(tauler);
+        return t;
+    }
     
     public TaulerEnunciat generarKakuroSimple(int rows, int cols, Integer numeroBlanques){
         // x = nºCols ; y = nºFiles
@@ -254,6 +331,7 @@ public class Algoritme {
                 }
             }
         }
+        // Eliminar les caselles blanques pertinents
         if(numeroBlanques != null && numeroBlanques < (rows-1)*(cols-1)){
             if(numeroBlanques < blanques){ // Deixar almenys una casella blanca sense completar... 
                 // Anem buidant random, fins que blanques == numeroBlanques
@@ -313,4 +391,60 @@ public class Algoritme {
         return hist;
     }
 
+    // ALGORITME DE VALIDACIÓ DE SOLUCIÓ
+    
+    public boolean validaSolucio(TaulerComencat tc){
+        
+        int rows = tc.getDimY();
+        int cols = tc.getDimX();
+        
+        //Check negres a dalt i esquerra
+        for(int r = 0; r < rows; ++r)
+            if (tc.getCasella(0,r).getClass() != CasellaNegra.class) return false;
+        
+        for(int c = 0; c < cols; ++c)
+            if (tc.getCasella(c,0).getClass() != CasellaNegra.class) return false;
+
+        
+        //Check totes blanques amb valor
+        for(int c = 1; c < cols; ++c)
+            for(int r = 1; r < rows; ++r)
+                if (tc.getCasella(c,r).getClass() == CasellaBlanca.class)
+                    if(((CasellaBlanca) tc.getCasella(c,r)).getValor() == null) return false;
+        
+        //Check de valors de files
+        for(int r = 1; r < rows; ++r){
+            int acum_fila = 0;
+            for(int c = cols - 1; c >= 0; --c){
+                if (tc.getCasella(c,r).getClass() == CasellaNegra.class){
+                    if (acum_fila > 0){
+                        Integer v = ((CasellaNegra)tc.getCasella(c,r)).getFila();
+                        if (acum_fila == 0 && v!=null) return false;
+                        else if (v != acum_fila) return false;
+                        acum_fila = 0;
+                    }
+                } else {
+                    acum_fila += ((CasellaBlanca) tc.getCasella(c,r)).getValor();
+                }
+            }
+        }
+        //Check de valors de columnes
+        for(int c = 1; c < cols; ++c){
+            int acum_col = 0;
+            for(int r = rows - 1; r >= 0; --r){
+                if (tc.getCasella(c,r).getClass() == CasellaNegra.class){
+                    if (acum_col > 0){
+                        Integer v = ((CasellaNegra)tc.getCasella(c,r)).getColumna();
+                        if (acum_col == 0 && v!=null) return false;
+                        else if (v != acum_col) return false;
+                        acum_col = 0;
+                    }
+                } else {
+                    acum_col += ((CasellaBlanca) tc.getCasella(c,r)).getValor();
+                }
+            }
+        }
+        return true;
+    }
+    
 }

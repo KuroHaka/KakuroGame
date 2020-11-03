@@ -15,9 +15,9 @@ public abstract class Tauler {
     // ATRIBUTS PRIVATS
     
     protected String id; // Protected perquè TaulerComençat ha de poder "actualitzar-lo"
-    private static int dimX;
-    private static int dimY;
-    private Casella[][] tauler;
+    protected static int dimX;
+    protected static int dimY;
+    protected Casella[][] tauler;
     // private Dificultat dificultat;
 
     // CONSTRUCTORES
