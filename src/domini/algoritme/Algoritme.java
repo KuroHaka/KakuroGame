@@ -182,9 +182,9 @@ public class Algoritme {
         return ret;
     }
 
-    // ALGORITME DE GENERACIO
+    // ALGORITMES DE GENERACIO
     
-    public TaulerComencat generarKakuroSolucionat(int rows, int cols){
+    public TaulerComencat generarKakuroSimpleSolucionat(int rows, int cols){
 
         // x = nºCols ; y = nºFiles
         Casella[][] tauler = new Casella[rows][cols];
@@ -331,6 +331,9 @@ public class Algoritme {
                 }
             }
         }
+        
+        // Fins aquí, és quasi idèntic a generarKakuroSolucionat(int rows, int cols).
+        
         // Eliminar les caselles blanques pertinents
         if(numeroBlanques != null && numeroBlanques < (rows-1)*(cols-1)){
             if(numeroBlanques < blanques){ // Deixar almenys una casella blanca sense completar... 
