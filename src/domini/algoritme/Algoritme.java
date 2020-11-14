@@ -457,4 +457,10 @@ public class Algoritme {
         return true;
     }
     
+    // ALGORITME VALIDADOR DE FORMAT DE PROPOSTA KAKURO
+    
+    public boolean validaFormat (TaulerEnunciat te){
+    
+        return true;
+    }
 }

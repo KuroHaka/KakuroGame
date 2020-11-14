@@ -44,5 +44,6 @@ public class Driver_Tauler {
         Tauler t_exemple2 = new TaulerEnunciat(e2);
         t_exemple2.print(); //Human friendly format
 
+        // FALTA CANVIS AL TAULER (Set caselles)
     }
 }
