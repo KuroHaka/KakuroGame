@@ -27,7 +27,7 @@ public class CasellaBlanca extends Casella{
     // MÈTODES PÚBLICS
 
     public boolean setValor(Integer valor) {
-        if (valor < 1 && valor != null) return false;
+//        if (valor < 1  && valor != null) return false;
         this.valor = valor;
         return true;
     }

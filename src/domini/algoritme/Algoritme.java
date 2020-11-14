@@ -14,30 +14,81 @@ enum Direccio{
 }
 public class Algoritme {
     Combinacions combinacions = new Combinacions();
-    TaulerEnunciat t;
 
     public Algoritme() {
-        this.t = null;
-    }
-    
-    public Algoritme(TaulerEnunciat taulerEnunciat) {
-        this.t = taulerEnunciat;
     }
 
     // ALGORITME SOLVER
-    
-    public TaulerComencat resoldreKakuro(){
-        for(int y = 0; y < t.getDimY(); y++) {
-            for (int x = 0; x < t.getDimX(); x++) {
-                if (t.esBlanca(x, y) && ((CasellaBlanca) t.getCasella(x, y)).getValor() == null && !getPossiblesValors(t.getCasella(x, y), Direccio.HORITZONTAL).isEmpty()) {
-                    ((CasellaBlanca) t.getCasella(x, y)).setValor(getPossiblesValors(t.getCasella(x, y), Direccio.HORITZONTAL).stream().findFirst().get());
+
+    public TaulerComencat resoldreKakuro(TaulerEnunciat tauler){
+        TaulerComencat t = tauler.comencarTauler();
+        CasellaBlanca casellaBlanca = seguentCasellaBlanca(t.getCasella(0,1),t);
+        if(casellaBlanca==null){
+            return null;
+        }
+        return resoldreKakuro(t, compteCasellesBlanques(t), casellaBlanca);
+    }
+
+
+    private TaulerComencat resoldreKakuro(TaulerComencat t, int blanquesRestant, CasellaBlanca casellarecent){
+        int x = casellarecent.getCoordX();
+        int y = casellarecent.getCoordY();
+        if(x>=t.getDimX()){
+            y++;
+            x=0;
+        }
+        Set<Integer> horit = getPossiblesValors(casellarecent, Direccio.HORITZONTAL, t);
+        if(horit!=null){
+            for(Integer i: horit){
+                CasellaBlanca casella = ((CasellaBlanca)t.getCasella(casellarecent.getCoordX(), casellarecent.getCoordY()));
+                casella.setValor(i);
+                t.print();
+                if(validaSolucio(t)){
+                    return t;
+                }
+                CasellaBlanca seguent = seguentCasellaBlanca(casellarecent, t);
+                if(seguent== null){
+                    casellarecent.setValor(null);
+                    return null;
+                }
+                TaulerComencat ret = resoldreKakuro(t, blanquesRestant-1, seguent);
+                if(ret != null){
+                    return ret;
                 }
             }
         }
-        return null;
+        casellarecent.setValor(null);
+        return  null;
     }
 
-    private void colocarBlanquesHoritzontals(CasellaNegra casellaNegra){
+    private int compteCasellesBlanques(TaulerComencat t){
+        int count = 0;
+        for(int y = 0; y < t.getDimY(); y++) {
+            for (int x = 0; x < t.getDimX(); x++) {
+                if (t.esBlanca(x, y)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    private CasellaBlanca seguentCasellaBlanca(Casella casella, TaulerComencat t){
+        int y = casella.getCoordY();
+        int x = casella.getCoordX();
+        do{
+            x++;
+            if(x>=t.getDimX()){
+                y++;
+                x=0;
+                if(y>=t.getDimY()){
+                    return null;
+                }
+            }
+        }while((t.esNegra(x,y)));
+        return ((CasellaBlanca)t.getCasella(x,y));
+    }
+/*    private void colocarBlanquesHoritzontals(CasellaNegra casellaNegra){
         int y = casellaNegra.getCoordY();
         int x = casellaNegra.getCoordX() + 1;
         int cont = 0;
@@ -54,10 +105,12 @@ public class Algoritme {
         }
     }
 
-    private Set<Integer> getPossiblesValors(Casella casella, Direccio direccio){
+ */
+
+    private Set<Integer> getPossiblesValors(Casella casella, Direccio direccio, TaulerComencat t){
         Set<Integer> ret = new HashSet<>();
         try {
-            for(Set<Integer> s : Objects.requireNonNull(combinacionsRestants(casella, direccio))) {
+            for(Set<Integer> s : Objects.requireNonNull(combinacionsRestants(casella, direccio, t))) {
                 ret.addAll(s);
             }
         }
@@ -68,14 +121,14 @@ public class Algoritme {
     }
 
     //Retorna les combinacions possibles restants
-    private Set<Set<Integer>> combinacionsRestants(Casella casella, Direccio direccio){
+    private Set<Set<Integer>> combinacionsRestants(Casella casella, Direccio direccio, TaulerComencat t){
         Set<Set<Integer>> ret = new HashSet<>();
-        if(getBlanquesUtilitzades(casella, direccio).isEmpty()){
-            return combinacions.getCombinacios(getSumRestant(casella, direccio), getNumBlanquesRestants(casella, direccio));
+        if(getBlanquesUtilitzades(casella, direccio, t).isEmpty()){
+            return combinacions.getCombinacios(getSumRestant(casella, direccio, t), getNumBlanquesRestants(casella, direccio, t));
         }
         try {
-            for (Set<Integer> s : combinacions.getCombinacios(getSumRestant(casella, direccio), getNumBlanquesRestants(casella, direccio))) {
-                if (Collections.disjoint(s,getBlanquesUtilitzades(casella, direccio))) {
+            for (Set<Integer> s : combinacions.getCombinacios(getSumRestant(casella, direccio, t), getNumBlanquesRestants(casella, direccio, t))) {
+                if (Collections.disjoint(s,getBlanquesUtilitzades(casella, direccio, t))) {
                     ret.add(s);
                 }
             }
@@ -86,7 +139,7 @@ public class Algoritme {
         }
     }
 
-    private int getNumBlanquesRestants(Casella casella, Direccio direccio){
+    private int getNumBlanquesRestants(Casella casella, Direccio direccio, TaulerComencat t){
         int y = casella.getCoordY();
         int x = casella.getCoordX();
         while (t.esBlanca(x,y)){
@@ -123,7 +176,7 @@ public class Algoritme {
         return cont;
     }
     
-    private int getSumRestant(Casella casella, Direccio direccio){
+    private int getSumRestant(Casella casella, Direccio direccio, TaulerComencat t){
         int x = casella.getCoordX();
         int y = casella.getCoordY();
         int suma = 0;
@@ -161,7 +214,7 @@ public class Algoritme {
             return (((CasellaNegra) t.getCasella(i, j)).getColumna() - suma);
     }
     
-    private Set<Integer> getBlanquesUtilitzades(Casella casella,Direccio direccio){
+    private Set<Integer> getBlanquesUtilitzades(Casella casella,Direccio direccio, TaulerComencat t){
         int x = casella.getCoordX();
         int y = casella.getCoordY();
         while (t.esBlanca(x,y)){

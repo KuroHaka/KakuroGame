@@ -16,5 +16,7 @@ public class TaulerEnunciat extends Tauler{
         super(t);
         //super(llegirTauler_String(t)); // Mètode Static que retorna en format matriu
     }
-    
+    public TaulerComencat comencarTauler(){
+        return new TaulerComencat(this.format_Estandard());
+    }
 }
