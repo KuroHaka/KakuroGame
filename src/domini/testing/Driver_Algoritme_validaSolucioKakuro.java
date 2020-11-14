@@ -2,15 +2,13 @@ package domini.testing;
 
 import domini.algoritme.Algoritme;
 import domini.tauler.TaulerComencat;
-import domini.tauler.TaulerEnunciat;
-import static domini.testing.Driver_Algoritme_resoldreKakuro.algoritme;
 
 public class Driver_Algoritme_validaSolucioKakuro {
     public static Algoritme algoritme = new Algoritme();
 
     public static void main(String[] args) {
         
-        System.out.println("TESTING VALIDADOR DE SOLUCIONS DE KAKURO: ");
+        System.out.println("DRIVER VALIDADOR DE SOLUCIONS DE KAKURO: ");
         
         TaulerComencat s;
         s = algoritme.generarKakuroSimpleSolucionat(7,9);
