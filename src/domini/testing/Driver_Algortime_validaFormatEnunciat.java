@@ -12,7 +12,7 @@ public class Driver_Algortime_validaFormatEnunciat {
         System.out.println("DRIVER VALIDADOR DE FORMATS DE ENUNCIATS: ");
         
         TaulerEnunciat s;
-        for (int i = 0; i < 0; ++i){
+        for (int i = 0; i < 30; ++i){
             s = algoritme.generarKakuroSimple(7,9,null);
             boolean valid = algoritme.validaFormat(s);
             System.out.println("Aquest enunciat de kakuro té format " + (valid ? "vàlid" : "invàlid"));
