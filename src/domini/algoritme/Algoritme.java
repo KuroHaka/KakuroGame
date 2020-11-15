@@ -42,7 +42,6 @@ public class Algoritme {
             for(Integer i: horit){
                 CasellaBlanca casella = ((CasellaBlanca)t.getCasella(casellarecent.getCoordX(), casellarecent.getCoordY()));
                 casella.setValor(i);
-                t.print();
                 if(validaSolucio(t)){
                     return t;
                 }

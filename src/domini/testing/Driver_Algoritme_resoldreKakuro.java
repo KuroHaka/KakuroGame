@@ -11,7 +11,7 @@ public class Driver_Algoritme_resoldreKakuro {
     public static void main(String[] args) {
         algoritme  = new Algoritme();
         for (int i = 0; i < 10; ++i){
-            TaulerEnunciat s = algoritme.generarKakuroSimple(6,6,null);
+            TaulerEnunciat s = algoritme.generarKakuroSimple(5,5,null);
             TaulerComencat solucio = algoritme.resoldreKakuro(s);
             boolean valid = algoritme.validaSolucio(solucio);
             solucio.print();
