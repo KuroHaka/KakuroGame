@@ -1,0 +1,7 @@
+En aquesta carpeta hi ha presents els testos dels algorismes.
+A cada test s'hi associen uns arxius:
+	- test_validarFormat.java: validaFormatXXX.in
+	- test_validarSolucio.java: validaSolucioXXX.in
+	- test_resoldreKakuro.java: resolXXX.in, resolXXX.out
+	- test_generarKakuro.java: 
+

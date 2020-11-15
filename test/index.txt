@@ -1,0 +1,2 @@
+Directori de testos.
+Hi ha el directori "algoritmes" on hi ha els testos dels corresponents algorismes.
