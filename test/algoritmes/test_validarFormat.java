@@ -21,10 +21,31 @@ public class test_validarFormat {
         System.out.println("TEST VALIDADOR DE FORMATS DE ENUNCIATS: ");
         
         System.out.println("Test 001...");
-        test("validaFormat001.in", false);
+        test("validaFormat001.in", true);
         System.out.println("Test 002...");
-        test("validaFormat002.in", true);
+        test("validaFormat002.in", false);
         System.out.println("Test 003...");
+        test("validaFormat003.in", false);
+        System.out.println("Test 004...");
+        test("validaFormat004.in", false);
+        System.out.println("Test 005...");
+        test("validaFormat005.in", false);
+        System.out.println("Test 006...");
+        test("validaFormat006.in", false);
+        System.out.println("Test 007...");
+        test("validaFormat007.in", false);
+        System.out.println("Test 008...");
+        test("validaFormat008.in", false);
+        System.out.println("Test 009...");
+        test("validaFormat009.in", false);
+        System.out.println("Test 010...");
+        test("validaFormat010.in", false);
+        System.out.println("Test 011...");
+        test("validaFormat011.in", false);
+        System.out.println("Test 012...");
+        test("validaFormat012.in", false);
+        System.out.println("Test 013...");
+        test("validaFormat013.in", false);
         ///// AFEGIR TESTOS /////
         
     }
