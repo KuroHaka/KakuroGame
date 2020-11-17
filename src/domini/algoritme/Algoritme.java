@@ -107,16 +107,26 @@ public class Algoritme {
  */
 
     private Set<Integer> getPossiblesValors(Casella casella, Direccio direccio, TaulerComencat t){
-        Set<Integer> ret = new HashSet<>();
+//        System.out.println(casella.getCoordX()+" "+casella.getCoordY());
+        Set<Integer> hori = new HashSet<>();
+        Set<Integer> verti = new HashSet<>();
         try {
-            for(Set<Integer> s : Objects.requireNonNull(combinacionsRestants(casella, direccio, t))) {
-                ret.addAll(s);
+            for(Set<Integer> x : combinacionsRestants(casella, direccio, t)) {
+                hori.addAll(x);
+            }
+            for(Set<Integer> y : combinacionsRestants(casella, Direccio.VERTICAL, t)){
+                verti.addAll(y);
             }
         }
         catch (NullPointerException e){
             return null;
         }
-        return ret;
+//        System.out.println(hori);
+//        System.out.println(verti);
+        hori.retainAll(verti);
+//        System.out.println(hori);
+//        System.out.println("___________");
+        return hori;
     }
 
     //Retorna les combinacions possibles restants
