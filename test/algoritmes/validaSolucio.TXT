@@ -1,4 +1,5 @@
-001: És un tauler correctament resolt, el test ha de donar positiu.
+001: És un tauler correctament resolt, el test ha de donar true.
 002: És un tauler incorrectament resolt, test = false.
 003: És un tauler amb una repetició a la mateixa fila, test = false.
+003: És un tauler amb una casella negra intermitja, test = true.
 
