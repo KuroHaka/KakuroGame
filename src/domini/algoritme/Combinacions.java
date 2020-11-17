@@ -95,7 +95,7 @@ public class Combinacions {
         afegirCombinacio(8,2,new int[][]{{1,7},{2,6},{3,5}});
         afegirCombinacio(8,3,new int[][]{{1,2,5},{1,3,4}});
 
-        afegirCombinacio(9,2,new int[][]{{1,8},{2,7},{3,6}});
+        afegirCombinacio(9,2,new int[][]{{1,8},{2,7},{4,5},{3,6}});
         afegirCombinacio(9,3,new int[][]{{1,2,6},{1,3,5},{2,3,4}});
 
         afegirCombinacio(10,2,new int[][]{{1,9},{2,8},{3,7},{4,6}});

@@ -26,23 +26,17 @@ public class Algoritme {
         if(casellaBlanca==null){
             return null;
         }
-        return resoldreKakuro(t, compteCasellesBlanques(t), casellaBlanca);
+        return resoldreKakuro(t, compteCasellesBlanques(t)-1, casellaBlanca);
     }
 
 
     private TaulerComencat resoldreKakuro(TaulerComencat t, int blanquesRestant, CasellaBlanca casellarecent){
-        int x = casellarecent.getCoordX();
-        int y = casellarecent.getCoordY();
-        if(x>=t.getDimX()){
-            y++;
-            x=0;
-        }
         Set<Integer> horit = getPossiblesValors(casellarecent, Direccio.HORITZONTAL, t);
         if(horit!=null){
             for(Integer i: horit){
                 CasellaBlanca casella = ((CasellaBlanca)t.getCasella(casellarecent.getCoordX(), casellarecent.getCoordY()));
                 casella.setValor(i);
-                if(validaSolucio(t)){
+                if(blanquesRestant<=0 && validaSolucio(t)){
                     return t;
                 }
                 CasellaBlanca seguent = seguentCasellaBlanca(casellarecent, t);
