@@ -1,12 +1,14 @@
-# FONTS
-rm -r ENTREGA/FONTS/*
-cp -r src/* ENTREGA/FONTS/
-
+# FONTS : src
+rm -r ENTREGA/FONTS/src
+cp -r src ENTREGA/FONTS/
+# FONTS : scripts drivers
+cp Compilacio_drivers.bat ENTREGA/FONTS/
+cp Driver_Tauler.bat ENTREGA/FONTS/
 
 # EXE : executables (drivers) de les classes + jocs de prova
 
 # Classe Algoritme
-cp -r src/domini/algoritme/* ENTREGA/EXE/algoritme
+# cp -r src/domini/algoritme/* ENTREGA/EXE/algoritme
 
 
 

@@ -1,4 +1,4 @@
-package domini.testing;
+package domini.drivers;
 
 import domini.algoritme.Algoritme;
 import domini.tauler.TaulerComencat;
