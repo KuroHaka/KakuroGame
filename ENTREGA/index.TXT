@@ -1,0 +1,2 @@
+Carpeta del projecte.
+Hi ha l'arxiu que descriu al grup i els directoris.
