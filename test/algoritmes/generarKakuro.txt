@@ -1,0 +1,10 @@
+Per a comprovar la correcció de "generarKakuro" s'assumeix que la funció
+"validarFormat" és correcte (sinó, donarà error als testos i s'arreglarà).
+
+Com que la generació és pseudoaleatòria, es faran kakuros de dimensió de
+1 a 20 (passant per totes les combinacions: 1,1;1,2;1,3...) 10 vegades i
+es validaran --> es fan 4000 kakuros a comprovar.
+
+A més, aquesta mateixa funció s'utilitzarà per als kakuros a resoldre.
+
+Si en cap dels dos casos falla, podem considerar que és correcte.

@@ -5,5 +5,7 @@ A cada test s'hi associen uns arxius:
 	- test_validarSolucio.java: validaSolucioXXX.in
 		* Mirar validaSolucio.txt
 	- test_resoldreKakuro.java: resolXXX.in, resolXXX.out
-	- test_generarKakuro.java: 
+		* Mirar resoldreKakuro.txt
+	- test_generarKakuro.java: ---
+		* Mirar generarKakuro.txt
 
