@@ -28,7 +28,15 @@ public class test_validarSolucio {
         System.out.println("Test 003...");
         test("validaSolucio003.in", false);
         System.out.println("Test 004...");
-        test("validaSolucio004.in", true);
+        test("validaSolucio004.in", false);
+        System.out.println("Test 005...");
+        test("validaSolucio005.in", true);
+        System.out.println("Test 006...");
+        test("validaSolucio006.in", false);
+        System.out.println("Test 007...");
+        test("validaSolucio007.in", true);
+        System.out.println("Test 008...");
+        test("validaSolucio008.in", true);
         ///// AFEGIR TESTOS /////
     }
 }

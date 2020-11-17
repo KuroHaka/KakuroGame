@@ -46,7 +46,11 @@ public class test_validarFormat {
         test("validaFormat012.in", false);
         System.out.println("Test 013...");
         test("validaFormat013.in", false);
-        ///// AFEGIR TESTOS /////
-        
+        System.out.println("Test 014...");
+        test("validaFormat014.in", true);
+        System.out.println("Test 015...");
+        test("validaFormat015.in", true);
+        System.out.println("Test 016...");
+        test("validaFormat016.in", true);
     }
 }

@@ -1,5 +1,9 @@
 001: És un tauler correctament resolt, el test ha de donar true.
 002: És un tauler incorrectament resolt, test = false.
 003: És un tauler amb una repetició a la mateixa fila, test = false.
-004: És un tauler amb una casella negra intermitja, test = true.
+004: És un tauler amb una repetició a la mateixa columna, test = false.
+005: És un tauler (correcte) amb una casella negra intermitja, test = true.
+006: És un tauler amb una casella buïda, test = false.
 
+007: És un tauler correctament resolt de mida gran, test = true.
+008: És un tauler correctament resolt de mida mooolt gran, test = true.

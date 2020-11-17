@@ -12,5 +12,9 @@
 011: Tauler on hi ha valor d'una fila menor del possible, test = false.
 012: Tauler on hi ha valor d'una columna major del possible, test = false.
 013: Tauler on hi ha valor d'una columna menor del possible, test = false.
+014: Tauler on no hi ha valors, test = true.
+
+015: Tauler correcte de mida gran, test = true.
+016: Tauler correcte de mida mooolt gran, test = true.
 
 
