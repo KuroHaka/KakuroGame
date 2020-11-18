@@ -629,4 +629,262 @@ public class Algoritme {
         }
         return true;
     }
+
+    //Algoritme de generació de solució única
+
+    /*private CasellaBlanca seguentCasellaBlanca(Casella casella, TaulerComencat t){
+        int y = casella.getCoordY();
+        int x = casella.getCoordX();
+        do{
+            x++;
+            if(x>=t.getDimX()){
+                y++;
+                x=0;
+                if(y>=t.getDimY()){
+                    return null;
+                }
+            }
+        }while((t.esNegra(x,y)));
+        return ((CasellaBlanca)t.getCasella(x,y));
+    }*/
+
+    private Set<Integer> getUnicaCombinacio(TaulerComencat tc, CasellaBlanca casellarecent) {
+        int sumaFila;
+        int x;
+        Set <Integer> used = new HashSet<>();
+        for(x = casellarecent.getCoordX() - 1; tc.getCasella(x, casellarecent.getCoordY()).getClass() == CasellaBlanca.class; --x) {
+            used.add(((CasellaBlanca)tc.getCasella(x, casellarecent.getCoordY())).getValor());
+        }
+        sumaFila = ((CasellaNegra)tc.getCasella(x, casellarecent.getCoordY())).getFila();
+        int blanquesSeguides = 0;
+        for(x = x+1; x < tc.getDimX() && tc.getCasella(x, casellarecent.getCoordY()).getClass() == CasellaBlanca.class; ++x) {
+            ++blanquesSeguides;
+        }
+        Set<Set<Integer> > comb = combinacions.getCombinacios(sumaFila, blanquesSeguides);
+        Set <Integer> combunica = new HashSet<>();
+        for(Set<Integer> s : comb) {
+            combunica.addAll(s);
+        }
+        combunica.removeAll(used);
+        return combunica;
+    }
+
+    private Set<Integer> getValorsColumna(TaulerComencat tc, CasellaBlanca casellarecent) {
+        Set <Integer> used = new HashSet<>();
+        for(int y = casellarecent.getCoordY() - 1; tc.getCasella(casellarecent.getCoordX(), y).getClass() == CasellaBlanca.class; --y) {
+            used.add(((CasellaBlanca)tc.getCasella(casellarecent.getCoordX(), y)).getValor());
+        }
+        return used;
+    }
+
+    private TaulerComencat solucionaKakuro(int nb, TaulerComencat tc) {
+        CasellaBlanca casellaBlanca = seguentCasellaBlanca(tc.getCasella(0,1), tc);
+        if(casellaBlanca == null) {
+            return null;
+        }
+        return solucionaKakuro(tc, casellaBlanca, nb);
+    }
+
+    private TaulerComencat solucionaKakuro(TaulerComencat tc, CasellaBlanca casellarecent, int numeroBlanques) {
+        Set<Integer> comb = getUnicaCombinacio(tc, casellarecent);
+        Set<Integer> used = getValorsColumna(tc, casellarecent);
+        comb.removeAll(used);
+        if(comb.isEmpty()) {return null;}
+        else {
+            for(Integer i: comb) {
+                ((CasellaBlanca)tc.getCasella(casellarecent.getCoordX(), casellarecent.getCoordY())).setValor(i);
+                if(numeroBlanques<=0){
+                    return tc;
+                }
+                CasellaBlanca seguent = seguentCasellaBlanca(casellarecent, tc);
+                if(seguent== null){
+                    ((CasellaBlanca)tc.getCasella(casellarecent.getCoordX(), casellarecent.getCoordY())).setValor(null);
+                    return null;
+                }
+                TaulerComencat tc2 = solucionaKakuro(tc, seguent, numeroBlanques-1);
+                if(tc2 != null){
+                    return tc2;
+                }
+                else {return null;}
+            }
+        }
+        ((CasellaBlanca)tc.getCasella((casellarecent.getCoordX()), casellarecent.getCoordY())).setValor(null);
+        return null;
+    }
+
+    private ArrayList<ArrayList<Integer> > crea1comb() {
+        ArrayList<ArrayList<Integer> > unaComb = new ArrayList<ArrayList<Integer> >(9);
+        ArrayList <Integer> a1 = new ArrayList<Integer> ();
+        a1.add(1); a1.add(2); a1.add(3); a1.add(4); a1.add(5); a1.add(6); a1.add(7); a1.add(8); a1.add(9); unaComb.add(a1);//Combinacions de 1 casella
+        a1 = new ArrayList<Integer> (); a1.add(3); a1.add(4); a1.add(16); a1.add(17); unaComb.add(a1);
+        a1 = new ArrayList<Integer> (); a1.add(6); a1.add(7); a1.add(23); a1.add(24); unaComb.add(a1);
+        a1 = new ArrayList<Integer> (); a1.add(10); a1.add(11); a1.add(29); a1.add(30); unaComb.add(a1);
+        a1 = new ArrayList<Integer> (); a1.add(15); a1.add(16); a1.add(34); a1.add(35); unaComb.add(a1);
+        a1 = new ArrayList<Integer> (); a1.add(21); a1.add(22); a1.add(38); a1.add(39); unaComb.add(a1);
+        a1 = new ArrayList<Integer> (); a1.add(28); a1.add(29); a1.add(41); a1.add(42); unaComb.add(a1);
+        a1 = new ArrayList<Integer> (); a1.add(36); a1.add(37); a1.add(38); a1.add(39); a1.add(40); a1.add(41); a1.add(42); a1.add(43); a1.add(44); unaComb.add(a1);
+        a1 = new ArrayList<Integer> (); a1.add(45); unaComb.add(a1);
+        return unaComb;
+    }
+
+    private int getNumFElems(Casella[][] tauler, int i, int j) {
+        int cont = 0;
+        for(int j2 = j + 1; j2 < tauler[0].length; ++j2) {
+            if(tauler[i][j2].getClass() == CasellaBlanca.class) {
+                ++cont; //sumem 1 per cada casella blanca a l'esquerra
+            }
+            else return cont;
+        }
+        return cont;
+    }
+
+    public TaulerEnunciat generarKakuro(int rows, int cols, Integer numeroBlanques, int numeroBlanquesEstablertes) {
+        Casella[][] tauler = new Casella[rows][cols];
+        //Negres a dalt i esquerra
+        for (int r = 0; r < rows; ++r) {
+            CasellaNegra ca = new CasellaNegra(0, r, null, null);
+            tauler[r][0] = ca;
+        }
+        for (int c = 0; c < cols; ++c) {
+            CasellaNegra ca = new CasellaNegra(c, 0, null, null);
+            tauler[0][c] = ca;
+        }
+        //Emplenar amb caselles blanques buides
+        for (int r = 1; r < rows; ++r) {
+            for (int c = 1; c < cols; ++c) {
+                CasellaBlanca ca = new CasellaBlanca(c, r, null);
+                tauler[r][c] = ca;
+            }
+        }
+        //Posar una negra si n'hi han 9 blanques seguides en una fila o columna(acaba amb la simetria si el kakuro es de més de 10x10
+        int blanquesSeguides = 0;
+        int negresColocades = 0;
+        int rand;
+        for (int r = 1; r < rows; ++r) {
+            for(int c = 1; c < cols; ++c) {
+                if (blanquesSeguides == 9) {
+                    rand = (int) (Math.random() * 3) + 1;
+                    ++negresColocades;
+                    CasellaNegra ca = new CasellaNegra(c - rand, r, null, null);
+                    tauler[r][c - rand] = ca;
+                    blanquesSeguides = rand;
+                }
+                else {
+                    ++blanquesSeguides;
+                }
+            }
+            blanquesSeguides = 0;
+        }
+        blanquesSeguides = 0;
+        for (int c = 1; c < cols; ++c) {
+            for(int r = 1; r < rows; ++r) {
+                if (blanquesSeguides == 9) {
+                    rand = (int) (Math.random() * 3) + 1;
+                    ++negresColocades;
+                    CasellaNegra ca = new CasellaNegra(c, r - rand, null, null);
+                    tauler[r - rand][c] = ca;
+                    blanquesSeguides = rand;
+                }
+                else {
+                    ++blanquesSeguides;
+                }
+            }
+            blanquesSeguides = 0;
+        }
+        int negExtres = (rows-1)*(cols-1) - (numeroBlanques) - negresColocades;
+        for(int p = 0; p < negExtres; ++p) {
+            int r = (int) ((Math.random() * (rows - 1)) + 1);
+            int c = (int) ((Math.random() * (cols - 1)) + 1);
+            --p;
+            if(tauler[r][c].getClass() == CasellaBlanca.class) {
+                ++p;
+                CasellaNegra ca = new CasellaNegra(c, r, null, null);
+                tauler[r][c] = ca;
+            }
+        }
+        int cont = 0;
+        for(int r = 0; r < rows; ++r) {
+            for(int c = 0; c < cols; ++c) {
+                if(tauler[r][c].getClass() == CasellaBlanca.class) {
+                    ++cont;
+                }
+            }
+        }
+        while((cont - numeroBlanques) > 0) {
+            int r = (int) ((Math.random() * (rows - 1)) + 1);
+            int c = (int) ((Math.random() * (cols - 1)) + 1);
+            if(tauler[r][c].getClass() == CasellaBlanca.class) {
+                --cont;
+                CasellaNegra ca = new CasellaNegra(c, r, null, null);
+                tauler[r][c] = ca;
+            }
+        }
+        ArrayList<ArrayList<Integer> > unaComb = new ArrayList<ArrayList<Integer> >(9);
+        unaComb = crea1comb();        // x = nºCols ; y = nºFiles
+        //Posem totes les caselles negres amb fila amb valors random de 1 sola combinacio possible per aconseguir una solucio única
+        for(int i = 0; i < rows; ++i) {
+            for(int j = 0; j < cols - 1; ++j) {
+                if(tauler[i][j].getClass() == CasellaNegra.class) {
+                    if(tauler[i][j + 1].getClass() == CasellaBlanca.class) {
+                        int numbElems = getNumFElems(tauler, i, j);
+                        //j+= numbElems; ????
+                        int q = unaComb.get(numbElems - 1).size() - 1;
+                        int c = (int)(Math.random()*q);
+                        int v = unaComb.get(numbElems - 1).get(c);
+                        tauler[i][j] = new CasellaNegra(i, j, v, null);
+                    }
+                }
+            }
+        }
+
+        //SOLVER!!!!!!!!!!!!!!!! tiene q comprobar si tiene solucion
+        TaulerComencat tc = new TaulerComencat(tauler);
+        solucionaKakuro(numeroBlanques - 1, tc);
+        boolean algunNull = false;
+        for(int r = 0; r < rows; ++r) {
+            for(int c = 0; c < cols; ++c) {
+                if(tc.getCasella(c,r).getClass() == CasellaBlanca.class) {
+                    if(((CasellaBlanca)tc.getCasella(c,r)).getValor() == null) {algunNull = true;}
+                }
+            }
+        }
+        if(algunNull) {
+            return generarKakuro(rows, cols, numeroBlanques, numeroBlanquesEstablertes);
+        }
+        else {
+            //rellenar las cols
+            for (int c = 1; c < cols; ++c) {
+                int acum_col = 0;
+                for (int r = rows - 1; r >= 0; --r) {
+                    if (tc.getCasella(c,r).getClass() == CasellaNegra.class) {
+                        if (acum_col > 0) {
+                            Integer valor_f = ((CasellaNegra)tc.getCasella(c,r)).getFila();
+                            tauler[r][c] = new CasellaNegra(c, r, valor_f, acum_col);
+                            acum_col = 0;
+                        }
+                    } else {
+                        acum_col += ((CasellaBlanca)tc.getCasella(c, r)).getValor();
+                    }
+                }
+            }
+            TaulerComencat tcBuit = tc;
+            int buidades = 0;
+            while(buidades < (numeroBlanques - numeroBlanquesEstablertes)) {
+                int r = (int) ((Math.random() * (rows - 1)) + 1);
+                int c = (int) ((Math.random() * (cols - 1)) + 1);
+                if(tcBuit.getCasella(c,r).getClass() == CasellaBlanca.class) {
+                    if(((CasellaBlanca)tcBuit.getCasella(c,r)).getValor() != null) {
+                        ((CasellaBlanca)tcBuit.getCasella(c,r)).setValor(null);
+                        tauler[r][c] = new CasellaBlanca(c, r, null);
+                        ++buidades;
+                    }
+                }
+            }
+            TaulerEnunciat t = new TaulerEnunciat(tauler);
+            return t;
+        }
+    }
+
+
+
 }

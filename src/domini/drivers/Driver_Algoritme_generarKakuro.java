@@ -9,9 +9,9 @@ public class Driver_Algoritme_generarKakuro {
     public static void main(String[] args) {
         System.out.println("TESTING GENERADOR DE KAKURO: ");
         TaulerEnunciat t;
-        t = algoritme.generarKakuroSimple(7,9,null);
+        t = algoritme.generarKakuro(7,9,30,10);
         t.print();
-        t = algoritme.generarKakuroSimple(10,10,5);
+        t = algoritme.generarKakuro(10,10,50,10);
         t.print();
     }
     
