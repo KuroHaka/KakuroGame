@@ -1,14 +1,32 @@
 package domini.drivers;
 
 import domini.tauler.Tauler;
-import domini.tauler.TaulerEnunciat;
+import domini.tauler.TaulerComencat;
 import presistencia.Dades;
 
-public class Driver_Tauler {
+public class Driver_TaulerComencat {
     
     public static void main(String[] args){
 
-        System.out.println("TAULER STANDARD INPUT: ");
+        System.out.println("TAULER EXEMPLE : ");
+        String ex = Dades.carregaArxiu("dades/exemple.txt");
+        TaulerComencat exemple = new TaulerComencat(ex);
+        exemple.print();
+
+        System.out.println("GETS : ");
+        System.out.println("getId() = " + exemple.getId());
+        System.out.println("getDimX() = " + exemple.getDimX());
+        System.out.println("getDimY() = " + exemple.getDimY());
+        
+        System.out.println("altres MÈTODES : ");
+        System.out.println("esNegra(2, 3) = " + exemple.esNegra(2, 3));
+        System.out.println("esBlanca(3, 0) = " + exemple.esBlanca(3, 0));
+        
+        System.out.println("FER CANVIS AL TAULER EXEMPLE : ");
+        System.out.println("setValor(2, 1, 8) = " + exemple.setValor(2, 1, 8));
+        exemple.print();
+        
+        /*System.out.println("TAULER STANDARD INPUT: ");
         Tauler t = new TaulerEnunciat(); // LLegeix el tauler per std in
         
         System.out.println("TAULER HUMAN FRIENDLY: ");
@@ -34,13 +52,6 @@ public class Driver_Tauler {
         String e1 = Dades.carregaArxiu("dades/test101.txt");
         Tauler t_exemple = new TaulerEnunciat(e1);
         t_exemple.print(); //Human friendly format
-
-        System.out.println("TAULER EXEMPLE : ");
-        String e2 = Dades.carregaArxiu("dades/exemple.txt");
-        //String exemple = Dades.carregaArxiu("dades/test101.txt");
-        Tauler t_exemple2 = new TaulerEnunciat(e2);
-        t_exemple2.print(); //Human friendly format
-
-        // FALTA CANVIS AL TAULER (Set caselles)
+        */
     }
 }
