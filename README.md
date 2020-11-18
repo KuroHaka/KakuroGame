@@ -1,5 +1,10 @@
 ### Generació de L'entrega
 
+- Requisits:
+
+ - Java JDK 11.*
+ - JUnit 4.12
+
 - Tots els `index.txt` han d'estar aa la carpeta corresponent
 
 - Tots els documents pertinents han d'estar a `ENTREGA/DOC`
