@@ -630,6 +630,7 @@ public class Algoritme {
         return true;
     }
 
+    
     //Algoritme de generació de solució única
 
     /*private CasellaBlanca seguentCasellaBlanca(Casella casella, TaulerComencat t){
