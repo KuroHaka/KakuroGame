@@ -1,6 +1,7 @@
 @echo off
 title Execucio de Drivers
 :menu
+mode con cols=60 lines=15
 cls
 echo.
 echo ==== Menu d.Execucio de drivers ====
@@ -18,6 +19,7 @@ if %choice%==2 ( SET driv=CasellaBlanca && goto exec)
 if %choice%==3 ( SET driv=CasellaNegra && goto exec)
 goto menu
 :exec
+mode con cols=100 lines=40
 cls
 echo.
 echo  Driver %driv%

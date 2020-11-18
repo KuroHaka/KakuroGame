@@ -1,4 +1,7 @@
 @echo off
+mode con cols=70 lines=20
+title Compilador
+cls
 echo.
 echo Compilador - /build
 echo.

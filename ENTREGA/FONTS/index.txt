@@ -1,0 +1,9 @@
+
+ > Compilacio_drivers.bat
+ Script BATCH per compilar automaticament els arxius necessaris per la execucio dels drivers.
+
+ > Execucio_drivers.bat
+ Scripts BATCH per executar interactivament els diferents drivers.
+
+        > Drivers inclosos:
+
