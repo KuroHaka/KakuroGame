@@ -2,7 +2,7 @@
 ## sudo apt-get install openjdk-11-jdk
 ##
 
-OUT = dist
+OUT = build
 
 entrega: compile jars
 
@@ -45,7 +45,7 @@ default: all
 all: compile jars
 
 clean:
-	rm -r dist
+	rm -r $(OUT)
 	rm Driver_tauler.jar
 	rm Driver_casella.jar
 	rm Driver_Algoritme.jar
