@@ -739,6 +739,9 @@ public class Algoritme {
     }
 
     public TaulerEnunciat generarKakuro(int rows, int cols, Integer numeroBlanques, int numeroBlanquesEstablertes) {
+        if(numeroBlanques==null){
+            numeroBlanques=(int)Math.round(0.85*(rows-1)*(cols-1));
+        }
         Casella[][] tauler = new Casella[rows][cols];
         //Negres a dalt i esquerra
         for (int r = 0; r < rows; ++r) {

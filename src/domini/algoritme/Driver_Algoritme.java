@@ -4,6 +4,7 @@ import domini.tauler.TaulerComencat;
 import domini.tauler.TaulerEnunciat;
 import presistencia.Dades;
 
+import java.nio.file.NoSuchFileException;
 import java.util.Scanner;
 
 public class Driver_Algoritme {
@@ -36,38 +37,121 @@ public class Driver_Algoritme {
                     x = sc.nextInt();
                     System.out.print("\tnumero de columnes: ");
                     y = sc.nextInt();
-                    System.out.print("\tnumero de caselles blanques (introdueix 0 si es un tauler buit): ");
-                    Integer b = sc.nextInt();
-                    TaulerEnunciat s = algoritme.generarKakuroSimple(x, y, b);
+
+                    System.out.print("\tnumero de caselles blanques totals(introdueix null si vols que sigui aleatori): ");
+                    String b = sc.next();
+                    Integer bint = b.equals("null")? null:Integer.parseInt(b);
+                    System.out.print("\tnumero de caselles blanques amb valors(introdueix 0 si es un tauler buit): ");
+                    int bq = sc.nextInt();
+                    TaulerEnunciat s = algoritme.generarKakuro(x, y, bint, bq);
                     System.out.println("Format Estandard: ");
-                    System.out.print(s.format_Estandard());
+                    System.out.println(s.format_Estandard());
                     System.out.println("Format Human friendly: ");
                     s.print();
+                    System.out.println("\nIndica el nom del fitxer del kakuro generat a guardar(introdueix null si no vols que es guardi):");
+                    String ret1 = scan.next();
+                    if(!ret1.equals("null")) {
+                        Dades.guardarArxiu(ret1, s.format_Estandard());
+                    }
                     System.out.println("FET!\n");
                     break;
                 case 2:
                     System.out.println(" -----------------------------------");
                     System.out.println(" \tResol un kakuro");
                     System.out.println(" -----------------------------------");
-                    System.out.println(" Indica el path del fitxer relatiu al .jar: ");
-                    String e2 = Dades.carregaArxiu(scan.next());
-                    TaulerEnunciat te = new TaulerEnunciat(e2);
-                    System.out.println(" El tauler llegit: ");
-                    System.out.print(te.format_Estandard());
-                    System.out.print(" El tauler resolt: ");
-                    TaulerComencat tc = algoritme.resoldreKakuro(te);
-                    System.out.print(tc.format_Estandard());
-                    te.print();
-                    System.out.println("Format Human friendly: ");
-                    tc.print();
-                    System.out.println("FET!\n");
+                    System.out.println("1- resol kakuro i genera.out");
+                    System.out.println("2- resol kakuro i comprova amb un altre fitxer solució");
+                    int opt2 = scan.nextInt();
+                    switch(opt2)
+                    {
+                        case 1:
+                            System.out.println("Indica el path del fitxer relatiu al .jar: ");
+                            String e2 = null;
+                            while(true){
+                                String aux = scan.next();
+                                try {
+                                    e2 = Dades.carregaArxiu(aux);
+                                    break;
+                                }
+                                catch(NoSuchFileException e){
+                                    System.out.println("Arxiu o path no existeix, torna-ho a introduir: ");
+                                }
+                            }
+                            TaulerEnunciat te = new TaulerEnunciat(e2);
+                            System.out.println(" El tauler llegit: ");
+                            System.out.println(te.format_Estandard());
+                            System.out.print(" El tauler resolt: ");
+                            TaulerComencat tc = algoritme.resoldreKakuro(te);
+                            System.out.print(tc.format_Estandard());
+                            te.print();
+                            System.out.println("Format Human friendly: ");
+                            tc.print();
+                            System.out.println("\nIndica el nom del arxiu solucio a guardar(introdueix null si no vols que es guardi):");
+                            String ret = scan.next();
+                            if(!ret.equals("null")) {
+                                Dades.guardarArxiu(ret, tc.format_Estandard());
+                            }
+                            System.out.println("FET!\n");
+                            break;
+                        case 2 :
+                            System.out.println(" Indica el path del fitxer relatiu al .jar: ");
+                            String e22 = null;
+                            while(true){
+                                String aux = scan.next();
+                                try {
+                                    e22 = Dades.carregaArxiu(aux);
+                                    break;
+                                }
+                                catch(NoSuchFileException e){
+                                    System.out.println("Arxiu o path no existeix, torna-ho a introduir: ");
+                                }
+                            }
+                            System.out.println(" Indica el path del fitxer relatiu al .jar a comparar: ");
+                            String s2 = null;
+                            while(true){
+                                String aux = scan.next();
+                                try {
+                                    s2 = Dades.carregaArxiu(aux);
+                                    break;
+                                }
+                                catch(NoSuchFileException e){
+                                    System.out.println("Arxiu o path no existeix, torna-ho a introduir: ");
+                                }
+                            }
+                            TaulerEnunciat te2 = new TaulerEnunciat(e22);
+                            TaulerComencat tes2 = new TaulerComencat(s2);
+                            System.out.println(" El tauler llegit: ");
+                            System.out.println(te2.format_Estandard());
+                            System.out.println(" El tauler resolt: ");
+                            TaulerComencat tc2 = algoritme.resoldreKakuro(te2);
+                            System.out.println(tc2.format_Estandard());
+                            System.out.println(" El tauler a comparar: ");
+                            System.out.println(tes2.format_Estandard());
+                            if(tc2.format_Estandard().equals(tes2.format_Estandard()))
+                                System.out.println(" SON IGUALS!");
+                            else
+                                System.out.println(" SON DIFERENTS");
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 case 3:
                     System.out.println(" -----------------------------------");
                     System.out.println(" \tValida format d'un kakuro");
                     System.out.println(" -----------------------------------");
-                    System.out.println(" Indica el path del fitxer del tauler relatiu al .jar: ");
-                    String e3 = Dades.carregaArxiu(scan.next());
+                    System.out.println(" Indica el path del fitxer relatiu al .jar: ");
+                    String e3 = null;
+                    while(true){
+                        String aux = scan.next();
+                        try {
+                            e3 = Dades.carregaArxiu(aux);
+                            break;
+                        }
+                        catch(NoSuchFileException e){
+                            System.out.println("Arxiu o path no existeix, torna-ho a introduir: ");
+                        }
+                    }
                     TaulerEnunciat te3 = new TaulerEnunciat(e3);
                     if(algoritme.validaFormat(te3))
                         System.out.println("FORMAT CORRECTE!");
@@ -78,8 +162,18 @@ public class Driver_Algoritme {
                     System.out.println(" -----------------------------------");
                     System.out.println(" \tValida solucio d'un kakuro");
                     System.out.println(" -----------------------------------");
-                    System.out.println(" Indica el path del fitxer del tauler relatiu al .jar: ");
-                    String e4 = Dades.carregaArxiu(scan.next());
+                    System.out.println(" Indica el path del fitxer relatiu al .jar: ");
+                    String e4=null;
+                    while(true){
+                        String aux = scan.next();
+                        try {
+                            e4 = Dades.carregaArxiu(aux);
+                            break;
+                        }
+                        catch(NoSuchFileException e){
+                            System.out.println("Arxiu o path no existeix, torna-ho a introduir: ");
+                        }
+                    }
                     TaulerComencat tc4 = new TaulerComencat(e4);
                     if(algoritme.validaSolucio(tc4))
                         System.out.println("SOLUCIO CORRECTA!");
