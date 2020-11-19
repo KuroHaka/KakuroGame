@@ -2,8 +2,11 @@
 ## sudo apt-get install openjdk-11-jdk
 ##
 
+OUT = dist
+
+entrega: compile jars
+
 ###################### COMPILACIO .java -> .class ################
-OUT = dist# build
 
 JAVAS = \
         src/domini/tauler/*.java \
@@ -22,30 +25,32 @@ compile: $(CLASSES)
 ###################### EXECUTABLES .class -> .jar ################
 
 COMPILATS = \
-        $(OUT)/domini/tauler/*.class \
-        $(OUT)/domini/tauler/casella/*.class \
-        $(OUT)/domini/algoritme/*.class \
-        $(OUT)/interficie/testing/Mock_Presentacio_stdio.class
+        domini/tauler/*.class \
+        domini/tauler/casella/*.class \
+        domini/algoritme/*.class \
+	presistencia/Dades.class \
 
-DRIVERS = \
-        $(OUT)/domini/tauler/Driver_tauler.class \
-        $(OUT)/domini/tauler/casella/Driver_casella.class \
-        $(OUT)/domini/algoritme/*.class
+jars: compile
+	cd $(OUT); \
+	jar cvfe ../Driver_tauler.jar domini.tauler.Driver_tauler $(COMPILATS)
+	cd $(OUT); \
+	jar cvfe ../Driver_casella.jar domini.tauler.casella.Driver_casella $(COMPILATS)
+	cd $(OUT); \
+	jar cvfe ../Driver_Algoritme.jar domini.algoritme.Driver_Algoritme $(COMPILATS)
 
-JARS = $(DRIVERS:.class=.jar)
+###################### DEFAULTS I ALTRES ########################
 
-.SUFFIXES: .class .jar
-.class.jar:
-	jar cvfe $*.jar %class% $(CLASSES)
+default: all
 
-jars: $(JARS)
-
-test: compile
-	java -Djava.io.tmpdir=/tmp
-	jar cvfe jars/Driver_casella.jar $(COMPILATS)
-	java -Djava.io.tmpdir=/tmp
-
-default: compile jars
+all: compile jars
 
 clean:
 	rm -r dist
+	rm Driver_tauler.jar
+	rm Driver_casella.jar
+	rm Driver_Algoritme.jar
+
+
+
+
+
