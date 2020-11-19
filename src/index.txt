@@ -1,1 +1,29 @@
-TODO
+-DOMINI
+    -algoritme
+        -Algoritme:
+        -Combinacions:
+    -drivers
+        -
+        -
+        -
+    -launcher
+        -Joc:
+        -Main:
+    -ranking
+        -Ranking:
+        -RankingEntry:
+    -repositori
+        -Repositori:
+    -tauler
+        -Casella
+            -Casella:
+            -CasellaBlanca:
+            -CasellaNegra:
+    -usuari
+        -Configuracio:
+        -Usuari:
+-INTERFICIE.TESTING
+    -inout:
+    -Mock_Presentacio_stdio:
+-PERSISTENCIA
+    -Dades:
