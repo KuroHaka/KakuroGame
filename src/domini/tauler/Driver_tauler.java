@@ -28,6 +28,7 @@ public class Driver_tauler {
                 while (scan.hasNext()) {
                     a=a+scan.next();
                 }
+
                 System.out.println(a);
                     /*
                     System.out.println(" Indica les dimensions del tauler:");
