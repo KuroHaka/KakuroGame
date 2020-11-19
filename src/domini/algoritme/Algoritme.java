@@ -29,7 +29,6 @@ public class Algoritme {
         return resoldreKakuro(t, compteCasellesBlanques(t)-1, casellaBlanca);
     }
 
-
     private TaulerComencat resoldreKakuro(TaulerComencat t, int blanquesRestant, CasellaBlanca casellarecent){
         Set<Integer> horit = getPossiblesValors(casellarecent, Direccio.HORITZONTAL, t);
         if(horit!=null){
