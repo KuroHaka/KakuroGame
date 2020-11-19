@@ -17,6 +17,7 @@ public class Driver_validarSolucio {
         boolean validesa = algoritme.validaSolucio(tauler);
         if (validesa) System.out.println(nom + ": ha passat el test, és vàlid...");
         else System.out.println(nom + ": no ha passat el test, no és vàlid...");
+        System.out.println();
     }
     
     private static String input() {
@@ -28,18 +29,21 @@ public class Driver_validarSolucio {
         ///////////////////////////////////////
         
         Scanner scan = new Scanner(System.in);
-        //System.out.println(" 1- Entrada tauler per directori");
-        //System.out.println(" Indica el path relatiu al .jar: ");
         ret = scan.next();
-        //String e2 = Dades.carregaArxiu(path);
         
         return ret;
     }
     
     public static void main(String[] args) {
-        System.out.println("TEST VALIDADOR DE SOLUCIONS DE KAKUROS: ");
-        System.out.println("Afegeix el nom d'un arxiu per a comprovar:");
-        String in = input();
-        test(in);
+        boolean fiBucle = false;
+        while (!fiBucle) {
+            System.out.println("TEST VALIDADOR DE SOLUCIONS DE KAKUROS: ");
+            System.out.println("Posa el nom de l'arxiu o surt prement \"p\":");
+            String in = input();
+            if (in.equals("p")) {
+                fiBucle = true;
+            }
+            else test(in);
+        }
     }
 }
