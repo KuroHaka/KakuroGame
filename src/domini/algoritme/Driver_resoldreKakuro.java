@@ -2,6 +2,7 @@ package domini.algoritme;
 
 import domini.tauler.TaulerComencat;
 import domini.tauler.TaulerEnunciat;
+import java.util.Scanner;
 import presistencia.Dades;
 
 public class Driver_resoldreKakuro {
@@ -31,6 +32,7 @@ public class Driver_resoldreKakuro {
             System.out.println(enu + ": ha passat el test, és vàlid!!!");
         }
         else System.out.println(enu + ": no ha passat el test, no és vàlid...");
+        System.out.println();
     }
     
     private static String input() {
@@ -41,6 +43,9 @@ public class Driver_resoldreKakuro {
         // AFEGIR CODI PER A LLEGIR INPUT!!! //
         ///////////////////////////////////////
         
+        Scanner scan = new Scanner(System.in);
+        ret = scan.next();
+        
         return ret;
     }
     
@@ -48,14 +53,29 @@ public class Driver_resoldreKakuro {
         ///// S'HA DE FER LA FUNCIÓ INPUT /////
         ///// AQUESTA S'HAURÀ DE BORRAR I FER UN ALTRE COP INPUT /////
         String ret = "resoldreKakuro001.out";
+        
+        Scanner scan = new Scanner(System.in);
+        ret = scan.next();
+        
         return ret;
     }
     
     public static void main(String[] args) {
-        System.out.println("TEST RESOLDRE KAKUROS: ");
         
-        String in = input();
-        String out = output();
-        test(in, out);
+        boolean fiBucle = false;
+        while (!fiBucle) {
+            System.out.println("TEST RESOLDRE KAKUROS: ");
+            System.out.println("Posa el nom de l'arxiu\".in\" o surt prement \"p\":");
+            System.out.println("ASSUMIREM QUE EL \".OUT\" TÉ EL MATEIX NOM QUE EL \".IN\"");
+            String in = input();
+            if (in.equals("p")) {
+                fiBucle = true;
+            }
+            else {
+                String out = in.substring(0, in.length()-2);
+                out = out + "out";
+                test(in,out);
+            }
+        }
     }
 }
