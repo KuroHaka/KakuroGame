@@ -1,0 +1,5 @@
+És el source del codi (tot el codi sense compilar).
+	La carpeta domini conté totes les classes.
+	La carpeta interficie conté el codi que comunica entre la interfície i l'usuari.
+	La carpeta presistencia conté el codi per guardar i carregar arxius.
+	
