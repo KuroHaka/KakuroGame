@@ -7,5 +7,5 @@ A cada test s'hi associen uns arxius (cadascun al seu directori):
 		* Mirar: validaSolucio.txt
 	- Per a resoldre un Kakuro: resolXXX.in, resolXXX.out
 		* Mirar: resoldreKakuro.txt
-	- Per a generar un Kakuro no veiem adequat fer testos.
+	- Per a generar un Kakuro no veiem adequat fer jocs de proves.
 
