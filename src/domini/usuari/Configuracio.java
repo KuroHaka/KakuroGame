@@ -56,7 +56,7 @@ public class Configuracio {
     
     public void print() {
         System.out.println("Numero Blanques: " + this.numeroBlanques);
-        System.out.println("Dimensió X: " + this.dimX + " , Dimensió Y : " + this.dimY);
+        System.out.println("Dimensio X: " + this.dimX + " , Dimensio Y : " + this.dimY);
         System.out.println("Dificultat: " + this.dif);
     }
     

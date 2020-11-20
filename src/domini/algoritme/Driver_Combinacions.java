@@ -51,7 +51,7 @@ public class Driver_Combinacions {
                     System.out.print("Introdueix el numero de caselles blanques: ");
                     b = sc.nextInt();
                     if(combinacions.getCombinacios(n,b)==null)
-                        System.out.println("\nNo existeix cap combinació per aquets valors introduits"+"\n");
+                        System.out.println("\nNo existeix cap combinacio per aquets valors introduits"+"\n");
                     else
                         System.out.println(combinacions.getCombinacios(n,b)+"\n");
                     break;

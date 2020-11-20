@@ -493,7 +493,7 @@ public class Algoritme {
         
         //Check de la primera casella negra, la (0,0)
         if (te.getCasella(0,0).getClass() != CasellaNegra.class){
-            System.out.println("Incorrecte: La primera casella (0,0) no és negra.");
+            System.out.println("Incorrecte: La primera casella (0,0) no es negra.");
                 return false;
         }
         if (((CasellaNegra)te.getCasella(0,0)).getColumna() != null || ((CasellaNegra)te.getCasella(0,0)).getFila() != null){
@@ -504,22 +504,22 @@ public class Algoritme {
         //Check negres a dalt i esquerra // No poden tenir valor de columna
         for(int r = 0; r < rows; ++r){
             if (te.getCasella(0,r).getClass() != CasellaNegra.class){
-                System.out.println("Incorrecte: Columna inicial (col=0) no és tota negra.");
+                System.out.println("Incorrecte: Columna inicial (col=0) no es tota negra.");
                 return false;
             }
             if (((CasellaNegra)te.getCasella(0,r)).getColumna() != null){
-            System.out.println("Incorrecte: La casella (0,"+r+") no pot tenir valor de columna: Està a la primera columna!");
+            System.out.println("Incorrecte: La casella (0,"+r+") no pot tenir valor de columna: Esta a la primera columna!");
                 return false;
             }
         }
         
         for(int c = 0; c < cols; ++c){ // No poden tenir valor de fila
             if (te.getCasella(c,0).getClass() != CasellaNegra.class){
-                System.out.println("Incorrecte: Fila inicial (row=0) no és tota negra.");
+                System.out.println("Incorrecte: Fila inicial (row=0) no es tota negra.");
                 return false;
             }
             if (((CasellaNegra)te.getCasella(c,0)).getFila() != null){
-            System.out.println("Incorrecte: La casella ("+c+",0) no pot tenir valor de fila: Està a la primera fila!");
+            System.out.println("Incorrecte: La casella ("+c+",0) no pot tenir valor de fila: Esta a la primera fila!");
                 return false;
             }
         }
@@ -533,22 +533,22 @@ public class Algoritme {
                     //if (acum_fila > 0){
                         Integer valor_fila = ((CasellaNegra)te.getCasella(c,r)).getFila();
                         if (N == 0 && valor_fila!=null){ 
-                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") hi ha valor de fila="+valor_fila+" però no té caselles blanques a la dreta.");
+                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") hi ha valor de fila="+valor_fila+" pero no te caselles blanques a la dreta.");
                             return false;
                         }
                         if (N != 0 && valor_fila==null){
-                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") no hi ha valor de fila però té "+N+" caselles blanques a la dreta.");
+                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") no hi ha valor de fila pero te "+N+" caselles blanques a la dreta.");
                             return false;
                         }
                         N = N - ja_plenes;
                         if (N != 0 && (N*N + N)/2 + acum_fila > valor_fila){
                             int valor_fila_min = (N*N + N)/2 + acum_fila;
-                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") el valor de fila mínim és "+valor_fila_min+".");
+                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") el valor de fila minim es "+valor_fila_min+".");
                             return false;
                         }
                         if(N != 0 && valor_fila > 9*N - (N*N - N)/2 + acum_fila){
                             int valor_fila_max = 9*N - (N*N - N)/2 + acum_fila;
-                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") el valor de fila màxim és "+valor_fila_max+".");
+                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") el valor de fila maxim es "+valor_fila_max+".");
                             return false;
                         }
                         //if (acum_fila == 0 && v!=null) return false;
@@ -576,22 +576,22 @@ public class Algoritme {
                     //if (acum_col > 0){
                         Integer valor_col = ((CasellaNegra)te.getCasella(c,r)).getColumna();
                         if (N == 0 && valor_col!=null){ 
-                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") hi ha valor de columna="+valor_col+" però no té caselles blanques a sota.");
+                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") hi ha valor de columna="+valor_col+" pero no te caselles blanques a sota.");
                             return false;
                         }
                         if (N != 0 && valor_col==null){
-                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") no hi ha valor de columna però té "+N+" caselles blanques a sota.");
+                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") no hi ha valor de columna pero te "+N+" caselles blanques a sota.");
                             return false;
                         }
                         N = N - ja_plenes;
                         if (N != 0 && (N*N + N)/2 + acum_col > valor_col){
                             int valor_col_min = (N*N + N)/2 + acum_col;
-                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") el valor de columna mínim és "+valor_col_min+".");
+                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") el valor de columna minim es "+valor_col_min+".");
                             return false;
                         }
                         if(N != 0 && valor_col > 9*N - (N*N - N)/2 + acum_col){
                             int valor_col_max = 9*N - (N*N - N)/2 + acum_col;
-                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") el valor de columna màxim és "+valor_col_max+".");
+                            System.out.println("Incorrecte: Casella negra (row="+r+",col="+c+") el valor de columna maxim es "+valor_col_max+".");
                             return false;
                         }
                         acum_col = 0;

@@ -1,5 +1,5 @@
 Directori algoritme on hi ha els possibles algorismes a emprar.
-	Algoritme: Classe on conté els algoritmes de resoldre i generar kakuros
+	Algoritme: Classe on conte els algoritmes de resoldre i generar kakuros
 	Combinacions: Classe auxiliar on guarda totes les possibles combinacions de resultats.
 	Driver: Driver on s'executen les proves per corroborar la seva correctitud.
 	

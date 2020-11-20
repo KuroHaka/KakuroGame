@@ -60,7 +60,7 @@ public class Driver_Algoritme {
                     System.out.println(" \tResol un kakuro");
                     System.out.println(" -----------------------------------");
                     System.out.println("1- resol kakuro i genera.out");
-                    System.out.println("2- resol kakuro i comprova amb un altre fitxer solució");
+                    System.out.println("2- resol kakuro i comprova amb un altre fitxer solucio");
                     int opt2 = scan.nextInt();
                     switch(opt2)
                     {
