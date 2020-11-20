@@ -1,0 +1,63 @@
+
+
+
+###########################
+GENERADOR DE KAKUROS:
+###########################
+La millora que podriem implementar al generador seria una crida a resoldreKakuro quan ja 
+tenim el TaulerEnunciat final per a que el solucionador(amb unes petites modificacions 
+respecte a la seva implementació actual) ens determini si hi ha més d'una solució possible 
+encara que per disseny, en principi no hauria de passar. 
+
+Aquestes modificacions que s'haurien de realitzar al solucionador es resumeixen en fer que no 
+s’aturi quan troba una solució, sino que s’incrementi en 1 una variable auxiliar i fer el 
+backtracking sencer. Un cop executat aquest solucionador, si el valor de la variable es 1, 
+tan sols tenim una solució possible. Aquesta modificació ens garantiria la solució única al 
+TaulerEnunciat però per les característiques que té l’algortime generador, la solució única 
+hauria d’estar garantida de totes formes.
+
+A partir de la dimensió 15x15, el generador comença a fallar degut a certs problemes de memoria. 
+Una millora que hem de fer és arreglar aquest problema que té, per tal de poder generar kakuros 
+més grans.
+
+
+
+###########################
+SOLUCIONADOR DE KAKUROS:
+###########################
+El solucionador va bastant bé, però a partir de certes mides (cap al 20x20), comença a trigar 
+per a poder resoldre. Les possibles millores a fer són principalment més optimitzacions, el 
+nostre algoritme ja prova amb combinacions de manera inteligents, pero no prioritza primer 
+les caselles més fàcils de resoldre, creiem que si fem un assignació de prioritat a cada 
+casella abans de fer el backtracking, el nostre algoritme podria arribar a resoldre kakuros 
+de encara major dificultat i en un temps menor
+
+Hem pensat també que es podría aplicar una nova funcionalitat modificant una mica el codi, 
+perquè pugui trobar totes les solucions en cas de que el tauler a resoldre no sigui de solució única.
+
+
+
+###########################
+VALIDADOR DE FORMAT:
+###########################
+Es podria afegir més comprovacions:
+Que es comprovi que les dimensions que s’indiquen realment siguin les del tauler
+Que comprovi que en cas de que hi hagi valors ja establerts de caselles blanques, que aquests 
+d’un tros de fila o columna delimitat per dos caselles negres no estiguin repetits: és a dir, 
+valors únics.
+
+
+
+###########################
+VALIDADOR DE SOLUCIÓ:
+###########################
+S’hauria d’afegir la següent comprovació:
+Detectar que en un tros de fila o columna delimitat per dos caselles negres hi ha un valor 
+repetit. Tot i que el solver això no ho farà mai, podria ser que quan es validin kakuros 
+externs, això sí que passi.
+Que comprovi que els números de les caselles blanques estiguin entre 1 i 9. De nou, el solver 
+no ho fa, però es pot donar el cas en kakuros externs.
+
+
+
+

@@ -1,0 +1,240 @@
+Descripció de casos d’ús
+########################
+
+
+NOM: Crea nou usuari
+#####################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari informa del nom d’usuari i la contrasenya (dos cops)
+	2- El sistema valida les dades i genera l’usuari i l’inicia a la seva sessió
+ERRORS:
+	1- Nom d'usuari ja existent
+	2- Les dues contrasenyes difereixen
+CURSOS ALTERNATIUS:
+	1- Informa de l’error i demana introduir de nou el nom d’usuari diferent
+	2- Informa de l’error i demana introduir de nou les contrasenyes
+
+
+
+NOM: Iniciar sessió
+####################
+ACTOR: Usuari
+COMPORTAMENT: 
+	1- L’usuari informa del nom d’usuari i la contrasenya
+	2- El sistema valida les credencials i inicia la sessió de l’usuari
+ERRORS:
+	1- La contrasenya no correspon a usuari.
+	2- L’usuari no existeix.
+CURSOS ALTERNATIUS:
+	1 i 2: Informa de l’error i demana tornar a omplir els formularis
+
+
+
+NOM: Tancar sessió
+###################
+ACTOR: Usuari
+COMPORTAMENT: 
+	1- L'usuari d’una sessió iniciada decideix tancar la sessió.
+	2- El sistema tanca la sessió de l’usuari
+
+
+
+NOM: Canviar consenya
+######################
+ACTOR: Usuari
+COMPORTAMENT: 
+	1- L’usuari informa de l’antiga i la nova contrasenya
+	2- El sistema valida la contrasenya antiga i la substitueix per la nova
+ERRORS: 
+	1- La contrasenya antiga és invàlida
+	2- La nova contrasenya no compleix els requisits de contrasenya
+CURSOS ALTERNATIUS:
+	1- Informa de l’error i torna a demanar l’antiga contrasenya
+	2- Informa de l’error i de nou la contrasenya
+
+
+
+NOM: Re-definir configuració per defecte
+#########################################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- El sistema mostra la configuració de joc per defecte
+	2- L’usuari indica els paràmetres a modificar
+	3- El sistema guarda els paràmetres a la nova configuració per defecte
+ERRORS: 
+	1- Els paràmetres són invàlids, no compleixen els requisits
+CURSOS ALTERNATIUS: 
+	1- Informa de l’error i es demana corregir els paràmetres pertinents
+
+
+
+NOM: Configurar partida 
+########################
+ACLARACIÓ:
+Una partida és un determinat tauler començat, amb el seu temporitzador, i un usuari propietari.
+ACTOR: Usuari
+COMPORTAMENT:
+	1- El sistema deixa 4 modes de dificultats per escollir: principiant, intermig, 
+		expert i personalitzat.
+	2- Si l’usuari escull personalitzat, el sistema mostra una llista de paràmetres 
+		que configuraran la partida a començar i mostra la configuració per defecte de 
+		l’usuari.
+	3- L’usuari pot canviar els valors proposat per defecte si escau.
+	4- El sistema genera la partida amb els valors i inicia el joc interactiu
+ERRORS: 
+	3- Els paràmetres són invàlids, no compleixen els requisits
+CURSOS ALTERNATIUS: 
+	3- Informa de l’error i es demana corregir els paràmetres pertinents
+
+
+
+NOM: Generar partida
+######################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari dona la configuració de la partida
+	2- El sistema genera un kakuro amb les característiques demanades
+
+
+
+NOM: Carregar enunciat repositori
+##################################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari identifica un enunciat d’un kakuro del repositori
+	2- El sistema carrega l’enunciat i obre el joc interactiu
+ERRORS:
+	1- L’enunciat identifiat no existeix
+CURSOS ALTERNATIUS:
+	1- Informa de l’error i demana de nou identificar l’enunciat del kakuro
+
+
+
+NOM: Jugar interactiu
+######################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari informa d’una partida ja començada o un enunciat d’un kakuro
+	2- El sistema proporciona l’entorn de joc interactiu de l’usuari
+ERRORS: 
+	1- La partida o enunciat proporcionat no té un format vàlid o és incorrecte
+CURSOS ALTERNATIUS:
+	1- Informa de l’error a l’usuari i es demana un altre kakuro
+
+
+
+NOM: Pausar partida
+#####################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari demana parar la partida del joc interactiu
+	2- El sistema pausa el temps i amaga la partida, i no admet jugades
+	3- El sistema també ensenya l’opció de reanudar la partida
+
+
+
+NOM: Reanudar partida
+#######################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- La partida del joc interactiu estava aturada
+	2- El sistema mostra de nou el tauler i activa el contador i admet jugades
+
+
+
+NOM: Guardar partida
+#####################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari que està jugant interactivament demana guardar la partida actual
+	2- El sistema emmagatzema les dades sobreescrivint la possibles dades antigues.
+	3- Retorna a l’usuari al joc interactiu
+ERRORS:
+	1- No hi ha hagut cap canvi en el fitxer o la partida
+CURSOS ALTERNATIUS: 
+	1- Simplement s’informa de que no hi ha hagut cap canvi
+
+
+
+NOM: Tancar partida
+####################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari que està jugant interactivament demana tancar la partida actual
+	2- El sistema mostra a l’usuari l’opció de guardar la partida
+	3- El sistema tanca la partida
+
+
+
+NOM: mostra solució
+####################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari demana que es mostri la solució de l’enunciat
+	2- El sistema calcula la solució de l’enunciat
+	3- El sistema mostra la solució de l’enunciat
+
+
+
+NOM: mostra ajuda
+###################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari demana ajut per resoldre el kakuro
+	2- El sistema omple una casella blanca buida sense valor amb el seu valor correcte
+ERRORS:
+	1- Totes les caselles blanques tenen un valor assignat
+CURSOS ALTERNATIUS:
+	1- S’indica mitjançant un missatge que totes les caselles blanques estan ocupades
+
+
+
+NOM: Veure kakuros repositori
+##############################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari demana veure els kakuros emmagatzemats al repositori
+	2- El sistema mostra tots els kakuros emmagatzemats al repositori a l’usuari
+ERRORS:
+	1- El repositori està buit
+CURSOS ALTERNATIUS:
+	1- S’indica a l’usuari que el repositori està buit
+
+
+
+NOM: Veure els meus kakuros
+############################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari demana veure els kakuros emmagatzemats al repositori que van ser
+	guardats per ell mateix
+	2- El sistema mostra a l’usuari els kakuros emmagatzemats al repositori que van ser 
+		sotmesos pel mateix usuari
+ERRORS:
+	1- L’usuari no ha sotmès encara cap kakuro al repositori
+CURSOS ALTERNATIUS:
+	1- S’indica a l’usuari que no hi ha al repositori cap kakuro seu
+
+
+
+NOM: Validar enunciat proposat
+###############################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- L’usuari indica al sistema un enunciat i demana que es validi la seva validesa
+	2- El sistema intenta resoldre el kakuro per esbrinar si aquest és vàlid
+	3- El sistema indica a l’usuari el resultat de la validació
+
+
+
+NOM: Resoldre enunciat
+#######################
+ACTOR: Usuari
+COMPORTAMENT:
+	1- El sistema resol un kakuro donat
+ERRORS:
+	1- El kakuro no és vàlid perquè no es pot resoldre
+CURSOS ALTERNATIUS:
+	1- El sistema indica aquesta circumstància a l’usuari
+

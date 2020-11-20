@@ -8,5 +8,5 @@ corresponent joc de proves de validaSolucio.
 005: És un tauler (correcte) amb una casella negra intermitja, test = true.
 006: És un tauler amb una casella buïda, test = false.
 
-007: És un tauler correctament resolt de mida gran, test = true.
-008: És un tauler correctament resolt de mida mooolt gran, test = true.
+007: És un tauler correctament resolt de mida gran (test computacional), test = true.
+008: És un tauler correctament resolt de mida mooolt gran (test computacional), test = true.

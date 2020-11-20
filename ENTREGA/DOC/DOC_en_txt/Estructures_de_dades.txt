@@ -1,0 +1,49 @@
+
+
+	Estructures de dades 
+
+
+Tauler:
+########
+Cada Tauler representa un Kakuro. La informació que contindrà seran les seves respectives dimensions 
+en X i Y representades amb dos integers, el seu identificador únic (en format hash guardat a una String) 
+i una matriu de Caselles del tipus Casella[][] que emmagetzamerà totes les caselles del Kakuro que Tauler 
+representarà.
+
+
+TaulerEnunciat:
+################
+TaulerEnunciat serà una herència de Tauler (contindrà la mateixa informació que Tauler) però serà un cas 
+particular de Kakuro ja que representarà el Kakuro que es mostrarà com a enunciat en la Partida a l’Usuari. 
+A més, al ser un enunciat, podrà ser emmagatzemat al Repositori.
+
+
+TaulerComencat:
+################
+TaulerComencat serà també una herència de Tauler, és a dir, també contindrà la mateixa informació que Tauler 
+però en aquest cas representarà un Kakuro que no serà utilitzat com a enunciat i, per tant, no podrà ser 
+emmagatzemat al Repositori. Per exemple, a cada Partida el kakuro que l’Usuari hagi modificat respecte al 
+de l’enunciat serà un TaulerComencat.
+
+
+Casella:
+#########
+Casella serà o de tipus CasellaBlanca o CasellaNegra, però independentment del tipus que sigui contindrà 
+dos integers que representaran la seva posició X i la seva posició Y dins de la matriu de Caselles del 
+Tauler al que pertanyi.
+
+
+CasellaBlanca:
+###############
+En cas de ser de tipus blanca, addicionalment té un integer que definirà quin valor té la CasellaBlanca 
+( o serà = null si no en té cap valor).
+
+
+CasellaNegra:
+##############
+En cas de ser de tipus negra, addicionalment contindrà dos integers que definiran quins valors tenen la 
+suma de la seva fila o la seva columna, és a dir, quin és el valor de la suma dels valors de totes les 
+caselles blanques que estan seguides a la dreta de la seva fila o a baix de la seva columna (fins trobar-nos 
+amb una hipotètica següent casellaNegra). 
+
+

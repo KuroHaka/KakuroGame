@@ -1,0 +1,30 @@
+
+domini
+  |- Algoritme         - (entre tots)
+  |   |- generador     - Cristian
+  |   |- solver        - Eugeni
+  |   |- validaSolucio - Marc Bofill
+  |   |- validaFormat  - Marc Bofill
+  |- Driver_Algoritme  - Xavier Girbau i Eugeni
+  |- Combinacions      - Eugeni
+  |- Driver_Combinacions  - Eugeni
+  |- Tauler	       - Marc Bofill
+  |   |- TaulerComençat
+  |   |- TaulerEnunciat
+  |- Driver_Tauler     - Eugeni
+  |- JUnitTest_Tauler  - Xavier Girbau
+  |- Casella	       - Eugeni i Marc Bofill
+  |   |- CasellaBlanca
+  |   |- CasellaNegra
+  |- Driver_Casella    - Eugeni
+
+interficie
+  |- stdio	       - Marc Bofill
+
+persistencia
+  |- Dades	       - Marc Bofill
+
+jocs de proves         - Xavier Girbau
+  |- resoldreKakuro
+  |- validaFormat
+  |- validaSolucio
