@@ -1,32 +1,45 @@
-DESCRIPCIÓ DE CLASSES
+
+
+	DESCRIPCIÓ DE CLASSES
 
 
 Nom de la classe: Joc
-###########################
+#############################
 descripció de la classe: classe mare del projecte de la qual neixen tots els processos i classes 
 Cardinalitat: un únic Joc
+Descripció dels atributs:
 Descripció de les relacions: 
 	Relació d’associació amb la classe “Usuari”: relaciona la classe “Joc” amb tots els Usuaris creats
 	Relació d'associació amb la classe “Repositori”: relaciona la classe “Joc” amb el repositori de Taulers Enunciat.
 	Relació d'associació amb la classe “Rànking”: relaciona la classe “Joc” amb el Rànking
 
-
 Nom de la classe: Algoritme
-###########################
+#############################
 descripció de la classe: classe on conte els algoritmes principals del nostre programa
-Cardinalitat: un únic
+Cardinalitat: un únic Algoritme
 Descripció dels atributs:
 Descripció dels métodes:
-	genraKakuro()
-	resoldreKakuro()
-	validaKakuro()
-	validaFormat()
+	generaKakuro(): Donat nombre de files, nombre de columnes, número de caselles blanques i número de caselles amb valors, retorna un TaulerEnunciat.
+	resoldreKakuro(): Donat un TaulerEnunciat, retorna un TaulerComencat ja resolt.
+	validaKakuro(): Donat un TaulerComencat diu si té la solució correcta.
+	validaFormat(): Donat un TaulerEnunciat verifica si té el format correcte.
 Descripció de les relacions: 
 	Relació amb la classe “Partida”: Genera, resol i valida els kakuros d’una partida.
-	Relació amb la classe “Combinacions”: Retorna les conbinacions pel backtraking del solucionador i les solucions úniques del generador
+	Relació amb la classe “Combinacions”: Retorna les combinacions pel backtracking del solucionador i les solucions úniques del generador.
+
+Nom de la classe: Combinacions
+###############################
+descripció de la classe: classe on conté totes les combinacions del Algoritme
+Cardinalitat: un únic Combinacions
+Descripció dels atributs:
+Descripció dels mètodes:
+	getCombinacions(): Donat un nombre de suma i el número de digits, retorna totes les combinacions possibles.
+Descripció de les relacions: 
+	Relació amb la classe “Algoritme”: Proporciona les combinacions per fer funcionar els algoritmes
+
 
 Nom de la classe: Usuari
-###########################
+#############################
 descripció de la classe: Representa un Usuari que té accés al Joc
 Cardinalitat: una per cada Usuari creat 
 Descripció dels atributs: 
@@ -40,15 +53,16 @@ Descripció de les relacions:
 	Relació d’associació amb la classe “RegistreAlRànking”: indica quines entrades del Rànking han sigut fetes per l’Usuari
 
 Nom de la classe: Repostori
-###########################
+#############################
 descripció de la classe: Repositori que emmagatzema Taulers enunciats que tenen entrades al rànking
 Cardinalitat: Un únic repositori
+Descripció dels atributs:
 Descripció de les relacions: 
 	Relació d’associació amb la classe “TaulerEnunciat”: indica quins Taulers enunciats estan guardats al repositori
 	Relació amb la classe “Joc”
 
 Nom de la classe: Partida
-###########################
+#############################
 descripció de la classe: Una partida és un determinat tauler començat, amb el seu temporitzador, i un usuari propietari. És la partida que està realitzant un usuari a partir d’un tauler enunciat i un tauler que està modificant.
 Cardinalitat: Tantes partides com els usuaris vulguin jugar (infinites).
 Descripció dels atributs:
@@ -59,9 +73,10 @@ Descripció de les relacions:
 	Relació d’associació amb la classe “Usuari”: indica quin Usuari està jugant la partida.
 	Relació d’associació amb la classe “TaulerEnunciat”: indica quin és el Tauler que actua com l'enunciat que l’usuari ha de resoldre.
 	Relació d’associació amb la classe “TaulerComençat”: indica l’estat del Tauler que l’Usuari està modificant.
+	Relació d’associació amb la classe “Algoritme”: proporciona els algoritmes per generar, resoldre i validar kakuros.
 
 Nom de la classe: Configuració
-###############################
+################################
 descripció de la classe: Representa la configuració d’un Tauler
 Cardinalitat: Tantes configuracions com partides com a màxim i tantes com usuaris com a mínim
 Descripció dels atributs:
@@ -73,16 +88,17 @@ Descripció de les relacions:
 	Relació d’associació amb la classe “Usuari”: cada Usuari tindrà una configuració per defecte
 
 Nom de la classe: Rànking
-#########################
+###########################
 descripció de la classe: Guarda els RegistreAlRànking i els ordena per temps en funció de diferentes variables com la dificultat, etc.
 Cardinalitat: Un únic Rànking
+Descripció dels atributs:
 Descripció de les relacions: 
 	Relació d’associació amb la classe “Joc”: relaciona el Rànking amb la classe general Joc
 	Relació amb la classe RegistreAlRànking: el Rànking està composat per diferents RegistreAlRànking.
 
 
 Nom de la classe: RegistreAlRànking
-####################################
+#####################################
 descripció de la classe: Representa un registre del Rànking
 Cardinalitat: Tantes com partides resoltes que hagin sigut guardades al rànking
 Descripció dels atributs:
@@ -92,7 +108,7 @@ Descripció de les relacions:
 	Relació de composició amb la classe Rànking: el Rànking està composat per diferents RegistreAlRànking.
 	Relació d’associació amb la classe TaulerEnunciat: relaciona el RegistreAlRànking amb el TaulerEnunciat que s’ha resolt en aquest registre.
 
-Nom de la classe:  Tauler
+Nom de la classe: Tauler
 #########################
 descripció de la classe: Representa un Tauler d’un Kakuro
 Cardinalitat: tants com Taulers existents
@@ -107,6 +123,7 @@ Nom de la classe: TaulerEnunciat
 #################################
 descripció de la classe: Representa un Tauler d’un Kakuro que serà l’enunciat d’una Partida
 Cardinalitat: Una per cada RegistreAlRànking i una per cada Partida
+Descripció dels atributs: 
 Descripció de les relacions: 
 	Relació d’associació amb la classe Partida: relaciona el TaulerEnunciat amb la Partida de la que és enunciat
 	Relació d’associació amb la classe Usuari: relaciona el TaulerEnunciat amb l’Usuari que l’ha generat
@@ -115,7 +132,7 @@ Descripció de les relacions:
 	Relació d’herència de la classe Tauler: TaulerEnunciat és un Tauler d’un Kakuro que actua com a enunciat: no ha estat modificat en una partida, és “la base”.
 
 Nom de la classe: TaulerComençat
-################################
+#################################
 descripció de la classe: Representa el Tauler modificat derivat del TaulerEnunciat que l’Usuari que està jugant la partida ha creat. Quan TaulerComençat = Solució la Partida termina.
 Cardinalitat: Un per cada Partida
 Descripció dels mètodes:
@@ -125,7 +142,7 @@ Descripció de les relacions:
 	Relació d’associació amb la classe Partida: relaciona el TaulerComençat amb la Partida a la que pertany
 
 Nom de la classe: Casella
-#########################
+#############################
 descripció de la classe: Representa una casella d’un Tauler
 Cardinalitat: Tantes com tinguin tots els Taulers existents.
 Descripció dels atributs:
@@ -135,7 +152,7 @@ Descripció de les relacions:
 	Relació d’agregació amb la classe “Tauler”: cada Casella forma part d’un Tauler
 
 Nom de la classe: Blanca
-#########################
+###########################
 descripció de la classe: Representa el tipus de Casella Blanca
 Cardinalitat: Tantes com Caselles Blanques de tots els Taulers tinguin
 Descripció dels atributs:
@@ -144,7 +161,7 @@ Descripció de les relacions:
 	Relació d’herència de la classe Casella: Blanca representa un tipus de Casella
 
 Nom de la classe: Negra
-#########################
+##########################
 descripció de la classe: Representa el tipus de Casella Negra
 Cardinalitat: Tantes com Caselles Negres de tots els Taulers tinguin
 Descripció dels atributs: 
@@ -152,4 +169,5 @@ Descripció dels atributs:
 	columna: Indica la suma que han de tenir tots els valors de les Caselles Blanques de la columna
 Descripció de les relacions: 
 	Relació d’herència de la classe Casella: Negra representa un tipus de Casella
+
 

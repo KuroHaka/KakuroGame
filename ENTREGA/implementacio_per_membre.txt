@@ -2,27 +2,33 @@
 domini
   |- Algoritme         - (entre tots)
   |   |- generador     - Cristian
-  |   |- solver        - Eugeni
+  |   |- solver        - Zhensheng Chen
   |   |- validaSolucio - Marc Bofill
   |   |- validaFormat  - Marc Bofill
-  |- Driver_Algoritme  - Xavier Girbau i Eugeni
-  |- Combinacions      - Eugeni
-  |- Driver_Combinacions  - Eugeni
+  |- Driver_Algoritme  - Xavier Girbau i Zhensheng Chen
+  |- Combinacions      - Zhensheng Chen
+  |- Driver_Combinacions  - Zhensheng Chen
+  |- Repositori	       - Cristian
   |- Tauler	       - Marc Bofill
   |   |- TaulerComençat
   |   |- TaulerEnunciat
-  |- Driver_Tauler     - Eugeni
+  |- Driver_Tauler     - Zhensheng Chen
   |- JUnitTest_Tauler  - Xavier Girbau
   |- Casella	       - Eugeni i Marc Bofill
   |   |- CasellaBlanca
   |   |- CasellaNegra
-  |- Driver_Casella    - Eugeni
+  |- Driver_Casella    - Zhensheng Chen
+  |- Configuracio      - Cristian
+  |- Usuari	       - Cristian
+
 
 interficie
   |- stdio	       - Marc Bofill
 
+
 persistencia
   |- Dades	       - Marc Bofill
+
 
 jocs de proves         - Xavier Girbau
   |- resoldreKakuro
