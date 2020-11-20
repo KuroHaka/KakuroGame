@@ -4,3 +4,18 @@ corresponent joc de proves de resoldreKakuro.
 001: Tauler amb un sol resultat, el test ha de ser igual que l'arxiu ".out".
 	* resoldreKakuroXXX.in --> driver --> resultat
 		resultat = resoldreKakuroXXX.out
+002: Tauler sencill de 6x6 amb bastantes caselles blanques per comprobar el correcte funcionament
+
+003: Tauler una mica més gran que en el cas 2 per comprobar si arriva a resoldre kakuros de 8x8
+
+004: Tauler encara una mica més que en el cas 3 per comprobar si arriva a resoldre kakuros de 10x10, aquests primers tests els vam utilitzar per veure fins a quina dimensió podia resoldre el solver
+
+005: Test de dimensions analogues al cas 004 per confirmar la resolucio correcta i eficient de 10x10
+
+006: Cas amb pocas files i moltes columnes per comprobar que el solver funcionava correctament en aquest cas "diferent"
+
+007: Un nou cas que vam utilitzar per asegurarnos que diferents distribucions de caselles blanques dins d'un kakuro eren resoltes pel solver
+
+008: Kakuro trivial de 2x2 per comprobar que l'algorisme podia resoldre fins i tot el kakuro mes simple
+
+Nota: com no vam fer tests del generador, els casos 04, 06 i 07 son kakuros generats pel generador amb les mides i nombre de caselles que tenen (es a dir, van ser generats correctament). Aquests casos, a diferencia de la resta, son tests generats despres de terminar el solver (no es van utilitzar en la fase de debugacio del solver) i van ser generats a part de per la rao explicada anteriorment, per comprobar i garantir el correcte funcionament del solver.
