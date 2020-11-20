@@ -682,9 +682,9 @@ public class Algoritme {
                     ((CasellaBlanca)tc.getCasella(casellarecent.getCoordX(), casellarecent.getCoordY())).setValor(null);
                     return null;
                 }
-                TaulerComencat tc2 = solucionaKakuro(tc, seguent, numeroBlanques-1);
-                if(tc2 != null){
-                    return tc2;
+                tc = solucionaKakuro(tc, seguent, numeroBlanques-1);
+                if(tc != null){
+                    return tc;
                 }
                 else {return null;}
             }
