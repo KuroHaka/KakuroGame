@@ -1,3 +1,6 @@
+En aquest document es descriu el que ha de resultar d'introduir el 
+corresponent joc de proves de validaSolucio.
+
 001: És un tauler correctament resolt, el test ha de donar true.
 002: És un tauler incorrectament resolt, test = false.
 003: És un tauler amb una repetició a la mateixa fila, test = false.

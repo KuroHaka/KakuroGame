@@ -1,4 +1,7 @@
-001: Tauler correctament format, el test ha de donar true
+En aquest document es descriu el que ha de resultar d'introduir el 
+corresponent joc de proves de validaFormat.
+
+001: Tauler correctament format, el test ha de donar true.
 002: Tauler massa petit (molts errors), test = false.
 003: Tauler amb la casella (0,0) amb valor, test = false.
 	* Aquest test no calia ja que tenim el 4 i el 5.
@@ -14,7 +17,5 @@
 013: Tauler on hi ha valor d'una columna menor del possible, test = false.
 014: Tauler on no hi ha valors, test = true.
 
-015: Tauler correcte de mida gran, test = true.
-016: Tauler correcte de mida mooolt gran, test = true.
-
-
+015: Tauler correcte de mida gran (test computacional), test = true.
+016: Tauler correcte de mida mooolt gran (test computacional), test = true.

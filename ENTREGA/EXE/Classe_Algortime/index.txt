@@ -1,0 +1,11 @@
+En aquesta carpeta hi ha presents els testos dels algorismes.
+
+A cada test s'hi associen uns arxius (cadascun al seu directori):
+	- Per a validar el format: validaFormatXXX.in
+		* Mirar: validaFormat.txt
+	- Per a validar el kakuro solucionat: validaSolucioXXX.in
+		* Mirar: validaSolucio.txt
+	- Per a resoldre un Kakuro: resolXXX.in, resolXXX.out
+		* Mirar: resoldreKakuro.txt
+	- Per a generar un Kakuro no veiem adequat fer testos.
+

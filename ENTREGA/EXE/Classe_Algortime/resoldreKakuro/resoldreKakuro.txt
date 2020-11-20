@@ -1,0 +1,6 @@
+En aquest document es descriu el que ha de resultar d'introduir el 
+corresponent joc de proves de resoldreKakuro.
+
+001: Tauler amb un sol resultat, el test ha de ser igual que l'arxiu ".out".
+	* resoldreKakuroXXX.in --> driver --> resultat
+		resultat = resoldreKakuroXXX.out
