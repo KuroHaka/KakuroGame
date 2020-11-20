@@ -682,9 +682,9 @@ public class Algoritme {
                     ((CasellaBlanca)tc.getCasella(casellarecent.getCoordX(), casellarecent.getCoordY())).setValor(null);
                     return null;
                 }
-                tc = solucionaKakuro(tc, seguent, numeroBlanques-1);
-                if(tc != null){
-                    return tc;
+                TaulerComencat tc2 = solucionaKakuro(tc, seguent, numeroBlanques-1);
+                if(tc2 != null){
+                    return tc2;
                 }
                 else {return null;}
             }
@@ -721,7 +721,7 @@ public class Algoritme {
 
     public TaulerEnunciat generarKakuro(int rows, int cols, Integer numeroBlanques, int numeroBlanquesEstablertes) {
         if(numeroBlanques==null){
-            numeroBlanques=(int)Math.round(0.85*(rows-1)*(cols-1));
+            numeroBlanques=(int)Math.round(0.55*(rows-1)*(cols-1));
         }
         Casella[][] tauler = new Casella[rows][cols];
         //Negres a dalt i esquerra
