@@ -1,0 +1,16 @@
+Requisits previs: És necessari tenir una versió igual o posterior a Java 11 i JUnit 4.12 per
+    poder executar els .JAR de cada Classe.
+
+Carpetes:
+
+  > Classe_Algoritme : 
+	Executable i MOLTS jocs de proves per cada algoritme
+
+  > Classe_Casella : 
+	Executable interactiu
+
+  > Classe_Combinacions : 
+	Executable interactiu
+
+  > Classe_Tauler : 
+	Executable interactiu
