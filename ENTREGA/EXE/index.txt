@@ -4,13 +4,13 @@ Requisits previs: És necessari tenir una versió igual o posterior a Java 11 i 
 Carpetes:
 
   > Classe_Algoritme : 
-	Executable i MOLTS jocs de proves per cada algoritme
+	Executable interactiu i MOLTS jocs de proves per cada algoritme
 
   > Classe_Casella : 
-	Executable interactiu
+	Executable interactiu del Driver
 
   > Classe_Combinacions : 
-	Executable interactiu
+	Executable interactiu del driver
 
   > Classe_Tauler : 
-	Executable interactiu
+	Executable interactiu del driver

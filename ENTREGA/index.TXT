@@ -1,5 +1,0 @@
-Carpeta del projecte.
-	Arxiu que descriu al grup: "Descripcio.txt"
-	Directori "DOC" on hi ha els documents.
-	Directori "FONTS" on hi ha el codi i els fitxers de comandes.
-	Directori "EXE" on hi ha els executables i els jocs de prova.
