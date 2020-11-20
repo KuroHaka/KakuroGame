@@ -181,6 +181,7 @@ public class Driver_Algoritme {
                         System.out.println("SOLUCIO INCORRECTA!");
                     break;
                 default:
+                    System.err.println("\tOPCIO INEXISTENT");
                     break;
             }
         } while (opt != 0);

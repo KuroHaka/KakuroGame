@@ -1,6 +1,5 @@
 package domini.algoritme;
 
-import domini.tauler.Tauler;
 import domini.tauler.TaulerComencat;
 import domini.tauler.TaulerEnunciat;
 import domini.tauler.casella.Casella;
@@ -80,24 +79,6 @@ public class Algoritme {
         }while((t.esNegra(x,y)));
         return ((CasellaBlanca)t.getCasella(x,y));
     }
-/*    private void colocarBlanquesHoritzontals(CasellaNegra casellaNegra){
-        int y = casellaNegra.getCoordY();
-        int x = casellaNegra.getCoordX() + 1;
-        int cont = 0;
-        while(t.esBlanca(x, y)){
-            x++;
-            cont++;
-        }
-        y = casellaNegra.getCoordY();
-        x = casellaNegra.getCoordX() + 1;
-        Set<Integer> fila = combinacions.getCombinacios(casellaNegra.getFila(), cont).stream().findFirst().get();
-        for (Integer integer : fila) {
-            ((CasellaBlanca) t.getCasella(x, y)).setValor(integer);
-            x++;
-        }
-    }
-
- */
 
     private Set<Integer> getPossiblesValors(Casella casella, Direccio direccio, TaulerComencat t){
 //        System.out.println(casella.getCoordX()+" "+casella.getCoordY());

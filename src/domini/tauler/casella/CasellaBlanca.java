@@ -32,6 +32,7 @@ public class CasellaBlanca extends Casella{
         return true;
     }
 
+    @Override
     public String to_String() {
         if (this.valor != null) {
             if (this.valor > 9) {

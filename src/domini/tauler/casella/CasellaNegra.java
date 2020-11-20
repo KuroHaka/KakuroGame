@@ -33,6 +33,7 @@ public class CasellaNegra extends Casella{
     
     // MÈTODES PÚBLICS
     
+    @Override
     public String to_String() {
         String str;
         if (this.columna == null && this.fila == null)

@@ -1,4 +1,4 @@
 Directori casella on hi ha tot el que correspon a la classe casella.
 	Casella: Classe abstracta casella.
 	CasellaBlanca: Subclasse de casella, caselles on s'ha de posar un valor.
-	CasellaNegra: Subclasse de casella, "parets" o marquen el valor de la suma.
+	CasellaNegra: Subclasse de casella, "parets" o marquen el valor de la suma el fila/columna.
