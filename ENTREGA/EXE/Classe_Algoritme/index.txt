@@ -8,4 +8,4 @@ A cada test s'hi associen uns arxius (cadascun al seu directori):
 	- Per a resoldre un Kakuro: resolXXX.in, resolXXX.out
 		* Mirar: resoldreKakuro.txt
 	- Per a generar un Kakuro no veiem adequat fer jocs de proves.
-
+		* Només cal fer moltes generacions i veure que funciona.
