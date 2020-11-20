@@ -1,9 +1,13 @@
 
- > Compilacio_drivers.bat
- Script BATCH per compilar automaticament els arxius necessaris per la execucio dels drivers.
+La carpeta 'src' conte la font del projecte en el format adequat de packages.
 
- > Execucio_drivers.bat
- Scripts BATCH per executar interactivament els diferents drivers.
+Per compilar i Generar els .JAR, s'ha d'utilitzar:
+	
+	'make'    (o 'make all')
 
-        > Drivers inclosos:
+Per buidar els arxius generats es pot fer 
 
+	'make clean'
+
+El Makefile conte altres Targets que no es recomana usar, ja que son compilacions
+ intermitges que tenen requeriments no especificats en el makefile.

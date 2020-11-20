@@ -1,0 +1,20 @@
+001: Tauler correctament format, el test ha de donar true
+002: Tauler massa petit (molts errors), test = false.
+003: Tauler amb la casella (0,0) amb valor, test = false.
+	* Aquest test no calia ja que tenim el 4 i el 5.
+004: Tauler amb la primera fila no tota negra, test = false.
+005: Tauler amb la primera columna no tota negra, test = false.
+006: Tauler on falta especificar el valor total d'una columna, test = false.
+007: Tauler on falta especificar el valor total d'una fila, test = false.
+008: Tauler on hi ha valor d'una fila on hi ha negres al costat, test = false.
+009: Tauler on hi ha valor d'una columna on hi ha negres a sota, test = false.
+010: Tauler on hi ha valor d'una fila major del possible, test = false.
+011: Tauler on hi ha valor d'una fila menor del possible, test = false.
+012: Tauler on hi ha valor d'una columna major del possible, test = false.
+013: Tauler on hi ha valor d'una columna menor del possible, test = false.
+014: Tauler on no hi ha valors, test = true.
+
+015: Tauler correcte de mida gran, test = true.
+016: Tauler correcte de mida mooolt gran, test = true.
+
+
