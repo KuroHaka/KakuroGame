@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.io.File;
 import java.nio.file.NoSuchFileException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,6 +10,14 @@ import java.nio.file.Path;
         
 public class Dades {
 
+    public static String[] llistaArxius(String dir) {
+        String[] pathnames;
+        File f = new File(dir);
+        pathnames = f.list();
+        System.out.println("(Dades) Arxius a " + dir + ": " + pathnames.length); 
+        return pathnames;
+    }
+    
     public static void guardarArxiu(String arxiu, String bufferedData){
         Path pa = Path.of(arxiu);
         try {
@@ -28,6 +37,9 @@ public class Dades {
         } catch (IOException ex) {
             Logger.getLogger(Dades.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // TODO: Comprovar això funciona
+        ret = ret.replace("\r\n", "\n"); //Windows format to Unix format
+        ret = ret.replace('\r', '\n'); //Remove Carriage Returns from old MacOS (also System)
         return ret;
     }
     

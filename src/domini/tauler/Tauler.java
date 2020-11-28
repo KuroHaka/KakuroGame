@@ -1,5 +1,6 @@
 package domini.tauler;
 
+import domini.hashing.Hash;
 import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
@@ -26,14 +27,14 @@ public abstract class Tauler {
         this.tauler = llegirTauler_interface(); //llegirTauler();
         this.dimX = tauler[0].length;
         this.dimY = tauler.length;
-        this.id = calculaHash(format_Estandard());
+        this.id = Hash.calculaHash(format_Estandard());
     }
     
     public Tauler(Casella[][] t){
         this.tauler = t;
         this.dimX = tauler[0].length;
         this.dimY = tauler.length;
-        this.id = calculaHash(format_Estandard());
+        this.id = Hash.calculaHash(format_Estandard());
     }
 
     public Tauler(String t){
@@ -188,7 +189,7 @@ public abstract class Tauler {
         return ret;
     }
     
-    private static String bytesToHex(byte[] bytes) {
+    /*private static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
             sb.append(String.format("%02x", b));
@@ -206,5 +207,5 @@ public abstract class Tauler {
         byte[] input = t.getBytes();
         byte[] result = md.digest(input);
         return bytesToHex(result);
-    }
+    }*/
 }

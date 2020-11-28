@@ -1,5 +1,6 @@
 package domini.tauler;
 
+import domini.hashing.Hash;
 import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
 
@@ -32,6 +33,6 @@ public class TaulerComencat extends Tauler{
     // MÈTODES PRIVATS
     
     private void recalculaId(){
-        this.id = calculaHash(format_Estandard());
+        this.id = Hash.calculaHash(format_Estandard());
     }
 }
