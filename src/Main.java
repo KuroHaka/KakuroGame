@@ -1,9 +1,10 @@
 
-import interficie.testing.InitFrame;
+import interficie.ControladoraInterficie;
 
 public class Main {
-    public static void main(String args[]) {
-        InitFrame init = new InitFrame();
-        init.setVisible(true);
+    
+    public static void main(String[] args){
+        ControladoraInterficie interf = new ControladoraInterficie();
+        interf.inicia();
     }
 }

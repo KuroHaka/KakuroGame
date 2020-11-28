@@ -2,7 +2,7 @@ package domini.algoritme;
 
 import domini.tauler.TaulerComencat;
 import domini.tauler.TaulerEnunciat;
-import presistencia.Dades;
+import persistencia.Dades;
 
 import java.nio.file.NoSuchFileException;
 import java.util.Scanner;

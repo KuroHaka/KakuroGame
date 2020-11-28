@@ -3,7 +3,7 @@ package domini.tauler;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.Scanner;
-import presistencia.Dades;
+import persistencia.Dades;
 
 public class Driver_tauler {
     
