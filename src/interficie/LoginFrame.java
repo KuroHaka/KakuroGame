@@ -20,6 +20,17 @@ public class LoginFrame extends javax.swing.JFrame {
         this.jLabel_Incorrecte.setVisible(false);
     
     }
+    
+    public void setUsuariPassword (String u, String p){
+        this.jTextUsuari.setText(u);
+        this.jPasswordField.setText(p);
+    }
+    
+    public void reset(){
+        this.jTextUsuari.setText("");
+        this.jPasswordField.setText("");
+        this.jLabel_Incorrecte.setVisible(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,7 +52,8 @@ public class LoginFrame extends javax.swing.JFrame {
         jButtonExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Kakuro");
+        setTitle("Kakuro ~ Login");
+        setLocation(new java.awt.Point(0, 0));
         setLocationByPlatform(true);
         setResizable(false);
 
@@ -53,7 +65,7 @@ public class LoginFrame extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 2, 14)); // NOI18N
-        jLabel1.setText("Kakuro");
+        jLabel1.setText("Login");
 
         jTextUsuari.setToolTipText("Nom d'Usuari");
 
@@ -64,6 +76,15 @@ public class LoginFrame extends javax.swing.JFrame {
 
         jLabel_Incorrecte.setForeground(new java.awt.Color(255, 0, 51));
         jLabel_Incorrecte.setText("Credencials Incorrectes");
+
+        jPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordFieldKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jPasswordFieldKeyTyped(evt);
+            }
+        });
 
         jButtonRegistre.setText("Registrar-se");
         jButtonRegistre.addActionListener(new java.awt.event.ActionListener() {
@@ -83,10 +104,6 @@ public class LoginFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(107, 107, 107))
             .addGroup(layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,6 +127,10 @@ public class LoginFrame extends javax.swing.JFrame {
                                 .addComponent(jButtonRegistre, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                                 .addComponent(jButtonExit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,10 +153,11 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(jButtonRegistre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonExit)
-                .addContainerGap())
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
@@ -176,9 +198,24 @@ public class LoginFrame extends javax.swing.JFrame {
         
         // Botó REGISTRAR-SE
         ctrl_interficie.registre.inicia();
+        this.setEnabled(false);
         ctrl_interficie.registre.setVisible(true);
         
     }//GEN-LAST:event_jButtonRegistreActionPerformed
+
+    private void jPasswordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordFieldKeyTyped
+        // NOTHING TO DO HERE
+    }//GEN-LAST:event_jPasswordFieldKeyTyped
+
+    private void jPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordFieldKeyPressed
+        
+        // ENTER AL PASSWORD
+        
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            System.out.println("(LoginFrame) Password [Enter]");
+            this.jButtonEntrar.doClick(); // Triguereja un click al boté de Enter
+        }
+    }//GEN-LAST:event_jPasswordFieldKeyPressed
 
     /**
      * @param args the command line arguments
