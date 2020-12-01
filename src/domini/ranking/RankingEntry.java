@@ -21,7 +21,7 @@ public class RankingEntry extends Ranking{
         return tempsRecord;
     }
     
-    public void print() {
+    public void printEntry() {
         System.out.println("ID = " + id);
         System.out.println("Durada = " + tempsRecord);
     }
