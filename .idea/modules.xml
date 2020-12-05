@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ENTREGA/FONTS/src/FONTS.iml" filepath="$PROJECT_DIR$/ENTREGA/FONTS/src/FONTS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ENTREGA/FONTS/FONTS1.iml" filepath="$PROJECT_DIR$/ENTREGA/FONTS/FONTS1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/subgrup-prop9-2.iml" filepath="$PROJECT_DIR$/subgrup-prop9-2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+    </modules>
+  </component>
+</project>

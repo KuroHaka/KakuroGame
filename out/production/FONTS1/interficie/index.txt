@@ -1,0 +1,5 @@
+Carpeta de les classes de persistencia
+
+ > Carpeta testing 
+	Conté la classe que s'utilitza per el input/output
+	per stdin. 

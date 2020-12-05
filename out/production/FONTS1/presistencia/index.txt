@@ -1,0 +1,5 @@
+Carpeta de les classes de persistencia
+
+ > Dades.java 
+	Conté la classe que s'utilitza per el input/output al
+	sistema de fitxers.

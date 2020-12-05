@@ -632,30 +632,40 @@ public class Algoritme {
     private Set<Integer> getUnicaCombinacio(TaulerComencat tc, CasellaBlanca casellarecent) {
         int sumaFila;
         int x;
-        Set <Integer> used = new HashSet<>();
-        for(x = casellarecent.getCoordX() - 1; tc.getCasella(x, casellarecent.getCoordY()).getClass() == CasellaBlanca.class; --x) {
-            used.add(((CasellaBlanca)tc.getCasella(x, casellarecent.getCoordY())).getValor());
+        try {
+            Set <Integer> used = new HashSet<>();
+            for(x = casellarecent.getCoordX() - 1; tc.getCasella(x, casellarecent.getCoordY()).getClass() == CasellaBlanca.class; --x) {
+                used.add(((CasellaBlanca)tc.getCasella(x, casellarecent.getCoordY())).getValor());
+            }
+            sumaFila = ((CasellaNegra)tc.getCasella(x, casellarecent.getCoordY())).getFila();
+            int blanquesSeguides = 0;
+            for(x = x+1; x < tc.getDimX() && tc.getCasella(x, casellarecent.getCoordY()).getClass() == CasellaBlanca.class; ++x) {
+                ++blanquesSeguides;
+            }
+            Set<Set<Integer> > comb = combinacions.getCombinacios(sumaFila, blanquesSeguides);
+            Set <Integer> combunica = new HashSet<>();
+            for(Set<Integer> s : comb) {
+                combunica.addAll(s);
+            }
+            combunica.removeAll(used);
+            return combunica;
         }
-        sumaFila = ((CasellaNegra)tc.getCasella(x, casellarecent.getCoordY())).getFila();
-        int blanquesSeguides = 0;
-        for(x = x+1; x < tc.getDimX() && tc.getCasella(x, casellarecent.getCoordY()).getClass() == CasellaBlanca.class; ++x) {
-            ++blanquesSeguides;
+        catch (StackOverflowError e){
+            return null;
         }
-        Set<Set<Integer> > comb = combinacions.getCombinacios(sumaFila, blanquesSeguides);
-        Set <Integer> combunica = new HashSet<>();
-        for(Set<Integer> s : comb) {
-            combunica.addAll(s);
-        }
-        combunica.removeAll(used);
-        return combunica;
     }
 
     private Set<Integer> getValorsColumna(TaulerComencat tc, CasellaBlanca casellarecent) {
-        Set <Integer> used = new HashSet<>();
-        for(int y = casellarecent.getCoordY() - 1; tc.getCasella(casellarecent.getCoordX(), y).getClass() == CasellaBlanca.class; --y) {
-            used.add(((CasellaBlanca)tc.getCasella(casellarecent.getCoordX(), y)).getValor());
+        try {
+            Set <Integer> used = new HashSet<>();
+            for(int y = casellarecent.getCoordY() - 1; tc.getCasella(casellarecent.getCoordX(), y).getClass() == CasellaBlanca.class; --y) {
+                used.add(((CasellaBlanca)tc.getCasella(casellarecent.getCoordX(), y)).getValor());
+            }
+            return used;
         }
-        return used;
+        catch (StackOverflowError e) {
+            return null;
+        }
     }
 
     private TaulerComencat solucionaKakuro(int nb, TaulerComencat tc) {
@@ -669,6 +679,7 @@ public class Algoritme {
     private TaulerComencat solucionaKakuro(TaulerComencat tc, CasellaBlanca casellarecent, int numeroBlanques) {
         Set<Integer> comb = getUnicaCombinacio(tc, casellarecent);
         Set<Integer> used = getValorsColumna(tc, casellarecent);
+        if(used == null || comb == null) {return null;}
         comb.removeAll(used);
         if(comb.isEmpty()) {return null;}
         else {
@@ -822,51 +833,54 @@ public class Algoritme {
         }
 
         //SOLVER!!!!!!!!!!!!!!!! tiene q comprobar si tiene solucion
-        TaulerComencat tc = new TaulerComencat(tauler);
-        solucionaKakuro(numeroBlanques - 1, tc);
-        boolean algunNull = false;
-        for(int r = 0; r < rows; ++r) {
-            for(int c = 0; c < cols; ++c) {
-                if(tc.getCasella(c,r).getClass() == CasellaBlanca.class) {
-                    if(((CasellaBlanca)tc.getCasella(c,r)).getValor() == null) {algunNull = true;}
+        try {
+            TaulerComencat tc = new TaulerComencat(tauler);
+            solucionaKakuro(numeroBlanques - 1, tc);
+            boolean algunNull = false;
+            for(int r = 0; r < rows; ++r) {
+                for(int c = 0; c < cols; ++c) {
+                    if(tc.getCasella(c,r).getClass() == CasellaBlanca.class) {
+                        if(((CasellaBlanca)tc.getCasella(c,r)).getValor() == null) {algunNull = true;}
+                    }
                 }
             }
-        }
-        if(algunNull) {
-            return generarKakuro(rows, cols, numeroBlanques, numeroBlanquesEstablertes);
-        }
-        else {
-            //rellenar las cols
-            for (int c = 1; c < cols; ++c) {
-                int acum_col = 0;
-                for (int r = rows - 1; r >= 0; --r) {
-                    if (tc.getCasella(c,r).getClass() == CasellaNegra.class) {
-                        if (acum_col > 0) {
-                            Integer valor_f = ((CasellaNegra)tc.getCasella(c,r)).getFila();
-                            tauler[r][c] = new CasellaNegra(c, r, valor_f, acum_col);
-                            acum_col = 0;
+            if(algunNull) {
+                return generarKakuro(rows, cols, numeroBlanques, numeroBlanquesEstablertes);
+            }
+            else {
+                //rellenar las cols
+                for (int c = 1; c < cols; ++c) {
+                    int acum_col = 0;
+                    for (int r = rows - 1; r >= 0; --r) {
+                        if (tc.getCasella(c,r).getClass() == CasellaNegra.class) {
+                            if (acum_col > 0) {
+                                Integer valor_f = ((CasellaNegra)tc.getCasella(c,r)).getFila();
+                                tauler[r][c] = new CasellaNegra(c, r, valor_f, acum_col);
+                                acum_col = 0;
+                            }
+                        } else {
+                            acum_col += ((CasellaBlanca)tc.getCasella(c, r)).getValor();
                         }
-                    } else {
-                        acum_col += ((CasellaBlanca)tc.getCasella(c, r)).getValor();
                     }
                 }
-            }
-            TaulerComencat tcBuit = tc;
-            int buidades = 0;
-            while(buidades < (numeroBlanques - numeroBlanquesEstablertes)) {
-                int r = (int) ((Math.random() * (rows - 1)) + 1);
-                int c = (int) ((Math.random() * (cols - 1)) + 1);
-                if(tcBuit.getCasella(c,r).getClass() == CasellaBlanca.class) {
-                    if(((CasellaBlanca)tcBuit.getCasella(c,r)).getValor() != null) {
-                        ((CasellaBlanca)tcBuit.getCasella(c,r)).setValor(null);
-                        tauler[r][c] = new CasellaBlanca(c, r, null);
-                        ++buidades;
+                TaulerComencat tcBuit = tc;
+                int buidades = 0;
+                while(buidades < (numeroBlanques - numeroBlanquesEstablertes)) {
+                    int r = (int) ((Math.random() * (rows - 1)) + 1);
+                    int c = (int) ((Math.random() * (cols - 1)) + 1);
+                    if(tcBuit.getCasella(c,r).getClass() == CasellaBlanca.class) {
+                        if(((CasellaBlanca)tcBuit.getCasella(c,r)).getValor() != null) {
+                            ((CasellaBlanca)tcBuit.getCasella(c,r)).setValor(null);
+                            tauler[r][c] = new CasellaBlanca(c, r, null);
+                            ++buidades;
+                        }
                     }
                 }
+                TaulerEnunciat t = new TaulerEnunciat(tauler);
+                return t;
             }
-            TaulerEnunciat t = new TaulerEnunciat(tauler);
-            return t;
         }
+        catch (StackOverflowError e) {return generarKakuro(rows, cols, numeroBlanques, numeroBlanquesEstablertes);}
     }
 
 

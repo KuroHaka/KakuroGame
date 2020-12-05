@@ -1,0 +1,8 @@
+Carpeta domini on hi ha totes les classes.
+	Algoritme: directori on hi ha els algoritmes pels kakuros (generar, validar...).
+	Drivers: directori temporal per a provar funcions concretes de les classes.
+	Launcher: carpeta on, potencialment, hi ha el main del joc.
+	Ranking: potencialment, hi ha el codi pels rankings.
+	Repositori: potencialment, hi ha el codi que organitza els repositori.
+	Tauler: hi ha la classe tauler (abstracta), les subclasses i les classes de casella.
+	Usuari: potencialment, el codi que permet generar i modificar als usuaris.

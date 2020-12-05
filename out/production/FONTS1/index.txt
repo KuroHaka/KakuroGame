@@ -1,0 +1,5 @@
+És el source del codi (tot el codi sense compilar).
+	La carpeta domini conté totes les classes de domini.
+	La carpeta interficie conté una simple classe de interaccio amb stdin.
+	La carpeta presistencia conté la classe que s'utilitza per el input/output al
+		sistema de fitxers.

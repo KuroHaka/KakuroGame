@@ -1,0 +1,6 @@
+Directori tauler on hi ha tot el que correspon a la classe tauler, un tauler el formen unes caselles.
+	Tauler: Classe abstracta tauler.
+	TaulerComencat: Subclasse de tauler, representa un kakuro ja començat.
+	TaulerEnunciat: Subclasse de tauler, representa un kakuro buit.
+	Casella: Directori on hi ha la classe casella.
+	JUnitTest_Tauler.java: JUnit de la classe tauler.
