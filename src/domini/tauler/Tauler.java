@@ -46,6 +46,11 @@ public abstract class Tauler {
     public Casella getCasella(Integer x, Integer y){
         return this.tauler[y][x];
     }
+    
+    public Integer getValor(int x, int y) {
+        if (!esBlanca(x,y)) return -1;
+        return ((CasellaBlanca)this.tauler[y][x]).getValor();
+    }
 
     public String getId() {
         return id;

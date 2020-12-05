@@ -5,6 +5,7 @@ import domini.tauler.TaulerEnunciat;
 import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
+import static java.lang.Math.random;
 
 import java.util.*;
 
@@ -883,6 +884,35 @@ public class Algoritme {
         catch (StackOverflowError e) {return generarKakuro(rows, cols, numeroBlanques, numeroBlanquesEstablertes);}
     }
 
-
+    // ALGORITME D'AJUDA
+    
+    public Object[] getAjuda(TaulerComencat comencat, TaulerComencat solucio) {
+        
+        ArrayList<Object[]> vec = new ArrayList<Object[]>();
+        int mida = 0;
+        
+        for (int i = 0; i < comencat.getDimX(); i++) {
+            for (int j = 0; j < comencat.getDimY(); j++) {
+                Integer valor = comencat.getValor(i, j);
+                
+                if (valor != null && valor != -1) {
+                    Integer valorSol = solucio.getValor(i, j);
+                    if (valor != valorSol) {
+                        return new Object[] {i, j, valorSol};
+                    }
+                }
+                else {
+                    vec.add(new Object[] {i,j});
+                    mida++;
+                }
+            }
+        }
+        
+        int aux = (int) random() % mida;
+        
+        int i = (int) vec.get(aux)[0];
+        int j = (int) vec.get(aux)[1];
+        return new Object[] {i, j, solucio.getValor(i, j)};
+    }
 
 }

@@ -20,6 +20,14 @@ public class TaulerComencat extends Tauler{
         super(t);
     }
     
+    public TaulerComencat(TaulerEnunciat enunciat) {
+        this.tauler = enunciat.tauler; //llegirTauler();
+        this.dimX = enunciat.dimX;
+        this.dimY = enunciat.dimY;
+        /// TODO : IMPORTANT!!!
+        this.id = Hash.calculaHash(format_Estandard());
+    }
+    
     // MÈTODES PÚBLICS
     
     public boolean setValor(Integer x, Integer y, Integer valor){
