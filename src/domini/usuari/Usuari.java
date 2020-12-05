@@ -30,8 +30,8 @@ public class Usuari {
         this.name = s;
     }
     
-    public void canviarConfigDefecte(int dx, int dy, int nb) {
-        this.defecte = new Configuracio(dx, dy, nb);
+    public void canviarConfigDefecte(int dx, int dy, int nb, int nbe) {
+        this.defecte = new Configuracio(dx, dy, nb, nbe);
     }
     
     public void canviarConfigDefecte2(Configuracio c) {

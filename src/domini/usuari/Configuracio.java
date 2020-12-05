@@ -1,8 +1,9 @@
 package domini.usuari;
 
-import domini.tauler.casella.Casella;
+import domini.tauler.casella.*;
 
 public class Configuracio {
+    private int numeroBlanquesEstablertes;
     private int numeroBlanques;
     private int dimX;
     private int dimY;
@@ -10,30 +11,45 @@ public class Configuracio {
     
     //Constructoras
     public Configuracio() {
-        this.numeroBlanques = 0;
-        this.dimX = 0;
-        this.dimY = 0;
-        this.dif = 0;
+        this.numeroBlanquesEstablertes = 10;
+        this.numeroBlanques = 20;
+        this.dimX = 8;
+        this.dimY = 8;
+        this.dif = 1;
     }
     
     public Configuracio(Casella[][] c) {
         this.dimX = c.length;
         this.dimY = c[0].length;
-        this.dif = 0; //COM LA DECIDIM????
         int cont = 0;
-        /*for(int i = 0; i < this.dimX; ++i) {
+        int est = 0;
+        for(int i = 0; i < this.dimX; ++i) {
             for(int j = 0; j < this.dimY; ++j) {
-                if(CASELLA[i][j] == ES BLANCA) {++cont;}
+                if(c[i][j].getClass() == (CasellaBlanca.class)) {
+                    ++cont;
+                    if(((CasellaBlanca)c[i][j]).getValor() != null) {
+                        ++est;
+                    }
+                }
             }
-        }*/
+        }
+        this.numeroBlanquesEstablertes = est;
         this.numeroBlanques = cont;
+        float f = (this.numeroBlanques - this.numeroBlanquesEstablertes)/((this.dimX - 1)* (this.dimY - 1));
+        if(f > 0.8) {this.dif = 3;}
+        else if(f > 0.5) {this.dif = 2;}
+        else {this.dif = 1;}  //Establertes les normes de dificultat
     }
     
-    public Configuracio(int dx, int dy, int nb) {
+    public Configuracio(int dx, int dy, int nb, int nbe) {
         this.dimX = dx;
         this.dimY = dy;
-        this.dif = 0; //COM LA DECIDIM????
         this.numeroBlanques = nb;
+        this.numeroBlanquesEstablertes = nbe;
+        float f = (this.numeroBlanques - this.numeroBlanquesEstablertes)/((this.dimX - 1)* (this.dimY - 1));
+        if(f > 0.8) {this.dif = 3;}
+        else if(f > 0.5) {this.dif = 2;}
+        else {this.dif = 1;}
     }
     
     //Funciones
@@ -56,8 +72,11 @@ public class Configuracio {
     
     public void print() {
         System.out.println("Numero Blanques: " + this.numeroBlanques);
+        System.out.println("Numero Blanques Establertes: " + this.numeroBlanquesEstablertes);
         System.out.println("Dimensio X: " + this.dimX + " , Dimensio Y : " + this.dimY);
-        System.out.println("Dificultat: " + this.dif);
+        if(this.dif == 1) {System.out.println("Dificultat: Principiant");}
+        if(this.dif == 2) {System.out.println("Dificultat: Avançada");}
+        if(this.dif == 3) {System.out.println("Dificultat: Expert");}
     }
     
     
