@@ -14,43 +14,44 @@ enum Direccio{
 }
 public class Algoritme {
     Combinacions combinacions = new Combinacions();
+    ArrayList<TaulerComencat> solucions;
 
     public Algoritme() {
     }
 
     // ALGORITME SOLVER
 
-    public TaulerComencat resoldreKakuro(TaulerEnunciat tauler){
+    public ArrayList<TaulerComencat> resoldreKakuro(TaulerEnunciat tauler){
         TaulerComencat t = tauler.comencarTauler();
         CasellaBlanca casellaBlanca = seguentCasellaBlanca(t.getCasella(0,1),t);
         if(casellaBlanca==null){
             return null;
         }
-        return resoldreKakuro(t, compteCasellesBlanques(t)-1, casellaBlanca);
+        solucions = new ArrayList<>();;
+        resoldreKakuro(t, compteCasellesBlanques(t)-1, casellaBlanca);
+        return solucions;
     }
 
-    private TaulerComencat resoldreKakuro(TaulerComencat t, int blanquesRestant, CasellaBlanca casellarecent){
+    private void resoldreKakuro(TaulerComencat t, int blanquesRestant, CasellaBlanca casellarecent){
         Set<Integer> horit = getPossiblesValors(casellarecent, Direccio.HORITZONTAL, t);
         if(horit!=null){
             for(Integer i: horit){
                 CasellaBlanca casella = ((CasellaBlanca)t.getCasella(casellarecent.getCoordX(), casellarecent.getCoordY()));
                 casella.setValor(i);
                 if(blanquesRestant<=0 && validaSolucio(t)){
-                    return t;
+                    TaulerComencat  newT = new TaulerComencat(t.format_Estandard());
+                    solucions.add(newT);
+                    return;
                 }
                 CasellaBlanca seguent = seguentCasellaBlanca(casellarecent, t);
-                if(seguent== null){
+                if(seguent == null){
                     casellarecent.setValor(null);
-                    return null;
+                    return;
                 }
-                TaulerComencat ret = resoldreKakuro(t, blanquesRestant-1, seguent);
-                if(ret != null){
-                    return ret;
-                }
+                resoldreKakuro(t, blanquesRestant-1, seguent);
             }
         }
         casellarecent.setValor(null);
-        return  null;
     }
 
     private int compteCasellesBlanques(TaulerComencat t){

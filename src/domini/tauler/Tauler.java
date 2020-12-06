@@ -4,7 +4,7 @@ import domini.hashing.Hash;
 import domini.tauler.casella.Casella;
 import domini.tauler.casella.CasellaBlanca;
 import domini.tauler.casella.CasellaNegra;
-import interficie.testing.Mock_Presentacio_stdio;
+//import interficie.testing.Mock_Presentacio_stdio;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -22,14 +22,14 @@ public abstract class Tauler {
     // private Dificultat dificultat;
 
     // CONSTRUCTORES
-    
+    /*
     public Tauler(){
         this.tauler = llegirTauler_interface(); //llegirTauler();
         this.dimX = tauler[0].length;
         this.dimY = tauler.length;
         this.id = Hash.calculaHash(format_Estandard());
     }
-    
+    */
     public Tauler(Casella[][] t){
         this.tauler = t;
         this.dimX = tauler[0].length;
@@ -139,7 +139,7 @@ public abstract class Tauler {
         }
         return c;
     }
-    
+    /*
     private Casella[][] llegirTauler_interface(){
         System.out.print("Numero de columnes (x): ");
         int x = Mock_Presentacio_stdio.llegirEnter();
@@ -156,7 +156,7 @@ public abstract class Tauler {
             }
         return t;
     }
-    
+    */
     private static Casella[][] llegirTauler_String(String t){
 
         //if(t.contains("\r")) System.out.println("Carriage Return");

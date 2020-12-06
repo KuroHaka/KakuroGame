@@ -7,11 +7,11 @@ import domini.tauler.casella.CasellaBlanca;
 public class TaulerComencat extends Tauler{
     
     // CONSTRUCTORES
-    
+    /*
     public TaulerComencat(){
         super();
     }
-    
+    */
     public TaulerComencat(Casella[][] t){
         super(t);
     }
@@ -19,7 +19,8 @@ public class TaulerComencat extends Tauler{
     public TaulerComencat(String t){
         super(t);
     }
-    
+
+    /*
     public TaulerComencat(TaulerEnunciat enunciat) {
         this.tauler = enunciat.tauler; //llegirTauler();
         this.dimX = enunciat.dimX;
@@ -27,7 +28,7 @@ public class TaulerComencat extends Tauler{
         /// TODO : IMPORTANT!!!
         this.id = Hash.calculaHash(format_Estandard());
     }
-    
+    */
     // MÈTODES PÚBLICS
     
     public boolean setValor(Integer x, Integer y, Integer valor){

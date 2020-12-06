@@ -1,10 +1,12 @@
 package domini.algoritme;
 
+import domini.tauler.Tauler;
 import domini.tauler.TaulerComencat;
 import domini.tauler.TaulerEnunciat;
 import persistencia.Dades;
 
 import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Driver_Algoritme {
@@ -38,6 +40,7 @@ public class Driver_Algoritme {
                     System.out.print("\tnumero de columnes: ");
                     y = sc.nextInt();
 
+                    System.out.print(algoritme.generarKakuroSimple(x,y,0).format_Estandard());
                     System.out.print("\tnumero de caselles blanques totals(introdueix null si vols que sigui aleatori): ");
                     String b = sc.next();
                     Integer bint = b.equals("null")? null:Integer.parseInt(b);
@@ -81,17 +84,20 @@ public class Driver_Algoritme {
                             System.out.println(" El tauler llegit: ");
                             System.out.println(te.format_Estandard());
                             System.out.print(" El tauler resolt: ");
-                            TaulerComencat tc = algoritme.resoldreKakuro(te);
-                            System.out.print(tc.format_Estandard());
-                            te.print();
-                            System.out.println("Format Human friendly: ");
-                            tc.print();
-                            System.out.println("\nIndica el nom del arxiu solucio a guardar(introdueix null si no vols que es guardi):");
-                            String ret = scan.next();
-                            if(!ret.equals("null")) {
-                                Dades.guardarArxiu(ret, tc.format_Estandard());
+                            ArrayList<TaulerComencat> sols = algoritme.resoldreKakuro(te);
+                            System.out.println("Número de solucions: "+sols.size());
+                            for(TaulerComencat tc: sols){
+                                System.out.print(tc.format_Estandard());
+                                te.print();
+                                System.out.println("Format Human friendly: ");
+                                tc.print();
+                                System.out.println("\nIndica el nom del arxiu solucio a guardar(introdueix null si no vols que es guardi):");
+                                String ret = scan.next();
+                                if(!ret.equals("null")) {
+                                    Dades.guardarArxiu(ret, tc.format_Estandard());
+                                }
+                                System.out.println("FET!\n");
                             }
-                            System.out.println("FET!\n");
                             break;
                         case 2 :
                             System.out.println(" Indica el path del fitxer relatiu al .jar: ");
@@ -123,14 +129,16 @@ public class Driver_Algoritme {
                             System.out.println(" El tauler llegit: ");
                             System.out.println(te2.format_Estandard());
                             System.out.println(" El tauler resolt: ");
-                            TaulerComencat tc2 = algoritme.resoldreKakuro(te2);
-                            System.out.println(tc2.format_Estandard());
-                            System.out.println(" El tauler a comparar: ");
-                            System.out.println(tes2.format_Estandard());
-                            if(tc2.format_Estandard().equals(tes2.format_Estandard()))
-                                System.out.println(" SON IGUALS!");
-                            else
-                                System.out.println(" SON DIFERENTS");
+                            ArrayList<TaulerComencat> sols2 = algoritme.resoldreKakuro(te2);
+                            for (TaulerComencat tc2:  sols2) {
+                                System.out.println(tc2.format_Estandard());
+                                System.out.println(" El tauler a comparar: ");
+                                System.out.println(tes2.format_Estandard());
+                                if (tc2.format_Estandard().equals(tes2.format_Estandard()))
+                                    System.out.println(" SON IGUALS!");
+                                else
+                                    System.out.println(" SON DIFERENTS");
+                            }
                             break;
                         default:
                             break;
