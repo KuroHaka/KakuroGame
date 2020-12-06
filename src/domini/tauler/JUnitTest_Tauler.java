@@ -1,4 +1,4 @@
-import domini.tauler.TaulerComencat;
+/*import domini.tauler.TaulerComencat;
 
 import org.junit.After;
 import org.junit.Before;
@@ -55,3 +55,4 @@ public class JUnitTest_Tauler {
     // @Test
     // public void hello() {}
 }
+*/

@@ -1,11 +1,15 @@
 package persistencia;
 
 import interficie.ControladoraInterficie;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControladoraPersistencia {
     
     ControladoraInterficie ctrl_interficie;
+    String root = "dades/";
     
     public ControladoraPersistencia(ControladoraInterficie ci) {
         this.ctrl_interficie = ci;
@@ -15,9 +19,19 @@ public class ControladoraPersistencia {
         
     }
        
-    public ArrayList<String> llista_id_usuaris() {
-        // TODO
-        return null;
+    public ArrayList<String> llista_usuaris() {
+        ArrayList<String> llista = new ArrayList<>();
+        
+        String shadow = "";
+        try {shadow = Dades.carregaArxiu(root + "shadow.txt");}
+        catch (NoSuchFileException ex) {}
+        
+        String[] files = shadow.split("\n");
+        for (String fila : files) {
+            llista.add(fila.split(":")[0]);
+        }
+        
+        return llista;
     }
     
     public ArrayList<String> llista_id_enunciats() {
@@ -31,8 +45,17 @@ public class ControladoraPersistencia {
     }
     
     public String getHashPassword(String usuari) {
-        // TODO
-        return "null";
+        String shadow = "";
+        try {shadow = Dades.carregaArxiu(root + "shadow.txt");}
+        catch (NoSuchFileException ex) {}
+        
+        String[] files = shadow.split("\n");
+        for (String fila : files) {
+            if (fila.split(":")[0].equals(usuari)) {
+                return fila.split(":")[1];
+            }
+        }
+        return "no_existeix_usuari";
     }
     
     public Object[] getUsuari(String usuari) {
@@ -58,6 +81,20 @@ public class ControladoraPersistencia {
     
     public boolean guardaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
         // TODO
+        return true;
+    }
+    
+    public boolean addUser(String usuari, String hash) {
+        
+        String shadow = "";
+        try {shadow = Dades.carregaArxiu(root + "shadow.txt");}
+        catch (NoSuchFileException ex) {}
+        
+        String line = "\n" + usuari + ":" + hash + ":";
+        
+        String new_shadow = shadow + line;
+        Dades.guardarArxiu(root + "shadow.txt", new_shadow);
+        
         return true;
     }
     

@@ -40,7 +40,7 @@ public class ControladoraDomini {
     // INICIALITZACIÓ
     
     public void inicia() {
-        this.id_usuaris = ctrl_persist.llista_id_usuaris();
+        this.id_usuaris = ctrl_persist.llista_usuaris();
         this.id_enunciats_repo = ctrl_persist.llista_id_enunciats();
     }
     
