@@ -2,8 +2,11 @@ package domini.algoritme;
 
 import domini.tauler.TaulerComencat;
 import domini.tauler.TaulerEnunciat;
+import java.nio.file.NoSuchFileException;
 import java.util.Scanner;
-import presistencia.Dades;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import persistencia.Dades;
 
 public class Driver_resoldreKakuro {
     public static Algoritme algoritme = new Algoritme();
@@ -11,7 +14,12 @@ public class Driver_resoldreKakuro {
     static String path = "test/algoritmes/resoldreKakuro/";
     
     private static void test(String enu, String sol) {
-        String enun = Dades.carregaArxiu(path + enu);
+        String enun ="";
+        try {
+            enun = Dades.carregaArxiu(path + enu);
+        } catch (NoSuchFileException ex) {
+            Logger.getLogger(Driver_resoldreKakuro.class.getName()).log(Level.SEVERE, null, ex);
+        }
         TaulerEnunciat enunciat = new TaulerEnunciat(enun);
         
         boolean validesa = algoritme.validaFormat(enunciat);
@@ -20,7 +28,12 @@ public class Driver_resoldreKakuro {
             return;
         }
         
-        String solu = Dades.carregaArxiu(path + sol);
+        String solu="";
+        try {
+            solu = Dades.carregaArxiu(path + sol);
+        } catch (NoSuchFileException ex) {
+            Logger.getLogger(Driver_resoldreKakuro.class.getName()).log(Level.SEVERE, null, ex);
+        }
         TaulerComencat solucio = new TaulerComencat(solu);
         
         TaulerComencat resolucioAux = algoritme.resoldreKakuro(enunciat);

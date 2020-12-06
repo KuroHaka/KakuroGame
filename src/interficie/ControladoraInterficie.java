@@ -1,6 +1,7 @@
 package interficie;
 
 import domini.ControladoraDomini;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import persistencia.ControladoraPersistencia;
 
@@ -9,14 +10,17 @@ public class ControladoraInterficie {
     private String dades_default_root = "dades";
     private String dades_root = dades_default_root;
     
-    // CONSTRUCTORA
-    
-    public ControladoraInterficie() {};
-    
     // CONTROLADORES de Domini i Persistencia
     
-    public ControladoraDomini domini = new ControladoraDomini();
-    public ControladoraPersistencia persist = new ControladoraPersistencia(dades_root, this);
+    public ControladoraDomini domini;
+    public ControladoraPersistencia persist;
+    
+    // CONSTRUCTORA
+    
+    public ControladoraInterficie() {
+        domini = new ControladoraDomini(this, persist);
+        persist = new ControladoraPersistencia(dades_root, this);
+    };
     
     // Tots els FRAMES
     
@@ -29,8 +33,11 @@ public class ControladoraInterficie {
     
     public void inicia() {
         // Inicia altres controladores
-        domini.inicia();
         persist.inicia();
+        ArrayList<String> llista_id_usuaris = null; // I need this Eugeni
+        ArrayList<String> llista_id_enunciats = null; // I need this Eugeni: son enunciats del repositori
+        domini.inicia(llista_id_usuaris, llista_id_enunciats);
+        
         // Inicia i Visibilitza el Frame de login
         login.inicia();
         login.setVisible(true);

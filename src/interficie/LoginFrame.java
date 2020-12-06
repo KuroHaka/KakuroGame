@@ -345,7 +345,8 @@ public class LoginFrame extends javax.swing.JFrame {
             System.out.println("(LoginFrame) Usuari o Password buits");
             return;
         }
-        boolean correcte = ctrl_interficie.persist.validaCredencials(usuari, passwd);
+        //boolean correcte = ctrl_interficie.persist.validaCredencials(usuari, passwd);
+        boolean correcte = true; // TODO 
         if (!correcte){
             this.jLabel_Incorrecte.setVisible(true);
             System.out.println("(LoginFrame) Credencials Incorrectes");

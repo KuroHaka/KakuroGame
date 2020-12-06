@@ -1,8 +1,6 @@
 package interficie;
 
-import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,8 +34,8 @@ public class IniciFrame extends javax.swing.JFrame {
         this.jLabelUsuari.setText("Benvingut " + this.usuari);
         
         // SET Llista de PARTIDES de l'Usuari
-        
-        partides_raw = ctrl_interficie.persist.llistaPartidesUsuari(this.usuari);
+        // TODO
+        //partides_raw = ctrl_interficie.persist.llistaPartidesUsuari(this.usuari);
         llista_partides = new Vector<>();
         
         for (String p : partides_raw) {
