@@ -6,17 +6,17 @@ import persistencia.ControladoraPersistencia;
 
 public class ControladoraInterficie {
     
-    private String dades_default_root = "dades";
-    private String dades_root = dades_default_root;
+    // CONTROLADORES de Domini i Persistencia
+    
+    public ControladoraDomini ctrl_domini;
+    public ControladoraPersistencia ctrl_persist;
     
     // CONSTRUCTORA
     
-    public ControladoraInterficie() {};
-    
-    // CONTROLADORES de Domini i Persistencia
-    
-    public ControladoraDomini domini = new ControladoraDomini();
-    public ControladoraPersistencia persist = new ControladoraPersistencia(dades_root, this);
+    public ControladoraInterficie() {
+        ctrl_persist = new ControladoraPersistencia(this);
+        ctrl_domini = new ControladoraDomini(this, ctrl_persist);
+    };
     
     // Tots els FRAMES
     
@@ -29,27 +29,12 @@ public class ControladoraInterficie {
     
     public void inicia() {
         // Inicia altres controladores
-        domini.inicia();
-        persist.inicia();
+        ctrl_persist.inicia();
+        ctrl_domini.inicia();
+        
         // Inicia i Visibilitza el Frame de login
         login.inicia();
         login.setVisible(true);
-    }
-    
-    // METODES: Funcions de comunicacio amb altres Controladores
-    
-    //public Partida deFilenameAPartida(String filename){
-    //
-    //}
-    
-    // METODES: Funcions per donar Format a diferents tipus
-    
-    public Object[] deFilenameAPartidaTimestampHash(String f){
-        String[] parts = f.split("@");
-        String nom = parts[1];
-        String timestamp = deTimestampAVerbose(Long.parseLong(parts[2]));
-        String hash = parts[3];
-        return new Object[] {nom, timestamp, hash};
     }
     
     public static String deTimestampAVerbose(long seconds) {

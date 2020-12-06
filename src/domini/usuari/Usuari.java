@@ -1,23 +1,35 @@
 package domini.usuari;
 
+import java.util.ArrayList;
+import partida.Partida;
+
 public class Usuari {
     private String name;
-    private String password;
+    private String password; // és un hash
     private Configuracio defecte;
-    
+    private ArrayList<String> id_partides;
     
     //Constructoras
     
     public Usuari() {
-        this.name = "";
-        this.password = "";
+        this.name = "nobody";
+        this.password = "x";
         this.defecte = new Configuracio(); //Hauriem de posar una configuracio inical per defecte?
+        this. id_partides = new ArrayList<String> ();
     }
     
-    public Usuari(String n, String p) {
-        this.name = n;
-        this.password = p;
-        this.defecte = new Configuracio();
+    public Usuari(String nom, String hashPwd) {
+        this.name = nom;
+        this.password = hashPwd;
+        this.defecte = new Configuracio(); //Hauriem de posar una configuracio inical per defecte?
+        this. id_partides = new ArrayList<String> ();
+    }
+    
+    public Usuari(String nom, String hashPwd, Configuracio c, ArrayList<String> partides) {
+        this.name = nom;
+        this.password = hashPwd;
+        this.defecte = c;
+        this.id_partides = partides;
     }
     
     //Funciones
@@ -34,7 +46,7 @@ public class Usuari {
         this.defecte = new Configuracio(dx, dy, nb, nbe);
     }
     
-    public void canviarConfigDefecte2(Configuracio c) {
+    public void canviarConfigDefecteExplicit(Configuracio c) {
         this.defecte = c;
     }
     
@@ -54,6 +66,14 @@ public class Usuari {
         System.out.println("Nom: " + this.name);
         System.out.println("Contrasenya: " + this.password);
         defecte.print();
+    }
+    
+    public ArrayList<String> getLlistaIdPartides(){
+        return this.id_partides;
+    }
+    
+    public void afegirPartida(String p){
+        id_partides.add(p);
     }
     
 }

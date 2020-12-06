@@ -1,8 +1,11 @@
 package domini.algoritme;
 
 import domini.tauler.TaulerComencat;
+import java.nio.file.NoSuchFileException;
 import java.util.Scanner;
-import presistencia.Dades;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import persistencia.Dades;
 
 public class Driver_validarSolucio {
     public static Algoritme algoritme = new Algoritme();
@@ -10,7 +13,12 @@ public class Driver_validarSolucio {
     static String path = "test/algoritmes/validarSolucio/";
     
     public static void test(String nom) {
-        String arxiu = Dades.carregaArxiu(path + nom);
+        String arxiu = "";
+        try {
+            arxiu = Dades.carregaArxiu(path + nom);
+        } catch (NoSuchFileException ex) {
+            Logger.getLogger(Driver_validarSolucio.class.getName()).log(Level.SEVERE, null, ex);
+        }
         TaulerComencat tauler = new TaulerComencat(arxiu);
         tauler.print();
         

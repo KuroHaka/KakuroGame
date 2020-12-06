@@ -134,7 +134,7 @@ public class RegistreFrame extends javax.swing.JFrame {
             System.out.println("(RegistreFrame) Usuari o Password buits");
             return;
         }
-        boolean correcte = ctrl_interficie.persist.registrarUsuari(usuari, passwd);
+        boolean correcte = true; // TODO // ctrl_interficie.persist.registrarUsuari(usuari, passwd);
         if (correcte){
             JOptionPane.showMessageDialog(this, "S'ha registrat correctament l'usuari " + usuari + ".", "Ep! I diu...", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);

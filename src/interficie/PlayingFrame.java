@@ -22,7 +22,8 @@ public class PlayingFrame extends javax.swing.JFrame {
 
     public void inicia(String usuari, String arxiuPartida){
         this.usuari = usuari;
-        Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(arxiuPartida);
+        // TODO
+        //Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(arxiuPartida);
         
     }
     
