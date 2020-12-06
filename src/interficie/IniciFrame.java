@@ -38,10 +38,10 @@ public class IniciFrame extends javax.swing.JFrame {
         //partides_raw = ctrl_interficie.persist.llistaPartidesUsuari(this.usuari);
         llista_partides = new Vector<>();
         
-        for (String p : partides_raw) {
+        /*for (String p : partides_raw) {
             Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(p);
             llista_partides.add(ret[0] + " <" + ret[1] + ">");
-        }
+        }*/
         this.jListPartides.setListData(llista_partides);
         
     }
@@ -170,13 +170,15 @@ public class IniciFrame extends javax.swing.JFrame {
         
         String arxiu_selec = partides_raw.get(index);
         
-        Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(arxiu_selec);
+        // TODO
+        
+        /*Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(arxiu_selec);
         String nom = (String) ret[0];
         String timestamp = (String) ret[1];
-        String hash = (String) ret[2];
+        String hash = (String) ret[2];*/
         
         // TODO Obrir partida
-        JOptionPane.showMessageDialog(this, "\n -- TODO --\nObrir partida:\n\n- Usuari: " + this.usuari + "\n- Arxiu: " + arxiu_selec + "\n- Partida: " + nom + "\n- Cronòmetre: " + timestamp);
+        //JOptionPane.showMessageDialog(this, "\n -- TODO --\nObrir partida:\n\n- Usuari: " + this.usuari + "\n- Arxiu: " + arxiu_selec + "\n- Partida: " + nom + "\n- Cronòmetre: " + timestamp);
         
         
         

@@ -12,14 +12,14 @@ public class ControladoraInterficie {
     
     // CONTROLADORES de Domini i Persistencia
     
-    public ControladoraDomini domini;
-    public ControladoraPersistencia persist;
+    public ControladoraDomini ctrl_domini;
+    public ControladoraPersistencia ctrl_persist;
     
     // CONSTRUCTORA
     
     public ControladoraInterficie() {
-        domini = new ControladoraDomini(this, persist);
-        persist = new ControladoraPersistencia(dades_root, this);
+        ctrl_persist = new ControladoraPersistencia(dades_root, this);
+        ctrl_domini = new ControladoraDomini(this, ctrl_persist);
     };
     
     // Tots els FRAMES
@@ -33,30 +33,12 @@ public class ControladoraInterficie {
     
     public void inicia() {
         // Inicia altres controladores
-        persist.inicia();
-        ArrayList<String> llista_id_usuaris = null; // I need this Eugeni
-        ArrayList<String> llista_id_enunciats = null; // I need this Eugeni: son enunciats del repositori
-        domini.inicia(llista_id_usuaris, llista_id_enunciats);
+        ctrl_persist.inicia();
+        ctrl_domini.inicia();
         
         // Inicia i Visibilitza el Frame de login
         login.inicia();
         login.setVisible(true);
-    }
-    
-    // METODES: Funcions de comunicacio amb altres Controladores
-    
-    //public Partida deFilenameAPartida(String filename){
-    //
-    //}
-    
-    // METODES: Funcions per donar Format a diferents tipus
-    
-    public Object[] deFilenameAPartidaTimestampHash(String f){
-        String[] parts = f.split("@");
-        String nom = parts[1];
-        String timestamp = deTimestampAVerbose(Long.parseLong(parts[2]));
-        String hash = parts[3];
-        return new Object[] {nom, timestamp, hash};
     }
     
     public static String deTimestampAVerbose(long seconds) {

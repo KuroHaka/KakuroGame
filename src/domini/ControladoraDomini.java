@@ -2,6 +2,7 @@ package domini;
 
 import domini.ranking.Ranking;
 import domini.repositori.Repositori;
+import domini.usuari.Configuracio;
 import domini.usuari.Usuari;
 import interficie.ControladoraInterficie;
 import java.util.ArrayList;
@@ -37,23 +38,29 @@ public class ControladoraDomini {
     
     // INICIALITZACIÓ
     
-    public void inicia(ArrayList<String> llista_id_usuaris, ArrayList<String> llista_id_enunciats/*TODO : falta ranking*/) {
-        this.id_usuaris = llista_id_usuaris;
-        this.id_enunciats_repo = llista_id_enunciats;
+    public void inicia() {
+        this.id_usuaris = ctrl_persist.llista_id_usuaris();
+        this.id_enunciats_repo = ctrl_persist.llista_id_enunciats();
     }
     
-    public boolean validarCredencials (String usuari, String password){
-        Object[] obj = ctrl_persist.getUsuari(usuari);
-        Usuari u = new Usuari();
-        return true;
+    public boolean validarCredencials (String id_usuari, String hash){ // DONE
+        String real = ctrl_persist.getHashPassword(id_usuari);
+        return real.equals(hash);
     }
     
     public boolean seleccionaUsuari (String id_usuari){
         if( ! id_usuaris.contains(id_usuari)) return false;
-        if( id_usuari == this.id_usuari_actual) return true;
-        id_usuari_actual = id_usuari;
-        //Set Usuari (i inicia)
+        if( id_usuari.equals(this.id_usuari_actual)) return true;
         
+        // TODO
+        String hashPwd = ctrl_persist.getHashPassword(id_usuari);
+        ArrayList<String> partides = ctrl_persist.llista_id_partides(id_usuari);
+        
+        Object[] ret = ctrl_persist.getConfiguracio(id_usuari);
+        Configuracio c = new Configuracio((int)ret[0], (int)ret[1], (int)ret[2], (int)ret[3]);
+        
+        Usuari u = new Usuari(id_usuari, hashPwd, c, partides);
+        this.id_usuari_actual = id_usuari;
         return true;
     }
     

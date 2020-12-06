@@ -1,7 +1,7 @@
 package persistencia;
 
 import interficie.ControladoraInterficie;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class ControladoraPersistencia {
     
@@ -14,21 +14,51 @@ public class ControladoraPersistencia {
     public void inicia() {
         
     }
-    
-    public Object[] getUsuari(String usuari) {
+       
+    public ArrayList<String> llista_id_usuaris() {
         // TODO
         return null;
     }
     
-    public Vector<String> llista_ids_PartidesUsuari(String username){ // Un array millor? Depèn de lo que accepti l'objecte de l.interficie
-        String[] totes_partides = Dades.llistaArxius("arxiu.json");
-        Vector<String> partides_usuari = new Vector<>();
+    public ArrayList<String> llista_id_enunciats() {
         // TODO
-        return partides_usuari;
+        return null;
     }
     
-    public void guardaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
+    public ArrayList<String> llista_id_partides(String id_usuari) {
         // TODO
+        return null;
+    }
+    
+    public String getHashPassword(String id_usuari) {
+        // TODO
+        return null;
+    }
+    
+    public Object[] getUsuari(String id_usuari) {
+        // TODO
+        return null;
+    }
+    
+    public Object[] getConfiguracio (String id_usuari) {
+        // TODO
+        int numeroBlanquesEstablertes = 10;
+        int numeroBlanques = 20;
+        int dimX = 8;
+        int dimY = 8;
+        
+        Object[] ret = new Object[] {numeroBlanquesEstablertes, numeroBlanques, dimX, dimY};
+        return ret;
+    }
+    
+    public Object[] carregaPartida (String id_partida) {
+        // TODO
+        return null;
+    }
+    
+    public boolean guardaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
+        // TODO
+        return true;
     }
     
 }
