@@ -1,5 +1,6 @@
 package domini;
 
+import domini.hashing.Hash;
 import domini.ranking.Ranking;
 import domini.repositori.Repositori;
 import domini.usuari.Configuracio;
@@ -43,7 +44,8 @@ public class ControladoraDomini {
         this.id_enunciats_repo = ctrl_persist.llista_id_enunciats();
     }
     
-    public boolean validarCredencials (String id_usuari, String hash){ // DONE
+    public boolean validarCredencials (String id_usuari, String password){
+        String hash = Hash.calculaHash(password);
         String real = ctrl_persist.getHashPassword(id_usuari);
         return real.equals(hash);
     }

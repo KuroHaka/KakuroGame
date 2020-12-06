@@ -7,7 +7,7 @@ public class ControladoraPersistencia {
     
     ControladoraInterficie ctrl_interficie;
     
-    public ControladoraPersistencia(String root, ControladoraInterficie ci) {
+    public ControladoraPersistencia(ControladoraInterficie ci) {
         this.ctrl_interficie = ci;
     }
     
@@ -25,22 +25,22 @@ public class ControladoraPersistencia {
         return null;
     }
     
-    public ArrayList<String> llista_id_partides(String id_usuari) {
+    public ArrayList<String> llista_id_partides(String usuari) {
         // TODO
         return null;
     }
     
-    public String getHashPassword(String id_usuari) {
+    public String getHashPassword(String usuari) {
+        // TODO
+        return "null";
+    }
+    
+    public Object[] getUsuari(String usuari) {
         // TODO
         return null;
     }
     
-    public Object[] getUsuari(String id_usuari) {
-        // TODO
-        return null;
-    }
-    
-    public Object[] getConfiguracio (String id_usuari) {
+    public Object[] getConfiguracio (String usuari) {
         // TODO
         int numeroBlanquesEstablertes = 10;
         int numeroBlanques = 20;

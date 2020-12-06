@@ -1,14 +1,10 @@
 package interficie;
 
 import domini.ControladoraDomini;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import persistencia.ControladoraPersistencia;
 
 public class ControladoraInterficie {
-    
-    private String dades_default_root = "dades";
-    private String dades_root = dades_default_root;
     
     // CONTROLADORES de Domini i Persistencia
     
@@ -18,7 +14,7 @@ public class ControladoraInterficie {
     // CONSTRUCTORA
     
     public ControladoraInterficie() {
-        ctrl_persist = new ControladoraPersistencia(dades_root, this);
+        ctrl_persist = new ControladoraPersistencia(this);
         ctrl_domini = new ControladoraDomini(this, ctrl_persist);
     };
     
