@@ -40,7 +40,7 @@ public class ControladoraDomini {
     
     // INICIALITZACIÓ
     
-    public void inicia() {
+    public void inicia () {
         this.usuaris = ctrl_persist.llista_usuaris();
         this.id_enunciats_repo = ctrl_persist.llista_id_enunciats();
     }
@@ -64,7 +64,7 @@ public class ControladoraDomini {
     
     // MÈTODES de Persistència
     
-    public boolean registrarUsuari(String nom_u, String password) {
+    public boolean registrarUsuari (String nom_u, String password) {
         if (usuaris.contains(nom_u)){
             System.out.println("(CtrlDomini) Usuari ja existeix");
             return false;
@@ -83,8 +83,15 @@ public class ControladoraDomini {
         return real.equals(hash);
     }
     
-    public Vector<String> llistaPartidesUsuari(){
+    public Vector<String> llistaPartidesUsuari() {
         return usuari_actual.getLlistaIdPartides();
     }
     
+    public Object[] getInfoPartida(String id_partida) {
+        return ctrl_persist.getInfoPartida(id_partida);
+    }
+    
+    public boolean borrarPartida(String id_partida, String usuari) {
+        return ctrl_persist.borrarPartida(id_partida, usuari);
+    }
 }
