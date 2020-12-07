@@ -3,6 +3,8 @@ package persistencia;
 import interficie.ControladoraInterficie;
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,17 +32,34 @@ public class ControladoraPersistencia {
         for (String fila : files) {
             llista.add(fila.split(":")[0]);
         }
-        
+        System.out.println("(Ctrl Persist) S'ha extret llista usuaris");
         return llista;
     }
     
     public ArrayList<String> llista_id_enunciats() {
         // TODO
+        
+        
+        
         return null;
     }
     
-    public ArrayList<String> llista_id_partides(String usuari) {
-        // TODO
+    public Vector<String> llista_id_partides(String usuari) {
+        Vector<String> llista = new Vector<>();
+        
+        String shadow = "";
+        try {shadow = Dades.carregaArxiu(root + "shadow.txt");}
+        catch (NoSuchFileException ex) {}
+        
+        String[] files = shadow.split("\n");
+        for (String fila : files) {
+            if (fila.split(":")[0].equals(usuari)) {
+                llista.addAll(Arrays.asList(fila.split(":")[2].split(",")));
+                System.out.println("(Ctrl Persist) S'han extret partides de " + usuari);
+                return llista;
+            }
+        }
+        System.out.println("(Ctrl Persist) No s'ha trobat usuari " + usuari);
         return null;
     }
     
@@ -52,9 +71,11 @@ public class ControladoraPersistencia {
         String[] files = shadow.split("\n");
         for (String fila : files) {
             if (fila.split(":")[0].equals(usuari)) {
+                System.out.println("(Ctrl Persist) S'ha extret hash de " + usuari);
                 return fila.split(":")[1];
             }
         }
+        System.out.println("(Ctrl Persist) No s'ha trobat usuari " + usuari);
         return "no_existeix_usuari";
     }
     
@@ -95,6 +116,7 @@ public class ControladoraPersistencia {
         String new_shadow = shadow + line;
         Dades.guardarArxiu(root + "shadow.txt", new_shadow);
         
+        System.out.println("(Ctrl Persist) S'ha afegit usuari " + usuari);
         return true;
     }
     
