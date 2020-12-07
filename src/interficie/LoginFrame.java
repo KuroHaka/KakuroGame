@@ -1,5 +1,7 @@
 package interficie;
 
+import javax.swing.JOptionPane;
+
 public class LoginFrame extends javax.swing.JFrame {
 
     ControladoraInterficie ctrl_interficie;
@@ -394,7 +396,9 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextUsuariActionPerformed
 
     private void jButtonRegistre1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistre1ActionPerformed
-        // TODO add your handling code here:
+        
+        JOptionPane.showMessageDialog(this, "Si no tens compte en pots crear un al botó de Registre.", "Ajuda per iniciar sessió", JOptionPane.INFORMATION_MESSAGE);
+        
     }//GEN-LAST:event_jButtonRegistre1ActionPerformed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged

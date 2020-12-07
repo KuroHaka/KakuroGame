@@ -62,7 +62,15 @@ public class ControladoraDomini {
         return true;
     }
     
-    // MÈTODES de Persistència
+    // MÈTODES per la capa de Domini
+    
+    public Vector<String> llistaPartidesUsuari() {
+        return usuari_actual.getLlistaIdPartides();
+    }
+    
+    
+    
+    // API amb Persistència
     
     public boolean registrarUsuari (String nom_u, String password) {
         if (usuaris.contains(nom_u)){
@@ -83,15 +91,22 @@ public class ControladoraDomini {
         return real.equals(hash);
     }
     
-    public Vector<String> llistaPartidesUsuari() {
-        return usuari_actual.getLlistaIdPartides();
-    }
-    
-    public Object[] getInfoPartida(String id_partida) {
+    public Object[] getInfoPartida (String id_partida) {
         return ctrl_persist.getInfoPartida(id_partida);
     }
     
-    public boolean borrarPartida(String id_partida, String usuari) {
-        return ctrl_persist.borrarPartida(id_partida, usuari);
+    public boolean borrarPartida (String id_partida, String usuari) {
+        return ctrl_persist.borrarPartida(id_partida/*, usuari*/);
     }
+    
+    public Object[] getConfigPreferida (String usuari) {
+        return ctrl_persist.getConfiguracio(usuari);
+    }
+    
+    // TODO
+    public boolean setConfigPreferida (String usuari, Object[] conf) {
+        //return ctrl_persist.setConfiguracio(usuari, conf);
+        return true;
+    }
+    
 }
