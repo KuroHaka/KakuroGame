@@ -132,6 +132,29 @@ public class ControladoraPersistencia {
         return true;
     }
     
+    public boolean borrarPartida(String id_partida) {
+        String partides = "";
+        try {partides = Dades.carregaArxiu(root + "partides.txt");}
+        catch (NoSuchFileException ex) {}
+        
+        String[] files = partides.split("\n");
+        String escriure = "";
+        boolean primer = true;
+        System.out.println("(Ctrl Persist) Ara es borra partida " + id_partida);
+        
+        for (int i = 0; i < files.length; i++) {
+            if (!files[i].split(":")[0].equals(id_partida)) {
+                if (primer) {
+                    escriure += files[i];
+                }
+                else escriure += "\n" + files[i];
+            }
+            else System.out.println("(Ctrl Persist) S'ha borrat partida " + id_partida);
+        }
+        Dades.guardarArxiu(root + "partides.txt", escriure);
+        return true;
+    }
+    
     public boolean addUser(String usuari, String hash) {
         
         String shadow = "";
