@@ -95,8 +95,35 @@ public class ControladoraPersistencia {
         return ret;
     }
     
+    public Object[] getInfoPartida(String id_partida) {
+        String nomEnunciat = "";
+        String nomComencada = "";
+        int tempsActual = 0; 
+        
+        String partides = "";
+        try {partides = Dades.carregaArxiu(root + "partides.txt");}
+        catch (NoSuchFileException ex) {}
+        
+        String[] files = partides.split("\n");
+        for (String fila : files) {
+            if (fila.split(":")[0].equals(id_partida)) {
+                nomEnunciat = (fila.split(":")[1]);
+                nomComencada = (fila.split(":")[2]);
+                tempsActual = Integer.parseInt(fila.split(":")[3]);
+                
+                System.out.println("(Ctrl Persist) S'han extret info partida de " + id_partida);
+                return new Object[] {nomEnunciat, nomComencada, tempsActual};
+            }
+        }
+        System.out.println("(Ctrl Persist) No s'ha trobat id_partida " + id_partida);
+        return null;
+    }
+    
     public Object[] carregaPartida (String id_partida) {
         // TODO
+        
+        
+        
         return null;
     }
     
