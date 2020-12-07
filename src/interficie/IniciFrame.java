@@ -32,11 +32,11 @@ public class IniciFrame extends javax.swing.JFrame {
         // Seleccionar la primera partida per defecte
         if(llista_partides.size() > 0){
         this.jListPartides.setSelectedIndex(0);
-        setPartidaSeleccionada(0);
-        } else capSeleccionada();
+        preview_setPartidaSeleccionada(0);
+        } else preview_capSeleccionada();
     }
     
-    private void capSeleccionada() {
+    private void preview_capSeleccionada() {
         this.jLabel_id_partida.setText("");
         this.jLabel_timestamp.setText("");
     }
@@ -45,7 +45,11 @@ public class IniciFrame extends javax.swing.JFrame {
         this.jListPartides.setListData(llista_partides);
     }
     
-    private void setPartidaSeleccionada(int posicio){
+    private void preview_setPartidaSeleccionada(int posicio){
+        if (posicio < 0){ 
+            preview_capSeleccionada();
+            return;
+        }
         String partida_id = llista_partides.get(posicio);
         this.jLabel_id_partida.setText(partida_id);
         Object[] ret = ctrl_interficie.ctrl_domini.getInfoPartida(partida_id);
@@ -242,7 +246,7 @@ public class IniciFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jListPartidesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListPartidesValueChanged
-        setPartidaSeleccionada(this.jListPartides.getSelectedIndex());
+        preview_setPartidaSeleccionada(this.jListPartides.getSelectedIndex());
     }//GEN-LAST:event_jListPartidesValueChanged
 
     private void jButton_delete_partidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_delete_partidaActionPerformed
@@ -252,13 +256,8 @@ public class IniciFrame extends javax.swing.JFrame {
         if(ok) {
             llista_partides.remove(index);
             actualitzaJList();
-            if(index > 0) {
-                setPartidaSeleccionada(index - 1);
-            }
-            else {
-                capSeleccionada();
-                this.jListPartides.setSelectedIndex(-1);
-            }
+            preview_capSeleccionada();
+            this.jListPartides.setSelectedIndex(-1);
         }
     }//GEN-LAST:event_jButton_delete_partidaActionPerformed
 
