@@ -1,5 +1,6 @@
 package interficie;
 
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
@@ -12,7 +13,6 @@ public class IniciFrame extends javax.swing.JFrame {
     ControladoraInterficie ctrl_interficie;
     
     String usuari = "<usuari>";
-    Vector<String> partides_raw; // llista partides de l'usuari amb el nom de l'arxiu
     Vector<String> llista_partides; // llista partides de l'usuari simple: nom + temps
     
     public IniciFrame(ControladoraInterficie pres) {
@@ -34,14 +34,9 @@ public class IniciFrame extends javax.swing.JFrame {
         this.jLabelUsuari.setText("Benvingut " + this.usuari);
         
         // SET Llista de PARTIDES de l'Usuari
-        // TODO
-        //partides_raw = ctrl_interficie.persist.llistaPartidesUsuari(this.usuari);
-        llista_partides = new Vector<>();
         
-        /*for (String p : partides_raw) {
-            Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(p);
-            llista_partides.add(ret[0] + " <" + ret[1] + ">");
-        }*/
+        llista_partides = ctrl_interficie.ctrl_domini.llistaPartidesUsuari(); //Vector<>();
+        
         this.jListPartides.setListData(llista_partides);
         
     }
@@ -168,17 +163,21 @@ public class IniciFrame extends javax.swing.JFrame {
         if (index == -1) return; // Cap seleccionat
         System.out.println("(IniciFrame) Index partida=" + index);
         
-        String arxiu_selec = partides_raw.get(index);
+        String arxiu_selec = llista_partides.get(index);
         
         // TODO
         
-        /*Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(arxiu_selec);
-        String nom = (String) ret[0];
-        String timestamp = (String) ret[1];
-        String hash = (String) ret[2];*/
-        
+        //Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(arxiu_selec);
+        int timestamp = 1234;// (int) ret[1];
+        //String hash = (String) ret[2];*/
+        String verbose_timestamp = ctrl_interficie.deTimestampAVerbose(timestamp);
         // TODO Obrir partida
-        //JOptionPane.showMessageDialog(this, "\n -- TODO --\nObrir partida:\n\n- Usuari: " + this.usuari + "\n- Arxiu: " + arxiu_selec + "\n- Partida: " + nom + "\n- Cronòmetre: " + timestamp);
+        JOptionPane.showMessageDialog(this, ""
+                + "\n -- TODO --"
+                + "\n [ Obrir partida ]\n"
+                + "\n- Propietari: " + this.usuari + ""
+                + "\n- Id de la partida: " + arxiu_selec +
+                "\n- Cronòmetre: " + verbose_timestamp);
         
         
         

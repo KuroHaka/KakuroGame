@@ -1,13 +1,14 @@
 package domini.usuari;
 
 import java.util.ArrayList;
+import java.util.Vector;
 import partida.Partida;
 
 public class Usuari {
     private String name;
     private String password; // és un hash
     private Configuracio defecte;
-    private ArrayList<String> id_partides;
+    private Vector<String> id_partides;
     
     //Constructoras
     
@@ -15,17 +16,17 @@ public class Usuari {
         this.name = "nobody";
         this.password = "x";
         this.defecte = new Configuracio(); //Hauriem de posar una configuracio inical per defecte?
-        this. id_partides = new ArrayList<String> ();
+        this. id_partides = new Vector<String> ();
     }
     
     public Usuari(String nom, String hashPwd) {
         this.name = nom;
         this.password = hashPwd;
         this.defecte = new Configuracio(); //Hauriem de posar una configuracio inical per defecte?
-        this. id_partides = new ArrayList<String> ();
+        this. id_partides = new Vector<String> ();
     }
     
-    public Usuari(String nom, String hashPwd, Configuracio c, ArrayList<String> partides) {
+    public Usuari(String nom, String hashPwd, Configuracio c, Vector<String> partides) {
         this.name = nom;
         this.password = hashPwd;
         this.defecte = c;
@@ -68,7 +69,7 @@ public class Usuari {
         defecte.print();
     }
     
-    public ArrayList<String> getLlistaIdPartides(){
+    public Vector<String> getLlistaIdPartides(){
         return this.id_partides;
     }
     

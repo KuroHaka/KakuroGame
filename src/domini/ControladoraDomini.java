@@ -7,6 +7,7 @@ import domini.usuari.Configuracio;
 import domini.usuari.Usuari;
 import interficie.ControladoraInterficie;
 import java.util.ArrayList;
+import java.util.Vector;
 import persistencia.ControladoraPersistencia;
 
 public class ControladoraDomini {
@@ -14,8 +15,8 @@ public class ControladoraDomini {
     // ATRIBUTS
     
     // Usuaris
-    private ArrayList<String> id_usuaris;
-    private String id_usuari_actual;
+    private ArrayList<String> usuaris;
+    private String nom_usuari_actual;
     private Usuari usuari_actual;
     // Repositori
     private ArrayList<String> id_enunciats_repo;
@@ -40,34 +41,50 @@ public class ControladoraDomini {
     // INICIALITZACIÓ
     
     public void inicia() {
-        this.id_usuaris = ctrl_persist.llista_usuaris();
+        this.usuaris = ctrl_persist.llista_usuaris();
         this.id_enunciats_repo = ctrl_persist.llista_id_enunciats();
     }
     
+    public boolean seleccionaUsuari (String nom_usuari){
+        if( ! usuaris.contains(nom_usuari)) return false;
+        if( nom_usuari.equals(this.nom_usuari_actual)) return true;
+        
+        // TODO
+        String hashPwd = ctrl_persist.getHashPassword(nom_usuari);
+        Vector<String> partides = ctrl_persist.llista_id_partides(nom_usuari);
+        
+        Object[] ret = ctrl_persist.getConfiguracio(nom_usuari);
+        Configuracio c = new Configuracio((int)ret[0], (int)ret[1], (int)ret[2], (int)ret[3]);
+        
+        Usuari u = new Usuari(nom_usuari, hashPwd, c, partides);
+        this.nom_usuari_actual = nom_usuari;
+        this.usuari_actual = u;
+        return true;
+    }
+    
+    // MÈTODES de Persistència
+    
+    public boolean registrarUsuari(String nom_u, String password) {
+        if (usuaris.contains(nom_u)){
+            System.out.println("(CtrlDomini) Usuari ja existeix");
+            return false;
+        }
+        String hash = Hash.calculaHash(password);
+        boolean correcte = ctrl_persist.addUser(nom_u, hash);
+        if (correcte){
+            usuaris.add(nom_u);
+        }
+        return correcte;
+    }
+        
     public boolean validarCredencials (String id_usuari, String password){
         String hash = Hash.calculaHash(password);
         String real = ctrl_persist.getHashPassword(id_usuari);
         return real.equals(hash);
     }
     
-    public boolean seleccionaUsuari (String id_usuari){
-        if( ! id_usuaris.contains(id_usuari)) return false;
-        if( id_usuari.equals(this.id_usuari_actual)) return true;
-        
-        // TODO
-        String hashPwd = ctrl_persist.getHashPassword(id_usuari);
-        ArrayList<String> partides = ctrl_persist.llista_id_partides(id_usuari);
-        
-        Object[] ret = ctrl_persist.getConfiguracio(id_usuari);
-        Configuracio c = new Configuracio((int)ret[0], (int)ret[1], (int)ret[2], (int)ret[3]);
-        
-        Usuari u = new Usuari(id_usuari, hashPwd, c, partides);
-        this.id_usuari_actual = id_usuari;
-        return true;
+    public Vector<String> llistaPartidesUsuari(){
+        return usuari_actual.getLlistaIdPartides();
     }
-    
-    // MÈTODES
-    
-    
     
 }

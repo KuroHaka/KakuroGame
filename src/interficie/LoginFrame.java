@@ -346,6 +346,8 @@ public class LoginFrame extends javax.swing.JFrame {
             System.out.println("(LoginFrame) Credencials Incorrectes");
             return;
         }
+        boolean seleccionaUsuari = ctrl_interficie.ctrl_domini.seleccionaUsuari(usuari);
+        if (!seleccionaUsuari) System.out.println("(LoginFrame) Això mai hauria de passar. Usuari : " + usuari);
         System.out.println("(LoginFrame) Login de " + usuari);
         
         // Anem a la pantalla Inici
