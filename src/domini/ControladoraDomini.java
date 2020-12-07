@@ -68,7 +68,10 @@ public class ControladoraDomini {
         return usuari_actual.getLlistaIdPartides();
     }
     
-    
+    public Vector<String> llista_id_enunciats() {
+        //return ctrl_persist.llista_id_enunciats();
+        return new Vector<String>();
+    }
     
     // API amb Persistència
     
@@ -96,7 +99,7 @@ public class ControladoraDomini {
     }
     
     public boolean borrarPartida (String id_partida, String usuari) {
-        return ctrl_persist.borrarPartida(id_partida/*, usuari*/);
+        return ctrl_persist.borrarPartida(id_partida, usuari);
     }
     
     public Object[] getConfigPreferida (String usuari) {

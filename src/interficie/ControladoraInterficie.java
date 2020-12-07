@@ -24,6 +24,7 @@ public class ControladoraInterficie {
     public IniciFrame inici = new IniciFrame(this);
     public RegistreFrame registre = new RegistreFrame(this);
     public PlayingFrame playing = new PlayingFrame(this);
+    public RepositoriFrame repo = new RepositoriFrame(this);
     
     // Funció per INICIAR una instància del Controlador.
     

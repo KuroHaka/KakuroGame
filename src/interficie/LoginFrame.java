@@ -372,7 +372,8 @@ public class LoginFrame extends javax.swing.JFrame {
         
         // Botó REGISTRAR-SE
         ctrl_interficie.registre.inicia();
-        this.setEnabled(false);
+        //this.setEnabled(false);
+        this.setVisible(false);
         ctrl_interficie.registre.setVisible(true);
         
     }//GEN-LAST:event_jButtonRegistreActionPerformed

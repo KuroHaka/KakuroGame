@@ -153,7 +153,13 @@ public class IniciFrame extends javax.swing.JFrame {
         jButton3.setText("Guarda com a Preferit [TODO]");
         jButton3.setToolTipText("");
 
-        jButton4.setText("Rankings [TODO]");
+        jButton4.setText("Rankings");
+        jButton4.setToolTipText("");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Repositori [TODO]");
 
@@ -542,6 +548,15 @@ public class IniciFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        // Obrir repositori
+        ctrl_interficie.repo.inicia();
+        this.setVisible(false);
+        ctrl_interficie.repo.setVisible(true);
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

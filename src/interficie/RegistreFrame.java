@@ -1,5 +1,7 @@
 package interficie;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 
 public class RegistreFrame extends javax.swing.JFrame {
@@ -19,6 +21,7 @@ public class RegistreFrame extends javax.swing.JFrame {
     
     public void inicia() {
         this.jLabel_Incorrecte.setVisible(false);
+        listenerQuanTanques();
     
     }
     
@@ -26,6 +29,18 @@ public class RegistreFrame extends javax.swing.JFrame {
         this.jLabel_Incorrecte.setVisible(false);
         this.jTextUsuari.setText("");
         this.jPassword.setText("");
+    }
+    
+    private void listenerQuanTanques(){
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                ctrl_interficie.registre.setVisible(false);
+                ctrl_interficie.login.setVisible(true);
+                reset();
+                //ctrl_interficie.login.setEnabled(true);
+                System.out.println("(RegistreFrame) S'ha tancat amb la creu. Fent coses...");
+            }
+        });
     }
 
     /**
@@ -46,7 +61,6 @@ public class RegistreFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Kakuro ~ Registrar-se");
         setAlwaysOnTop(true);
         setResizable(false);
@@ -150,6 +164,7 @@ public class RegistreFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ctrl_interficie.login.setEnabled(true);
         this.setVisible(false);
+        ctrl_interficie.login.setVisible(true);
         reset();
         
     }//GEN-LAST:event_jButton1ActionPerformed
