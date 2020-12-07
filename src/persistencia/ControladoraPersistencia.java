@@ -53,8 +53,11 @@ public class ControladoraPersistencia {
         
         String[] files = shadow.split("\n");
         for (String fila : files) {
-            if (fila.split(":")[0].equals(usuari)) {
-                llista.addAll(Arrays.asList(fila.split(":")[2].split(",")));
+            String[] elems = fila.split(":");
+            if (elems[0].equals(usuari)) {
+                if (elems.length > 2) {
+                    llista.addAll(Arrays.asList(fila.split(":")[2].split(",")));
+                }
                 System.out.println("(Ctrl Persist) S'han extret partides de " + usuari);
                 return llista;
             }
@@ -122,12 +125,75 @@ public class ControladoraPersistencia {
         return null;
     }
     
+    //////////////////// PRIVADES RANDOM *GUARDAR ////////////////////
+    
+    private int assignarId() {
+        String document = getDocument("partides");
+        String[] llista = getLlista(document, "\n");
+        return Integer.parseInt(llista[llista.length - 1].split(":")[0]) + 1;
+    }
+    
+    private String[] guardarElemLlista(String[] llista, Object[] partida) {
+        String escriure;
+        if (llista.length > 0) {
+            escriure = "\n" + (String)partida[0] + ":" + (String)partida[1] + ":" + (String)partida[2] + ":" + (String)partida[3];
+        }
+        else escriure = (String)partida[0] + ":" + (String)partida[1] + ":" + (String)partida[2] + ":" + (String)partida[3];
+        
+        String[] ret = new String[llista.length + 1];
+        System.arraycopy(llista, 0, ret, 0, llista.length);
+        ret[llista.length] = escriure;
+        
+        return ret;
+    }
+    
+    private Object[] assignarDocuments(int id, Integer temps) {
+//##//  // TODO
+        return new Object[] {id, "enunciat5.txt", "Comencat5.txt", temps};
+    }
+    
+    //////////////////// GUARDAR PARTIDA SHADOW ////////////////////
+    
+    private void guardarPartidaShadow(String usuari, int id) {
+        String document = getDocument("shadow");
+        String[] llistaUsuaris = getLlista(document, "\n");
+        
+        Object[] fila;
+        fila = getUsuari(usuari, llistaUsuaris);
+        String[] elemsUsuari = getLlista((String) fila[0], ":");
+        
+        String[] partides = getLlista(elemsUsuari[2], ",");
+        elemsUsuari[2] = elemsUsuari[2] + "," + id;
+        
+        llistaUsuaris = reescriureElemLlista(llistaUsuaris, elemsUsuari, (int) fila[1]);
+        document = prepararEscriptura(llistaUsuaris);
+        reescriureDocument("shadow", document);
+    }
+    
+    //////////////////// GUARDAR PARTIDA PARTIDES ////////////////////
+    
+    private void guardarPartidaPartides(int id, Integer temps) {
+        String document = getDocument("partides");
+        String[] llistaPartides = getLlista(document, "\n");
+//##//  // TODO IMPORTANT:
+        Object[] partida = assignarDocuments(id, temps);
+        llistaPartides = guardarElemLlista(llistaPartides, partida);
+        
+        document = prepararEscriptura(llistaPartides);
+        reescriureDocument("partides", document);
+    }
+    
+    //////////////////// GUARDAR PARTIDA ////////////////////
+    
     public boolean guardaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
-        // TODO
+        int id = assignarId();
+        guardarPartidaShadow(usuari, id);
+        guardarPartidaPartides(id, timestamp);
+        
         return true;
     }
     
-    //////////////////// PRIVADES RANDOM ////////////////////
+    //////////////////// PRIVADES RANDOM *BORRAR ////////////////////
     
     private String getDocument(String nomArxiu) {
         String arxiu = "";
