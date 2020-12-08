@@ -122,11 +122,16 @@ public class ControladoraPersistencia {
     }
     
     public Object[] carregaPartida (String id_partida) {
-        // TODO
+        String documentPartides = getDocument("partides");
+        String[] llistaPartides = getLlista(documentPartides, "\n");
         
+        Object[] fila;
+        fila = getUsuari(id_partida, llistaPartides);
+        String[] elemsPartida = getLlista((String) fila[0], ":");
         
-        
-        return null;
+        String documentComencada = getDocument("comencada/"+elemsPartida[2]);
+        Object[] ret = new Object[] {documentComencada, Integer.parseInt(elemsPartida[3])};
+        return ret;
     }
     
     //////////////////// PRIVADES RANDOM *GUARDAR ////////////////////
@@ -189,8 +194,16 @@ public class ControladoraPersistencia {
     
     //////////////////// GUARDAR PARTIDA ////////////////////
     
-    public boolean guardaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
+    public String guardaNovaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
         int id = assignarId();
+        guardarPartidaShadow(usuari, id);
+        guardarPartidaPartides(id, timestamp);
+        
+        return ""+id;
+    }
+    
+    public boolean guardaPartida (String id_partida, String usuari, Integer timestamp, String taulerFormatEstandard) {
+        int id = Integer.parseInt(id_partida);
         guardarPartidaShadow(usuari, id);
         guardarPartidaPartides(id, timestamp);
         

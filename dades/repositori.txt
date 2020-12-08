@@ -1,1 +1,1 @@
-123:enunciat1.txt:acidcaos:2:45,5
+123:enunciat1:acidcaos:2:45,5
