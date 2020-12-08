@@ -2,7 +2,7 @@ package domini.usuari;
 
 import java.util.ArrayList;
 import java.util.Vector;
-import partida.Partida;
+import domini.partida.Partida;
 
 public class Usuari {
     private String name;

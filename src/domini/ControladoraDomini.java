@@ -19,7 +19,7 @@ public class ControladoraDomini {
     private String nom_usuari_actual;
     private Usuari usuari_actual;
     // Repositori
-    private ArrayList<String> id_enunciats_repo;
+    private Vector<String> id_enunciats_repo;
     private Repositori repositori;
     
     // Ranking

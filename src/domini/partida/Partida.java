@@ -1,4 +1,4 @@
-package partida;
+package domini.partida;
 
 import domini.algoritme.Algoritme;
 import domini.tauler.TaulerComencat;
