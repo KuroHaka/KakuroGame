@@ -23,12 +23,12 @@ public abstract class Tauler {
 
     // CONSTRUCTORES
     
-    public Tauler(){
+    /*public Tauler(){
         this.tauler = null;// new Casella[0][0]; //legirTauler_interface(); //llegirTauler();
         //this.dimX = 0;//tauler[0].length;
         //this.dimY = 0;//tauler.length;
         this.id = null;//Hash.calculaHash(format_Estandard());
-    }
+    }*/
     
     public Tauler(Casella[][] t){
         this.tauler = t;
@@ -218,7 +218,7 @@ public abstract class Tauler {
                     Integer fila = casella_negra.getFila();
                     String c = "" + (col == null ? " " : col);
                     String f = "" + (fila == null ? " " : fila);
-                    ret[i][j] = "";
+                    ret[i][j] = c + "\\" + f;
                 }
                 
             }
