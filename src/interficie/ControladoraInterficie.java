@@ -23,10 +23,10 @@ public class ControladoraInterficie {
     public LoginFrame login = new LoginFrame(this);
     public IniciFrame inici = new IniciFrame(this);
     public RegistreFrame registre = new RegistreFrame(this);
-    public PlayingFrame playing = new PlayingFrame(this);
+    public PlayingFrame playing; // S'ha d'inicialitzar quan es comença la partida cada cop. // = new PlayingFrame(this);
     public RepositoriFrame repo = new RepositoriFrame(this);
     
-    // Funció per INICIAR una instància del Controlador.
+    // Inicialització
     
     public void inicia() {
         // Inicia altres controladores
@@ -37,6 +37,30 @@ public class ControladoraInterficie {
         login.inicia();
         login.setVisible(true);
     }
+    
+    
+    
+/////////////////// PARTIDES
+    
+    public boolean valor_canviat(int fila, int col, Integer valor){
+    
+        return true;
+    }
+    
+    public void iniciaPartida(String id_partida) {
+        System.out.println("(CtrlInt) iniciar partida id=" + id_partida);
+        Object[] ret = ctrl_domini.iniciaPartida(id_partida);
+        playing = new PlayingFrame(this, ret);
+    }
+
+    public void generaAndIniciaNovaPartida(int files, int cols, int valor, Integer blanques) {
+        System.out.println("(CtrlInt) generar i iniciar nova partida");
+        Object[] ret = ctrl_domini.generaIniciaNovaPartida(files, cols, valor, blanques);
+        playing = new PlayingFrame(this, ret);
+    }
+    
+    
+/////////////////// CANVIS DE FORMAT
     
     public static String deTimestampAVerbose(long seconds) {
             int day = (int)TimeUnit.SECONDS.toDays(seconds);        
@@ -52,4 +76,6 @@ public class ControladoraInterficie {
             if (first) return "no començada";
             return tot;
     }
+    
+    
 }

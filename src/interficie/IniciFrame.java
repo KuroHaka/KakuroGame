@@ -431,8 +431,6 @@ public class IniciFrame extends javax.swing.JFrame {
 
         String verbose_timestamp = ctrl_interficie.deTimestampAVerbose(timestamp);
         
-        // TODO Obrir partida
-        
         JOptionPane.showMessageDialog(this, ""
                 + "\n -- TODO --"
                 + "\n [ Obrir partida ]\n"
@@ -441,6 +439,9 @@ public class IniciFrame extends javax.swing.JFrame {
                 + "\n- Arxiu d'enunciat: " + nomEnunciat
                 + "\n- Arxiu de partida: " + nomComencada
                 + "\n- Cronòmetre: " + verbose_timestamp, "Informació Partida id=" + id_partida_seleccionada, JOptionPane.INFORMATION_MESSAGE);
+        
+        // OBRIR PARTIDA
+        ctrl_interficie.iniciaPartida(id_partida_seleccionada);
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -535,6 +536,11 @@ public class IniciFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
+        int files = (int) this.jSpinner_numFiles.getValue();
+        int cols = (int) this.jSpinner_numCols.getValue();
+        int blanques_amb_valor = (int) this.jSpinner_blanquesValor.getValue();
+        Integer blanques = jCheckBox1.isSelected() ? (int)this.jSpinner_numBlanques.getValue() : null;
+        
         JOptionPane.showMessageDialog(this, ""
                 + "\n -- TODO --"
                 + "\n [ Crear Partida ]\n"
@@ -546,6 +552,8 @@ public class IniciFrame extends javax.swing.JFrame {
                 + "\n- Num blanques: " + (jCheckBox1.isSelected() ? this.jSpinner_numBlanques.getValue() : "null")
                 + "", "Creació d'una nova partida", JOptionPane.INFORMATION_MESSAGE);
         
+        // GENERAR I OBRIR PARTIDA
+        ctrl_interficie.generaAndIniciaNovaPartida(files, cols, blanques_amb_valor, blanques);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

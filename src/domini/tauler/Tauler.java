@@ -25,9 +25,9 @@ public abstract class Tauler {
     
     public Tauler(){
         this.tauler = null;// new Casella[0][0]; //legirTauler_interface(); //llegirTauler();
-        this.dimX = tauler[0].length;
-        this.dimY = tauler.length;
-        this.id = Hash.calculaHash(format_Estandard());
+        //this.dimX = 0;//tauler[0].length;
+        //this.dimY = 0;//tauler.length;
+        this.id = null;//Hash.calculaHash(format_Estandard());
     }
     
     public Tauler(Casella[][] t){
@@ -194,23 +194,36 @@ public abstract class Tauler {
         return ret;
     }
     
-    /*private static String bytesToHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            sb.append(String.format("%02x", b));
-        }
-        return sb.toString();
+    // Mètodes per Controladora de Domini (Canvis de Format per Interficie)
+    
+    public String[][] toFormatInterficie() {
+        
+        /* 'tauler' Està en format : 
+        
+            - blanca valor  4
+            - blanca buida  ?
+            - negra coses   4\3  (columna\fila)
+            - negra buida   *
+        
+        */
+        String[][] ret = new String[dimY][dimX]; // x: Nfila; y: Ncolumna.
+        for (int i = 0; i < dimY; ++i)
+            for (int j = 0; j < dimX; ++j) {
+                if(tauler[i][j].getClass().equals(CasellaBlanca.class)){
+                    Integer v = getValor(i,j);
+                    ret[i][j] = "" + (v == null ? "?" : v);
+                } else {
+                    CasellaNegra casella_negra = (CasellaNegra)tauler[i][j];
+                    Integer col = casella_negra.getColumna();
+                    Integer fila = casella_negra.getFila();
+                    String c = "" + (col == null ? " " : col);
+                    String f = "" + (fila == null ? " " : fila);
+                    ret[i][j] = "";
+                }
+                
+            }
+        
+        return ret;
     }
     
-    protected String calculaHash(String t){
-        MessageDigest md = null;
-        try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Tauler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        byte[] input = t.getBytes();
-        byte[] result = md.digest(input);
-        return bytesToHex(result);
-    }*/
 }

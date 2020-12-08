@@ -18,6 +18,7 @@ import java.awt.Container;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class PlayingFrame extends javax.swing.JFrame {
 
@@ -27,19 +28,44 @@ public class PlayingFrame extends javax.swing.JFrame {
     Partida partida;
     TaulerComencat tc;
     
-    public PlayingFrame(ControladoraInterficie pres) {
+    public PlayingFrame(ControladoraInterficie pres, Object[] params) {
         this.ctrl_interficie = pres;
+        
+        String[][] tauler = (String[][]) params[0];
+        int timestamp = (int) params[1];
+        
+        /* 'tauler' Està en format : 
+        
+            - blanca valor  4
+            - blanca buida  ?
+            - negra coses   4\3  (columna\fila) * si no té valor hi ha un espai: ' '. Exemple: "4\ "
+            - negra buida   *
+        
+        */
+        
+        // Proof of work
+        String tauler_string = "";
+        for (String fila[] : tauler) {for (String elem : fila) tauler_string += (elem + " | ") ; tauler_string += "\n";}
+        JOptionPane.showMessageDialog(this, "\n [ Playing ]\n" + tauler_string, "Proof of work", JOptionPane.INFORMATION_MESSAGE);
+        
+
         initComponents();
     }
     
     public PlayingFrame() {
-        String txt = "";
-        try {
-            txt = Dades.carregaArxiu("dades/enunciats/enunciat2.txt");
-        } catch (NoSuchFileException ex) {
-            Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        tc = new TaulerComencat(txt);
+        
+        /* THIS SHOULD NOT BE HERE <3 */
+        /**/
+        /**/ String txt = "";
+        /**/ try {
+        /**/     txt = Dades.carregaArxiu("dades/enunciats/enunciat2.txt");
+        /**/ } catch (NoSuchFileException ex) {
+        /**/     Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
+        /**/ }
+        /**/ tc = new TaulerComencat(txt);
+        /**/
+        /* <3 */
+        
         this.ctrl_interficie = null;
         initComponents();
     }
