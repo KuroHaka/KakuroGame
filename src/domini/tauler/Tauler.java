@@ -22,14 +22,14 @@ public abstract class Tauler {
     // private Dificultat dificultat;
 
     // CONSTRUCTORES
-    /*
+    
     public Tauler(){
-        this.tauler = llegirTauler_interface(); //llegirTauler();
+        this.tauler = null;// new Casella[0][0]; //legirTauler_interface(); //llegirTauler();
         this.dimX = tauler[0].length;
         this.dimY = tauler.length;
         this.id = Hash.calculaHash(format_Estandard());
     }
-    */
+    
     public Tauler(Casella[][] t){
         this.tauler = t;
         this.dimX = tauler[0].length;

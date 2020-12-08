@@ -27,14 +27,14 @@ public class Partida {
         // TODO : REVISAR, HAURIA DE SER AIXÍ:
         // this.comencat = (TaulerComencat) enunciat;
         this.comencat = new TaulerComencat(enunciat);
-        this.solucio = algoritme.resoldreKakuro(enunciat);
+        this.solucio = algoritme.resoldreKakuro(enunciat).get(0);
     }
     
     public Partida(Usuari usuari, TaulerEnunciat enunciat, TaulerComencat comencat, int tempsAcumulat, boolean contrarellotge) {
         this.usuari = usuari;
         this.enunciat = enunciat;
         this.comencat = comencat;
-        this.solucio = algoritme.resoldreKakuro(enunciat);
+        this.solucio = algoritme.resoldreKakuro(enunciat).get(0);
         this.tempsAcumulat = tempsAcumulat;
         this.contrarellotge = contrarellotge;
     }
