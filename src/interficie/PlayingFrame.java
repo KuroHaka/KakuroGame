@@ -24,15 +24,20 @@ public class PlayingFrame extends javax.swing.JFrame {
 
     ControladoraInterficie ctrl_interficie;
     
-    String usuari;
-    Partida partida;
-    TaulerComencat tc;
+    String usuari; /* THIS SHOULD NOT BE HERE <3 */
+    Partida partida; /* THIS SHOULD NOT BE HERE <3 */
+    TaulerComencat tc;  /* THIS SHOULD NOT BE HERE <3 */
+    
+    String[][] tauler;
+    int timestamp;
     
     public PlayingFrame(ControladoraInterficie pres, Object[] params) {
         this.ctrl_interficie = pres;
         
-        String[][] tauler = (String[][]) params[0];
-        int timestamp = (int) params[1];
+        // Coses xaxis
+        
+        this.tauler = (String[][]) params[0];
+        this.timestamp = (int) params[1];
         
         /* 'tauler' Està en format : 
         
@@ -43,11 +48,8 @@ public class PlayingFrame extends javax.swing.JFrame {
         
         */
         
-        // Proof of work
-        String tauler_string = "";
-        for (String fila[] : tauler) {for (String elem : fila) tauler_string += (elem + " | ") ; tauler_string += "\n";}
-        JOptionPane.showMessageDialog(this, "\n [ Playing ]\n" + tauler_string, "Proof of work", JOptionPane.INFORMATION_MESSAGE);
-        
+        // Proof of work (Se'n pot anar a la mierder)
+        popupTauler();
 
         initComponents();
     }
@@ -64,15 +66,20 @@ public class PlayingFrame extends javax.swing.JFrame {
         /**/ }
         /**/ tc = new TaulerComencat(txt);
         /**/
-        /* <3 */
+        /* END */
         
         this.ctrl_interficie = null;
         initComponents();
     }
 
     public void inicia(String usuari, String arxiuPartida){
-        this.usuari = usuari;
-        //Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(arxiuPartida);
+        // Nothing here :)
+    }
+    
+    private void popupTauler() {
+        String tauler_string = "";
+        for (String fila[] : tauler) {for (String elem : fila) tauler_string += (elem + " | ") ; tauler_string += "\n";}
+        JOptionPane.showMessageDialog(this, "\n [ Playing ]\n" + tauler_string, "Proof of work", JOptionPane.INFORMATION_MESSAGE);
     }
     
     private void addCasellaNegra(JPanel panel, Integer x, Integer y){
