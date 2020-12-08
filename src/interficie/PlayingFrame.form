@@ -24,36 +24,72 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panel" alignment="1" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton2" min="-2" pref="77" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton3" min="-2" pref="85" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="546" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jPanel1" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="panel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="109" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jButton1" pref="44" max="32767" attributes="0"/>
+                  <Component id="jButton2" max="32767" attributes="0"/>
+                  <Component id="jButton3" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="panel">
+    <Container class="javax.swing.JPanel" name="jPanel1">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="//IMPORT TAULER&#xa;String txt = &quot;&quot;;&#xa;try {&#xa;    txt = Dades.carregaArxiu(&quot;dades/enunciats/enunciat2.txt&quot;);&#xa;} catch (NoSuchFileException ex) {&#xa;    System.out.println(&quot;No file&quot;);&#xa;}&#xa;TaulerComencat tc = new TaulerComencat(txt);&#xa;&#xa;//INIT GRID&#xa;panel.setLayout(new GridLayout(tc.getDimY(),tc.getDimX(),1,1));&#xa;&#xa;// ADD TO GRID&#xa;for (int y = 0; y &lt; tc.getDimY(); y++) {&#xa;    for(int x = 0; x &lt; tc.getDimX(); x++){&#xa;        if(tc.esBlanca(x, y)){&#xa;            addCasellaBlanca(panel, ((CasellaBlanca)tc.getCasella(x, y)).getValor());&#xa;        }&#xa;        else{&#xa;            addCasellaNegra(panel, ((CasellaNegra)tc.getCasella(x, y)).getColumna(),((CasellaNegra)tc.getCasella(x, y)).getFila());&#xa;        }&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jPanel1.setLayout(new GridLayout(tc.getDimY(),tc.getDimX(),1,1));&#xa;        &#xa;// ADD TO GRID&#xa;for (int y = 0; y &lt; tc.getDimY(); y++) {&#xa;    for(int x = 0; x &lt; tc.getDimX(); x++){&#xa;        if(tc.esBlanca(x, y)){&#xa;            addCasellaBlanca(jPanel1, ((CasellaBlanca)tc.getCasella(x, y)).getValor());&#xa;        }&#xa;        else{&#xa;            addCasellaNegra(jPanel1, ((CasellaNegra)tc.getCasella(x, y)).getColumna(),((CasellaNegra)tc.getCasella(x, y)).getFila());&#xa;        }&#xa;    }&#xa;}"/>
       </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="650" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="296" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="403" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jButton1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jButton2"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jButton3"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

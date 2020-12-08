@@ -13,6 +13,11 @@ import javax.swing.JTextField;
 import persistencia.Dades;
 import domini.tauler.casella.*;
 import domini.partida.Partida;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 public class PlayingFrame extends javax.swing.JFrame {
 
@@ -20,6 +25,7 @@ public class PlayingFrame extends javax.swing.JFrame {
     
     String usuari;
     Partida partida;
+    TaulerComencat tc;
     
     public PlayingFrame(ControladoraInterficie pres) {
         this.ctrl_interficie = pres;
@@ -27,13 +33,19 @@ public class PlayingFrame extends javax.swing.JFrame {
     }
     
     public PlayingFrame() {
+        String txt = "";
+        try {
+            txt = Dades.carregaArxiu("dades/enunciats/enunciat2.txt");
+        } catch (NoSuchFileException ex) {
+            Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tc = new TaulerComencat(txt);
         this.ctrl_interficie = null;
         initComponents();
     }
 
     public void inicia(String usuari, String arxiuPartida){
         this.usuari = usuari;
-        // TODO
         //Object[] ret = ctrl_interficie.deFilenameAPartidaTimestampHash(arxiuPartida);
     }
     
@@ -93,58 +105,74 @@ public class PlayingFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kakuro ~ Jugant");
 
-        //IMPORT TAULER
-        String txt = "";
-        try {
-            txt = Dades.carregaArxiu("dades/enunciats/enunciat2.txt");
-        } catch (NoSuchFileException ex) {
-            System.out.println("No file");
-        }
-        TaulerComencat tc = new TaulerComencat(txt);
-
-        //INIT GRID
-        panel.setLayout(new GridLayout(tc.getDimY(),tc.getDimX(),1,1));
-
-        // ADD TO GRID
-        for (int y = 0; y < tc.getDimY(); y++) {
-            for(int x = 0; x < tc.getDimX(); x++){
-                if(tc.esBlanca(x, y)){
-                    addCasellaBlanca(panel, ((CasellaBlanca)tc.getCasella(x, y)).getValor());
-                }
-                else{
-                    addCasellaNegra(panel, ((CasellaNegra)tc.getCasella(x, y)).getColumna(),((CasellaNegra)tc.getCasella(x, y)).getFila());
-                }
-            }
-        }
-
-        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        panelLayout.setVerticalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 403, Short.MAX_VALUE)
         );
+
+        jButton1.setText("jButton1");
+
+        jButton2.setText("jButton2");
+
+        jButton3.setText("jButton3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 546, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 109, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        jPanel1.setLayout(new GridLayout(tc.getDimY(),tc.getDimX(),1,1));
+
+        // ADD TO GRID
+        for (int y = 0; y < tc.getDimY(); y++) {
+            for(int x = 0; x < tc.getDimX(); x++){
+                if(tc.esBlanca(x, y)){
+                    addCasellaBlanca(jPanel1, ((CasellaBlanca)tc.getCasella(x, y)).getValor());
+                }
+                else{
+                    addCasellaNegra(jPanel1, ((CasellaNegra)tc.getCasella(x, y)).getColumna(),((CasellaNegra)tc.getCasella(x, y)).getFila());
+                }
+            }
+        }
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -181,6 +209,9 @@ public class PlayingFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel panel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
