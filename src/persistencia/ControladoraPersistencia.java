@@ -36,12 +36,16 @@ public class ControladoraPersistencia {
         return llista;
     }
     
-    public ArrayList<String> llista_id_enunciats() {
-        // TODO
+    public Vector<String> llista_id_enunciats() {
+        Vector<String> llista = new Vector<String>();
         
+        String document = getDocument("repositori");
+        String[] llistaEnunciats = getLlista(document, "\n");
         
-        
-        return null;
+        for (String enunciat : llistaEnunciats) {
+            llista.add(enunciat.split(":")[0]);
+        }
+        return llista;
     }
     
     public Vector<String> llista_id_partides(String usuari) {
