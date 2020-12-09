@@ -19,7 +19,34 @@ public class ControladoraPersistencia {
     }
     
     public void inicia() {
-        //TODO (fer directoris, arxius...)
+        /*
+        
+        directoris de dades {comencada, enunciats}
+        arxius de dades {shadow, partides, repositori}
+        arxius de comencada {"idPartida".txt...}
+        arxius de enunciats {"idEnunciat".txt...}
+        
+        shadow      --> usuari:hashPassword:{idPartida1,idPartida2...}
+        partides    --> idPartida:idEnunciat:temps
+        repositori  --> idEnunciat:usuariPropietari:N:{usuari1,usuari2,usuari3}:{temps1,temps2,temps3}
+            * N = nombre de temps i usuaris als posteriors apartats (max 3)
+            * usuari2 correspon al temps2
+            * Els temps corresponen al top 3 del corresponent enunciat
+        
+        idPartida   --> "Tauler amb caselles editades (o no), partida d'un usuari concret"
+        idEnunciat  --> "Tauler amb les caselles inicials de l'enunciat"
+        
+        */
+        
+        System.out.println("(Persist) Que comenci el drama :)");
+        if (!Dades.existeixDirectori("dades")) Dades.ferDirectori("dades");
+        
+        if (!Dades.existeixDirectori(root + "comencada")) Dades.ferDirectori(root + "comencada");
+        if (!Dades.existeixDirectori(root + "enunciats")) Dades.ferDirectori(root + "enunciats");
+        
+        if (!Dades.existeixArxiu(root + "shadow" + ext)) reescriureDocument(root + "shadow" + ext, "admin:x:0");
+        if (!Dades.existeixArxiu(root + "partides" + ext)) reescriureDocument(root + "partides" + ext, "0:0:0");
+        if (!Dades.existeixArxiu(root + "repositori" + ext)) reescriureDocument(root + "repositori" + ext, "0:admin:0:");
     }
        
     public ArrayList<String> llista_usuaris() {
@@ -407,6 +434,14 @@ public class ControladoraPersistencia {
         
         System.out.println("(Ctrl Persist) S'ha afegit usuari " + usuari);
         return true;
+    }
+    
+    public Object[] getRankings(int dificultat) {
+        // TODO 
+        String[] nomUser = new String[]{"a","b","?"};
+        Object[] temps = new Object[] {"1","2","?"};
+
+        return new Object[] {nomUser, temps};
     }
     
 }

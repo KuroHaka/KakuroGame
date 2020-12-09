@@ -60,4 +60,8 @@ public class Dades {
         return f.exists();
     }
     
+    public static boolean existeixArxiu(String arxiu) {
+        File f = new File(arxiu);
+        return f.exists();
+    }
 }
