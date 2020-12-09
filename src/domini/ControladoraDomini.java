@@ -47,7 +47,7 @@ public class ControladoraDomini {
     public ControladoraInterficie ctrl_interficie;
     public ControladoraPersistencia ctrl_persist;
     
-    // CONSTRUCTORES    
+    // CONSTRUCTORES
     
     public ControladoraDomini (ControladoraInterficie ci, ControladoraPersistencia persist) {
         this.ctrl_interficie = ci;
@@ -86,8 +86,8 @@ public class ControladoraDomini {
     }
     
     public Vector<String> llista_id_enunciats() {
-        //return ctrl_persist.llista_id_enunciats();
-        return new Vector<String>();
+        return ctrl_persist.llista_id_enunciats();
+        //return new Vector<String>();
     }
 
     

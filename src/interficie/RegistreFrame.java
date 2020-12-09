@@ -21,7 +21,9 @@ public class RegistreFrame extends javax.swing.JFrame {
     
     public void inicia() {
         this.jLabel_Incorrecte.setVisible(false);
+        System.out.print("(RegFrame) iniciar()...");
         listenerQuanTanques();
+        System.out.println("Done.");
     
     }
     

@@ -47,13 +47,15 @@ public class IniciFrame extends javax.swing.JFrame {
         this.jListPartides.setSelectedIndex(0);
         preview_setPartidaSeleccionada(0);
         } else preview_capSeleccionada();
-        
+              
         // SET Dificultat : Personalitzada
+        this.jComboBox_Dificultat.setSelectedItem(0);
+        
         this.jSpinner_numBlanques.setEnabled(true);
         this.jSpinner_numCols.setEnabled(true);
         this.jSpinner_numFiles.setEnabled(true);
         
-        this.jSpinner_numBlanques.setValue(conf_preferida[0]);
+        this.jSpinner_blanquesValor.setValue(conf_preferida[0]);
         if (conf_preferida[1] == null){ 
             this.jSpinner_numBlanques.setValue(-1); 
             jCheckBox1.setSelected(false);
@@ -153,7 +155,7 @@ public class IniciFrame extends javax.swing.JFrame {
         jButton3.setText("Guarda com a Preferit [TODO]");
         jButton3.setToolTipText("");
 
-        jButton4.setText("Rankings");
+        jButton4.setText("Repositori");
         jButton4.setToolTipText("");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,7 +163,7 @@ public class IniciFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Repositori [TODO]");
+        jButton5.setText("Rankings [TODO]");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Configuració preferida");
@@ -275,9 +277,9 @@ public class IniciFrame extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -483,7 +485,7 @@ public class IniciFrame extends javax.swing.JFrame {
     private void jComboBox_DificultatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_DificultatActionPerformed
         
         String selected = (String) this.jComboBox_Dificultat.getSelectedItem();
-        System.out.println("(IniciFrame) Dificultat seleccionada : " + selected);
+        System.out.print("(IniciFrame) Dificultat seleccionada : " + selected + "... ");
         boolean es_personalitzat = (selected == "Personalitzat");
         Object [] conf;
         if (selected == "Personalitzat")    conf = conf_preferida;
@@ -518,7 +520,8 @@ public class IniciFrame extends javax.swing.JFrame {
             this.jSpinner_numBlanques.setValue(conf[1]); 
         else 
             this.jSpinner_numBlanques.setValue(-1);
-
+        
+        System.out.println("Done.");
     }//GEN-LAST:event_jComboBox_DificultatActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
