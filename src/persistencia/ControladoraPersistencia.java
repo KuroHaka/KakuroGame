@@ -133,11 +133,22 @@ public class ControladoraPersistencia {
         fila = getUsuari(id_partida, llistaPartides);
         String[] elemsPartida = getLlista((String) fila[0], ":");
         
-        String documentComencada = getDocument("comencada/"+elemsPartida[2]);
-        Object[] ret = new Object[] {documentComencada, Integer.parseInt(elemsPartida[3])};
+        String documentComencada = getDocument("comencada/" + id_partida);
+        Object[] ret = new Object[] {documentComencada, Integer.parseInt(elemsPartida[2])};
         return ret;
     }
     
+    public Object[] carregaPartidaRepositori(int idEnunciat, String usuari) {
+        int id_partida = assignarId("partides");
+        String id = "" + id_partida;
+        guardarPartidaShadow(usuari, id);
+        guardarPartidaPartides(id, 0, idEnunciat);
+        
+        String tauler = getDocument("enunciats" + idEnunciat);
+        guardarPartidaDirs(id_partida, "comencada", tauler);
+        
+        return new Object[] {id_partida, tauler};
+    }
     
     //////////////////// PRIVADES RANDOM *GUARDAR ////////////////////
     
