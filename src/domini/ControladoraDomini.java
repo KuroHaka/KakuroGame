@@ -186,7 +186,7 @@ public class ControladoraDomini {
         Object[] ret = ctrl_persist.carregaPartidaRepositori(Integer.parseInt(id_enunciat), this.nom_usuari_actual);
         
         // CONSTRUIR Partida
-        String nou_id_partida = (String) ret[0];
+        String nou_id_partida = "" + ((int) ret[0]);
         String formatStd = (String) ret[1];
         TaulerEnunciat te = new TaulerEnunciat(formatStd);
         TaulerComencat tc = new TaulerComencat(te);
