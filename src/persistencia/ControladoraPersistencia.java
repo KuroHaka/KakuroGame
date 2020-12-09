@@ -12,13 +12,14 @@ public class ControladoraPersistencia {
     
     ControladoraInterficie ctrl_interficie;
     String root = "dades/";
+    String ext = ".txt";
     
     public ControladoraPersistencia(ControladoraInterficie ci) {
         this.ctrl_interficie = ci;
     }
     
     public void inicia() {
-        
+        //TODO (fer directoris, arxius...)
     }
        
     public ArrayList<String> llista_usuaris() {
@@ -97,11 +98,7 @@ public class ControladoraPersistencia {
         return ret;
     }
     
-    public Object[] getInfoPartida(String id_partida) {
-        /*String nomEnunciat = "";
-        String nomComencada = "";
-        int tempsActual = 0; */
-        
+    public Object[] getInfoPartida(String id_partida) {       
         String partides = getDocument("partides");
         String[] files = getLlista(partides, "\n");
         
@@ -109,20 +106,6 @@ public class ControladoraPersistencia {
         String[] elemsPartida = getLlista((String) partida[0], ":");
         
         return new Object[] {elemsPartida[1], elemsPartida[0], Integer.parseInt(elemsPartida[2])};
-        
-        
-        /*for (String fila : files) {
-            if (fila.split(":")[0].equals(id_partida)) {
-                nomEnunciat = (fila.split(":")[1]);
-                nomComencada = (fila.split(":")[2]);
-                tempsActual = Integer.parseInt(fila.split(":")[3]);
-                
-                System.out.println("(Ctrl Persist) S'han extret info partida de " + id_partida);
-                return new Object[] {nomEnunciat, nomComencada, tempsActual};
-            }
-        }
-        System.out.println("(Ctrl Persist) No s'ha trobat id_partida " + id_partida);
-        return null;*/
     }
     
     public Object[] carregaPartida (String id_partida) {
@@ -144,7 +127,7 @@ public class ControladoraPersistencia {
         guardarPartidaShadow(usuari, id);
         guardarPartidaPartides(id, 0, idEnunciat);
         
-        String tauler = getDocument("enunciats" + idEnunciat);
+        String tauler = getDocument("enunciats/" + idEnunciat);
         guardarPartidaDirs(id_partida, "comencada", tauler);
         
         return new Object[] {id_partida, tauler};
@@ -155,16 +138,14 @@ public class ControladoraPersistencia {
     private int assignarId(String arxiu) {
         String document = getDocument(arxiu);
         String[] llista = getLlista(document, "\n");
-        return Integer.parseInt(llista[llista.length - 1].split(":")[0]) + 1;
+        
+        if (llista.length > 1) return Integer.parseInt(llista[llista.length - 1].split(":")[0]) + 1;
+        if (llista[0].length() > 0) return 2;
+        return 1;
     }
     
     private String[] guardarElemLlista(String[] llista, String id, int idEnunciat, Integer temps) {
-        String escriure;
-        System.out.println("(Persist) Aviam el drama... id = " + idEnunciat);
-        if (llista.length > 0) {
-            escriure = "\n" + id + ":" + idEnunciat + ":" + temps;
-        }
-        else escriure = id + ":" + idEnunciat + ":" + temps;
+        String escriure = id + ":" + idEnunciat + ":" + temps;
         
         String[] ret = new String[llista.length + 1];
         System.arraycopy(llista, 0, ret, 0, llista.length);
@@ -174,7 +155,7 @@ public class ControladoraPersistencia {
     }
     
     private int assignarIdDocument(String dir) {
-        int extensio = ".txt".length();
+        int extensio = ext.length();
         String[] llistaEnunciats = Dades.llistaArxius(root + dir);
         int idPotencial = -1;
         
@@ -202,17 +183,29 @@ public class ControladoraPersistencia {
         fila = getUsuari(usuari, llistaUsuaris);
         String[] elemsUsuari = getLlista((String) fila[0], ":");
         
-        String[] partides = getLlista(elemsUsuari[2], ",");
-        boolean existeix = false;
-        
-        for (int i = 0; i < partides.length; i++) if (id.equals(partides[i])) existeix = true;
-        
-        if (!existeix) {
-            elemsUsuari[2] = elemsUsuari[2] + "," + id;
-        
-            llistaUsuaris = reescriureElemLlista(llistaUsuaris, elemsUsuari, (int) fila[1]);
+        if (elemsUsuari.length == 2) {
+            String[] aux = new String[3];
+            aux[0] = elemsUsuari[0];
+            aux[1] = elemsUsuari[1];
+            aux[2] = id;
+            
+            llistaUsuaris = reescriureElemLlista(llistaUsuaris, aux, (int) fila[1]);
             document = prepararEscriptura(llistaUsuaris);
             reescriureDocument("shadow", document);
+        }
+        else if (elemsUsuari.length > 2) {
+            String[] partides = getLlista(elemsUsuari[2], ",");
+            boolean existeix = false;
+
+            for (int i = 0; i < partides.length; i++) if (id.equals(partides[i])) existeix = true;
+
+            if (!existeix) {
+                elemsUsuari[2] = elemsUsuari[2] + "," + id;
+
+                llistaUsuaris = reescriureElemLlista(llistaUsuaris, elemsUsuari, (int) fila[1]);
+                document = prepararEscriptura(llistaUsuaris);
+                reescriureDocument("shadow", document);
+            }
         }
     }
     
@@ -267,7 +260,7 @@ public class ControladoraPersistencia {
     
     private String getDocument(String nomArxiu) {
         String arxiu = "";
-        try {arxiu = Dades.carregaArxiu(root + nomArxiu + ".txt");}
+        try {arxiu = Dades.carregaArxiu(root + nomArxiu + ext);}
         catch (NoSuchFileException ex) {}
         return arxiu;
     }
@@ -339,7 +332,7 @@ public class ControladoraPersistencia {
         for (String usuari : llistaUsuaris) {
             if (primer) {
                 primer = false;
-                escriure += usuari;
+                escriure = usuari;
             }
             else escriure += "\n" + usuari;
         }
@@ -347,7 +340,7 @@ public class ControladoraPersistencia {
     }
     
     private void reescriureDocument(String arxiu, String escriure) {
-        Dades.guardarArxiu(root + arxiu +".txt", escriure);
+        Dades.guardarArxiu(root + arxiu + ext, escriure);
     }
     
     //////////////////// ELIMINAR PARTIDA SHADOW ////////////////////
@@ -381,116 +374,23 @@ public class ControladoraPersistencia {
         reescriureDocument("partides", document);
     }
     
+    //////////////////// ELIMINAR PARTIDA COMENCADA ////////////////////
+    
+    private void borrarPartidaComencada(String id_partida) {
+        // TODO (BOFILL)
+        //Dades.borrarArxiu(root + "comencada/" + id_partida + ext);
+        System.out.println("(Persist) S'ha borrat de comencada " + id_partida);
+    }
+    
     //////////////////// ELIMINAR PARTIDA ////////////////////
     
     public boolean borrarPartida(String id_partida, String usuari) {
         borrarPartidaPartides(id_partida);
         borrarPartidaShadow(usuari, id_partida);
+        borrarPartidaComencada(id_partida);
         
         return true;
     }
-    
-    
-    
-    /*private void borrarPartidaSha(String fila, String id_partida) {
-        String[] elems = getLlista(fila,":");
-        String[] partides = getLlista(elems[2], ",");
-        for (String partida : partides) {
-            if (partida.equals(id_partida)) 
-        }
-    }
-    
-    public boolean borrarPartidaSh(String usuari, String id_partida) {
-        String document = getDocument("shadow");
-        String[] llista = getLlista(document, "\n");
-        String fila = getUsuari(usuari, llista);
-        if (fila != null) {
-            borrarPartidaSha(fila, id_partida);
-            
-        }
-        return true;
-    }
-    
-    //////////////////// ELIMINAR PARTIDA ////////////////////
-    
-    private boolean borrarPartidaShadow(String usuari, String id_partida) {
-        String shadow = "";
-        try {shadow = Dades.carregaArxiu(root + "shadow.txt");}
-        catch (NoSuchFileException ex) {}
-        
-        String[] files = shadow.split("\n");
-        String escriure = "";
-        boolean primer = true;
-        System.out.println("(Ctrl Persist) Ara es borra de shadow partida " + id_partida);
-        
-        for (String fila : files) {
-            if (fila.split(":")[0].equals(usuari)) {
-                String[] partides = fila.split(":")[2].split(",");
-                String llistaPartides = "";
-                boolean primerAux = true;
-                
-                for (String partida : partides) {
-                    if (!partida.equals(id_partida)) {
-                        if (primerAux) {
-                            llistaPartides += fila;
-                            primerAux = false;
-                        }
-                        else llistaPartides += "," + fila;
-                    }
-                    else System.out.println("(Ctrl Persist) S'ha borrat de shadow partida " + id_partida);
-                }
-                if (primer) {
-                    String escriurePartides = fila.split(":")[0] + ":" + fila.split(":")[1] + ":" + llistaPartides;
-                    escriure += escriurePartides;
-                    primer = false;
-                }
-                else {
-                    String escriurePartides = fila.split(":")[0] + ":" + fila.split(":")[1] + ":" + llistaPartides;
-                    escriure += "\n" + escriurePartides;
-                }
-            }
-            else if (primer) {
-                    escriure += fila;
-                    primer = false;
-                }
-            else escriure += "\n" + fila;
-        }
-        
-        Dades.guardarArxiu(root + "shadow.txt", escriure);
-        return true;
-    }
-    
-    private boolean borrarPartidaPartides(String id_partida) {
-        String partides = "";
-        try {partides = Dades.carregaArxiu(root + "partides.txt");}
-        catch (NoSuchFileException ex) {}
-        
-        String[] files = partides.split("\n");
-        String escriure = "";
-        boolean primer = true;
-        System.out.println("(Ctrl Persist) Ara es borra de partides partida " + id_partida);
-        
-        for (int i = 0; i < files.length; i++) {
-            if (!files[i].split(":")[0].equals(id_partida)) {
-                if (primer) {
-                    escriure += files[i];
-                    primer = false;
-                }
-                else escriure += "\n" + files[i];
-            }
-            else System.out.println("(Ctrl Persist) S'ha borrat de partides partida " + id_partida);
-        }
-        Dades.guardarArxiu(root + "partides.txt", escriure);
-        return true;
-    }
-    
-    public boolean borrarPartida(String id_partida, String usuari) {
-        boolean ok = borrarPartidaPartides(id_partida);
-        if (ok) {
-            boolean ok2 = borrarPartidaShadow(usuari, id_partida);
-        }
-        return true;
-    }*/
     
     //////////////////// ELIMINAR PARTIDA FI ////////////////////
     
