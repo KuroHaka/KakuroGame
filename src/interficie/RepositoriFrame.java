@@ -7,9 +7,16 @@ import javax.swing.JOptionPane;
 
 public class RepositoriFrame extends javax.swing.JFrame {
 
+    // Controladora
+    
     ControladoraInterficie ctrl_interficie;
     
-    Vector<String> llista_id_enunciats;
+    // Atributs
+    
+    private Vector<String> llista_id_enunciats;
+    private String usuari;
+    
+    // Constructores
     
     public RepositoriFrame(ControladoraInterficie pres) {
         this.ctrl_interficie = pres;
@@ -21,11 +28,16 @@ public class RepositoriFrame extends javax.swing.JFrame {
         initComponents();
     }
     
-    public void inicia() {
+    // Inicialització
+    
+    public void inicia(String usu) {
+        this.usuari = usu;
         llista_id_enunciats = ctrl_interficie.ctrl_domini.llista_id_enunciats(); //Vector<>();
         actualitzaJList();
         listenerQuanTanques();
     }
+    
+    // Exit (sortir)
     
     private void tornaAlInici() {
         this.setVisible(false);
@@ -42,10 +54,21 @@ public class RepositoriFrame extends javax.swing.JFrame {
         });
     }
     
+    // Mètodes d'actualització de la llista
     
     private void actualitzaJList() {
         this.jListEnunciats.setListData(llista_id_enunciats);
     }
+    
+    // iniciar nova partida desde un enunciat
+    
+    private void novaPartida_Desde_EnunciatSeleccionat() {
+        int index = this.jListEnunciats.getSelectedIndex();
+        String id_enunciat_seleccionat = llista_id_enunciats.get(index);
+        ctrl_interficie.iniciaNovaPartidaDesdeRepositori(id_enunciat_seleccionat);
+        
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,6 +79,8 @@ public class RepositoriFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButtonGenera = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+
+        setTitle("Kakuro ~ Repositori");
 
         jListEnunciats.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -68,8 +93,13 @@ public class RepositoriFrame extends javax.swing.JFrame {
         jLabel1.setText("Repositori públic d'Enunciats");
 
         jButtonGenera.setText("Genera Partida [TODO]");
+        jButtonGenera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGeneraActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Torna a l'Inici");
+        jButton1.setText("< Torna a l'Inici");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -80,29 +110,28 @@ public class RepositoriFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButtonGenera, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jButton1)
-                            .addGap(318, 318, 318)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(126, 126, 126))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonGenera, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,6 +146,13 @@ public class RepositoriFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         tornaAlInici();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonGeneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGeneraActionPerformed
+        
+        novaPartida_Desde_EnunciatSeleccionat();
+        
+        
+    }//GEN-LAST:event_jButtonGeneraActionPerformed
 
     /**
      * @param args the command line arguments

@@ -134,6 +134,12 @@ public class ControladoraDomini {
         return ctrl_persist.borrarPartida(id_partida, usuari);
     }
     
+    public boolean guardaPartida(int temps, String tauler_fStd) {
+        return ctrl_persist.guardaPartida(id_partida_actual, nom_usuari_actual, temps, tauler_fStd);
+    }
+    
+    ////// Començar a jugar
+    
     public Object[] iniciaPartida(String id_partida) {
         System.out.println("(CtrlDomini) iniciar partida id=" + id_partida);
         
@@ -173,11 +179,31 @@ public class ControladoraDomini {
         return new Object[] {tauler, 0}; // '0' ja que és una nova partida.
     }
     
-    public boolean guardaPartida(int temps, String tauler_fStd) {
-        return ctrl_persist.guardaPartida(id_partida_actual, nom_usuari_actual, temps, tauler_fStd);
+    public Object[] iniciaNovaPartidaDesdeRepositori(String id_enunciat) {
+        System.out.println("(CtrlDomini) Iniciar partida desde Repositori");
+        
+        // OBTENIR DADES
+        Object[] ret = ctrl_persist.carregaPartidaRepositori(Integer.parseInt(id_enunciat), this.nom_usuari_actual);
+        
+        // CONSTRUIR Partida
+        String nou_id_partida = (String) ret[0];
+        String formatStd = (String) ret[1];
+        TaulerEnunciat te = new TaulerEnunciat(formatStd);
+        TaulerComencat tc = new TaulerComencat(te);
+        Partida partida = new Partida(usuari_actual, te, tc, 0, false);
+        
+        // GENERAR nova Partida
+        partides.add(nou_id_partida); // retorna un bool..
+        
+        // INICIAR
+        this.partida_actual = new Partida(usuari_actual, te, tc, 0, false);
+        this.id_partida_actual = nou_id_partida;
+        
+        String[][] tauler = tauler_a_MatriuStrings(tc);
+        return new Object[] {tauler, 0}; // '0' ja que és una nova partida.
     }
-    
-    
+        
+        
 /////////////////// CANVIS DE FORMAT
     
     private String[][] tauler_a_MatriuStrings(Tauler tauler) {

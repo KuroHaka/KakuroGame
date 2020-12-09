@@ -59,6 +59,12 @@ public class ControladoraInterficie {
         playing = new PlayingFrame(this, ret);
     }
     
+    public void iniciaNovaPartidaDesdeRepositori(String id_enunciat) {
+        System.out.println("(CtrlInt) Iniciar partida desde Repositori");
+        Object[] ret = ctrl_domini.iniciaNovaPartidaDesdeRepositori(id_enunciat);
+        playing = new PlayingFrame(this, ret);
+    }
+    
     
 /////////////////// CANVIS DE FORMAT
     

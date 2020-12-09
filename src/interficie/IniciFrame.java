@@ -49,23 +49,43 @@ public class IniciFrame extends javax.swing.JFrame {
         } else preview_capSeleccionada();
               
         // SET Dificultat : Personalitzada
-        this.jComboBox_Dificultat.setSelectedItem(0);
+        this.jComboBox_Dificultat.setSelectedItem(0); // Per defecte: "Personalitzat" Seleccionat
+        set_configuracio_seleccionada(conf_preferida, true);
         
-        this.jSpinner_numBlanques.setEnabled(true);
-        this.jSpinner_numCols.setEnabled(true);
-        this.jSpinner_numFiles.setEnabled(true);
+    }
+    
+    private void set_configuracio_seleccionada(Object[] conf, boolean es_personalitzat){
+
+// [x] Check box de Numero Blanques
+        // SELECTED
+        jCheckBox1.setSelected((conf[1] != null));
         
-        this.jSpinner_blanquesValor.setValue(conf_preferida[0]);
-        if (conf_preferida[1] == null){ 
-            this.jSpinner_numBlanques.setValue(-1); 
-            jCheckBox1.setSelected(false);
-        } else {
-            this.jSpinner_numBlanques.setValue(conf_preferida[1]);
-            jCheckBox1.setSelected(true);
-        }
-        this.jSpinner_numCols.setValue(conf_preferida[2]);
-        this.jSpinner_numFiles.setValue(conf_preferida[3]);
+        // ENABLED
+        if(!es_personalitzat){
+              jCheckBox1.setEnabled(false);
+        }else jCheckBox1.setEnabled(true);
         
+// Spinners
+        //ENABLED
+        this.jSpinner_blanquesValor.setEnabled(es_personalitzat);
+        this.jSpinner_numCols.setEnabled(es_personalitzat);
+        this.jSpinner_numFiles.setEnabled(es_personalitzat);
+        
+        if (jCheckBox1.isSelected())
+            this.jSpinner_numBlanques.setEnabled(es_personalitzat);
+        else 
+            this.jSpinner_numBlanques.setEnabled(false);
+        
+        // VALORS
+        this.jSpinner_blanquesValor.setValue(conf[0]);
+        this.jSpinner_numCols.setValue(conf[2]);
+        this.jSpinner_numFiles.setValue(conf[3]);
+        
+        if (jCheckBox1.isSelected())
+            this.jSpinner_numBlanques.setValue(conf[1]); 
+        else 
+            this.jSpinner_numBlanques.setValue(-1);
+
     }
     
     private void preview_capSeleccionada() {
@@ -486,40 +506,17 @@ public class IniciFrame extends javax.swing.JFrame {
         
         String selected = (String) this.jComboBox_Dificultat.getSelectedItem();
         System.out.print("(IniciFrame) Dificultat seleccionada : " + selected + "... ");
+        
         boolean es_personalitzat = (selected == "Personalitzat");
+        
         Object [] conf;
         if (selected == "Personalitzat")    conf = conf_preferida;
         else if (selected == "Fàcil")       conf = conf_facil;
         else if (selected == "Difícil")     conf = conf_dificil;
         else if (selected == "Expert")      conf = conf_expert;
         else conf = conf_preferida; // This should never happen
-
-        // [x] Check box de Numero Blanques
-        jCheckBox1.setSelected((conf[1] == null));
-        if(!es_personalitzat){
-              jCheckBox1.setEnabled(false);
-        }else jCheckBox1.setEnabled(true);
-        if(conf[1] == null){
-              jCheckBox1.setSelected(false);
-        }else jCheckBox1.setSelected(true);
-        // Spinners Enables
-        this.jSpinner_blanquesValor.setEnabled(es_personalitzat);
-        this.jSpinner_numCols.setEnabled(es_personalitzat);
-        this.jSpinner_numFiles.setEnabled(es_personalitzat);
-        if (jCheckBox1.isSelected())
-            this.jSpinner_numBlanques.setEnabled(es_personalitzat);
-        else 
-            this.jSpinner_numBlanques.setEnabled(false);
         
-        // Spinners set_Valors
-        this.jSpinner_blanquesValor.setValue(conf[0]);
-        this.jSpinner_numCols.setValue(conf[2]);
-        this.jSpinner_numFiles.setValue(conf[3]);
-        //this.jSpinner_numBlanques.setValue((conf[1] == null ? -1 : conf[1]));
-        if (jCheckBox1.isSelected())
-            this.jSpinner_numBlanques.setValue(conf[1]); 
-        else 
-            this.jSpinner_numBlanques.setValue(-1);
+        set_configuracio_seleccionada(conf, es_personalitzat);
         
         System.out.println("Done.");
     }//GEN-LAST:event_jComboBox_DificultatActionPerformed
@@ -563,7 +560,7 @@ public class IniciFrame extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         // Obrir repositori
-        ctrl_interficie.repo.inicia();
+        ctrl_interficie.repo.inicia(this.usuari);
         this.setVisible(false);
         ctrl_interficie.repo.setVisible(true);
         
