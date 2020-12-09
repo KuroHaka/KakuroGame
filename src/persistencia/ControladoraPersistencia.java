@@ -98,16 +98,20 @@ public class ControladoraPersistencia {
     }
     
     public Object[] getInfoPartida(String id_partida) {
-        String nomEnunciat = "";
+        /*String nomEnunciat = "";
         String nomComencada = "";
-        int tempsActual = 0; 
+        int tempsActual = 0; */
         
-        String partides = "";
-        try {partides = Dades.carregaArxiu(root + "partides.txt");}
-        catch (NoSuchFileException ex) {}
+        String partides = getDocument("partides");
+        String[] files = getLlista(partides, "\n");
         
-        String[] files = partides.split("\n");
-        for (String fila : files) {
+        Object[] partida = getUsuari(id_partida, files);
+        String[] elemsPartida = getLlista((String) partida[0], ":");
+        
+        return new Object[] {elemsPartida[1], elemsPartida[0], Integer.parseInt(elemsPartida[2])};
+        
+        
+        /*for (String fila : files) {
             if (fila.split(":")[0].equals(id_partida)) {
                 nomEnunciat = (fila.split(":")[1]);
                 nomComencada = (fila.split(":")[2]);
@@ -118,7 +122,7 @@ public class ControladoraPersistencia {
             }
         }
         System.out.println("(Ctrl Persist) No s'ha trobat id_partida " + id_partida);
-        return null;
+        return null;*/
     }
     
     public Object[] carregaPartida (String id_partida) {
@@ -134,20 +138,22 @@ public class ControladoraPersistencia {
         return ret;
     }
     
+    
     //////////////////// PRIVADES RANDOM *GUARDAR ////////////////////
     
-    private int assignarId() {
-        String document = getDocument("partides");
+    private int assignarId(String arxiu) {
+        String document = getDocument(arxiu);
         String[] llista = getLlista(document, "\n");
         return Integer.parseInt(llista[llista.length - 1].split(":")[0]) + 1;
     }
     
-    private String[] guardarElemLlista(String[] llista, Object[] partida) {
+    private String[] guardarElemLlista(String[] llista, String id, int idEnunciat, Integer temps) {
         String escriure;
+        System.out.println("(Persist) Aviam el drama... id = " + idEnunciat);
         if (llista.length > 0) {
-            escriure = "\n" + (String)partida[0] + ":" + (String)partida[1] + ":" + (String)partida[2] + ":" + (String)partida[3];
+            escriure = "\n" + id + ":" + idEnunciat + ":" + temps;
         }
-        else escriure = (String)partida[0] + ":" + (String)partida[1] + ":" + (String)partida[2] + ":" + (String)partida[3];
+        else escriure = id + ":" + idEnunciat + ":" + temps;
         
         String[] ret = new String[llista.length + 1];
         System.arraycopy(llista, 0, ret, 0, llista.length);
@@ -156,14 +162,28 @@ public class ControladoraPersistencia {
         return ret;
     }
     
-    private Object[] assignarDocuments(int id, Integer temps) {
-//##//  // TODO
-        return new Object[] {id, "enunciat5.txt", "Comencat5.txt", temps};
+    private int assignarIdDocument(String dir) {
+        int extensio = ".txt".length();
+        String[] llistaEnunciats = Dades.llistaArxius(root + dir);
+        int idPotencial = -1;
+        
+        for (String enunciat : llistaEnunciats) {
+            int aux = Integer.parseInt(enunciat.substring(0, enunciat.length()-extensio));
+            if (aux > idPotencial) idPotencial = aux;
+        }
+        return idPotencial+1;
+    }
+    
+    private int getIdDocument(String id_partida, String arxiu) {
+        String document = getDocument(arxiu);
+        String[] llistaPartides = getLlista(document, "\n");
+        Object[] partida = getUsuari(id_partida, llistaPartides);
+        return Integer.parseInt(getLlista((String) partida[0], ":")[1]);
     }
     
     //////////////////// GUARDAR PARTIDA SHADOW ////////////////////
     
-    private void guardarPartidaShadow(String usuari, int id) {
+    private void guardarPartidaShadow(String usuari, String id) {
         String document = getDocument("shadow");
         String[] llistaUsuaris = getLlista(document, "\n");
         
@@ -172,43 +192,65 @@ public class ControladoraPersistencia {
         String[] elemsUsuari = getLlista((String) fila[0], ":");
         
         String[] partides = getLlista(elemsUsuari[2], ",");
-        elemsUsuari[2] = elemsUsuari[2] + "," + id;
+        boolean existeix = false;
         
-        llistaUsuaris = reescriureElemLlista(llistaUsuaris, elemsUsuari, (int) fila[1]);
-        document = prepararEscriptura(llistaUsuaris);
-        reescriureDocument("shadow", document);
+        for (int i = 0; i < partides.length; i++) if (id.equals(partides[i])) existeix = true;
+        
+        if (!existeix) {
+            elemsUsuari[2] = elemsUsuari[2] + "," + id;
+        
+            llistaUsuaris = reescriureElemLlista(llistaUsuaris, elemsUsuari, (int) fila[1]);
+            document = prepararEscriptura(llistaUsuaris);
+            reescriureDocument("shadow", document);
+        }
     }
     
     //////////////////// GUARDAR PARTIDA PARTIDES ////////////////////
     
-    private void guardarPartidaPartides(int id, Integer temps) {
+    private void guardarPartidaPartides(String id, Integer temps, int idEnunciat) {
         String document = getDocument("partides");
         String[] llistaPartides = getLlista(document, "\n");
-//##//  // TODO IMPORTANT:
-        Object[] partida = assignarDocuments(id, temps);
-        llistaPartides = guardarElemLlista(llistaPartides, partida);
+        
+        llistaPartides = guardarElemLlista(llistaPartides, id, idEnunciat, temps);
         
         document = prepararEscriptura(llistaPartides);
         reescriureDocument("partides", document);
     }
     
+    //////////////////// GUARDAR PARTIDA ENUNCIATS I COMENCADES ////////////////////
+    
+    private void guardarPartidaDirs(int idEnunciat, String dir, String tauler) {
+        reescriureDocument(dir + "/" + idEnunciat, tauler);
+    }
+    
     //////////////////// GUARDAR PARTIDA ////////////////////
     
     public String guardaNovaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
-        int id = assignarId();
+        int id_partida = assignarId("partides");
+        String id = "" + id_partida;
         guardarPartidaShadow(usuari, id);
-        guardarPartidaPartides(id, timestamp);
         
-        return ""+id;
+        int idEnunciat = assignarIdDocument("enunciats");
+        guardarPartidaPartides(id, timestamp, idEnunciat);
+        
+        guardarPartidaDirs(idEnunciat, "enunciats", taulerFormatEstandard);
+        guardarPartidaDirs(id_partida, "comencada", taulerFormatEstandard);
+        
+        return id;
     }
     
     public boolean guardaPartida (String id_partida, String usuari, Integer timestamp, String taulerFormatEstandard) {
-        int id = Integer.parseInt(id_partida);
-        guardarPartidaShadow(usuari, id);
-        guardarPartidaPartides(id, timestamp);
+        guardarPartidaShadow(usuari, id_partida);
+        
+        int idEnunciat = getIdDocument(id_partida, "partides");
+        guardarPartidaPartides(id_partida, timestamp, idEnunciat);
+        
+        guardarPartidaDirs(idEnunciat, "enunciats", taulerFormatEstandard);
+        guardarPartidaDirs(Integer.parseInt(id_partida), "comencada", taulerFormatEstandard);
         
         return true;
     }
+    
     
     //////////////////// PRIVADES RANDOM *BORRAR ////////////////////
     
@@ -317,7 +359,7 @@ public class ControladoraPersistencia {
     
     //////////////////// ELIMINAR PARTIDA PARTIDES ////////////////////
     
-    private void borrarPartidaPartides(String usuari, String id_partida) {
+    private void borrarPartidaPartides(String id_partida) {
         String document = getDocument("partides");
         String[] llistaPartides = getLlista(document, "\n");
         
@@ -331,7 +373,7 @@ public class ControladoraPersistencia {
     //////////////////// ELIMINAR PARTIDA ////////////////////
     
     public boolean borrarPartida(String id_partida, String usuari) {
-        borrarPartidaPartides(usuari, id_partida);
+        borrarPartidaPartides(id_partida);
         borrarPartidaShadow(usuari, id_partida);
         
         return true;
