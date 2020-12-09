@@ -25,6 +25,7 @@ public class Dades {
         } catch (IOException ex) {
             Logger.getLogger(Dades.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("(Dades) Arxiu " + arxiu + " guardat");
     }
     
     public static String carregaArxiu(String arxiu) throws NoSuchFileException {
@@ -40,7 +41,23 @@ public class Dades {
         // TODO: Comprovar això funciona
         ret = ret.replace("\r\n", "\n"); //Windows format to Unix format
         ret = ret.replace('\r', '\n'); //Remove Carriage Returns from old MacOS (also System)
+        System.out.println("(Dades) Arxiu " + arxiu + " carregat");
         return ret;
+    }
+    
+    public static boolean borrarArxiu(String arxiu) {
+        File f = new File(arxiu); 
+        return f.delete();
+    }
+    
+    public static boolean ferDirectori(String dir) {
+        File f = new File(dir);
+        return f.mkdir();
+    }
+    
+    public static boolean existeixDirectori(String dir) {
+        File f = new File(dir);
+        return f.exists();
     }
     
 }
