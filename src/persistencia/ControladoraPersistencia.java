@@ -406,8 +406,7 @@ public class ControladoraPersistencia {
         String document = getDocument("partides");
         String[] llistaPartides = getLlista(document, "\n");
         
-        Object[] fila;
-        fila = getUsuari(id_partida, llistaPartides);
+        Object[] fila = getUsuari(id_partida, llistaPartides);
         
         document = borrarElemLlista(llistaPartides, (int) fila[1]);
         reescriureDocument("partides", document);
@@ -415,9 +414,8 @@ public class ControladoraPersistencia {
     
     //////////////////// ELIMINAR PARTIDA COMENCADA ////////////////////
     
-    private void borrarPartidaComencada(String id_partida) {
-        // TODO (BOFILL)
-        //Dades.borrarArxiu(root + "comencada/" + id_partida + ext);
+    private void borrarPartidaComencada(String id_partida, String dir) {
+        Dades.borrarArxiu(root + dir + id_partida + ext);
         System.out.println("(Persist) S'ha borrat de comencada " + id_partida);
     }
     
@@ -426,12 +424,52 @@ public class ControladoraPersistencia {
     public boolean borrarPartida(String id_partida, String usuari) {
         borrarPartidaPartides(id_partida);
         borrarPartidaShadow(usuari, id_partida);
-        borrarPartidaComencada(id_partida);
+        borrarPartidaComencada(id_partida, "comencada/");
         
         return true;
     }
     
     //////////////////// ELIMINAR PARTIDA FI ////////////////////
+    
+    private String[] actualitzarRep(String[] elems, String usuari, Integer temps) {
+        int numElems = Integer.parseInt(elems[2]);
+        if (numElems == 0) {
+            int mida = elems.length;
+            String[] ret = new String[mida + 1];
+            System.arraycopy(elems, 0, ret, 0, mida);
+            ret[mida] = usuari + ":" + temps;
+            return ret;
+        }
+        if (temps < Integer.parseInt(elems[4])) {
+            elems[3] = usuari;
+            elems[4] = "" + temps;
+        }
+        return elems;
+    }
+    
+    public boolean acabarPartida(String usuari, String id_partida, Integer temps) {
+        String documentPartides = getDocument("partides");
+        String[] llistaPartides = getLlista(documentPartides, "\n");
+        Object[] partida = getUsuari(id_partida, llistaPartides);
+        String[] elemsPartida = getLlista((String) partida[0], ":");
+        
+        documentPartides = borrarElemLlista(llistaPartides, (int) partida[1]);
+        reescriureDocument("partides", documentPartides);
+        
+        String documentRepositori = getDocument("repositori");
+        String[] repositori = getLlista(documentRepositori, "\n");
+        Object[] enunciat = getUsuari(elemsPartida[1],repositori);
+        String[] elemsEnunciat = getLlista((String) enunciat[0], ":");
+        
+        elemsEnunciat = actualitzarRep(elemsEnunciat, usuari, temps);
+        documentRepositori = prepararEscriptura(elemsEnunciat);
+        reescriureDocument("repositori", documentRepositori);
+        
+        borrarPartidaComencada(id_partida, "comencada/");
+//##//  // TODO Falta borrar de shadow i actualitzar ranking
+        
+        return true;
+    }
     
     public boolean addUser(String usuari, String hash) {
         
