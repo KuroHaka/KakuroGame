@@ -91,7 +91,7 @@ public class RankingFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel1.setText("Rànkings");
 
         jLabelPrimer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
