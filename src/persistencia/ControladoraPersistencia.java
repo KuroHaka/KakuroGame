@@ -22,16 +22,18 @@ public class ControladoraPersistencia {
         /*
         
         directoris de dades {comencada, enunciats}
-        arxius de dades {shadow, partides, repositori}
+        arxius de dades {shadow, partides, repositori, ranking}
         arxius de comencada {"idPartida".txt...}
         arxius de enunciats {"idEnunciat".txt...}
         
         shadow      --> usuari:hashPassword:{idPartida1,idPartida2...}
         partides    --> idPartida:idEnunciat:temps
-        repositori  --> idEnunciat:usuariPropietari:N:{usuari1,usuari2,usuari3}:{temps1,temps2,temps3}
-            * N = nombre de temps i usuaris als posteriors apartats (max 3)
-            * usuari2 correspon al temps2
-            * Els temps corresponen al top 3 del corresponent enunciat
+        repositori  --> idEnunciat:usuariPropietari:N:usuari:temps
+            * N = bit boolea "hi ha record" (0 o 1)
+            * Els temps correspon al record corresponent enunciat
+        ranking     --> N{:usuari,temps}
+            * Hi ha 3 files, una per dificultat
+            * N = [0..3] indica quants apartats hi hauran posteriorment
         
         idPartida   --> "Tauler amb caselles editades (o no), partida d'un usuari concret"
         idEnunciat  --> "Tauler amb les caselles inicials de l'enunciat"
@@ -47,6 +49,7 @@ public class ControladoraPersistencia {
         if (!Dades.existeixArxiu(root + "shadow" + ext)) reescriureDocument(root + "shadow" + ext, "admin:x:0");
         if (!Dades.existeixArxiu(root + "partides" + ext)) reescriureDocument(root + "partides" + ext, "0:0:0");
         if (!Dades.existeixArxiu(root + "repositori" + ext)) reescriureDocument(root + "repositori" + ext, "0:admin:0:");
+        if (!Dades.existeixArxiu(root + "ranking" + ext)) reescriureDocument(root + "ranking" + ext, "0:admin:0:\n0:admin:0:\n0:admin:0:");
     }
        
     public ArrayList<String> llista_usuaris() {
@@ -254,6 +257,14 @@ public class ControladoraPersistencia {
         reescriureDocument(dir + "/" + idEnunciat, tauler);
     }
     
+    //////////////////// GUARDAR PARTIDA AL REPOSITORI ////////////////////
+    
+    private void guardarNovaPartidaRep(String idEnunciat, String autor) {
+        String document = getDocument("repositori");
+        String escriure = "\n" + idEnunciat + ":" + autor + ":0:";
+        reescriureDocument("repositori", document + escriure);
+    }
+    
     //////////////////// GUARDAR PARTIDA ////////////////////
     
     public String guardaNovaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
@@ -264,8 +275,9 @@ public class ControladoraPersistencia {
         int idEnunciat = assignarIdDocument("enunciats");
         guardarPartidaPartides(id, timestamp, idEnunciat);
         
-        guardarPartidaDirs(idEnunciat, "enunciats", taulerFormatEstandard);
-        guardarPartidaDirs(id_partida, "comencada", taulerFormatEstandard);
+        guardarPartidaDirs(idEnunciat, "comencada", taulerFormatEstandard);
+        guardarPartidaDirs(id_partida, "enunciats", taulerFormatEstandard);
+        guardarNovaPartidaRep("" + idEnunciat, usuari);
         
         return id;
     }
@@ -439,7 +451,7 @@ public class ControladoraPersistencia {
     public Object[] getRankings(int dificultat) {
         // TODO 
         String[] nomUser = new String[]{"a","b","?"};
-        Object[] temps = new Object[] {"1","2","?"};
+        String[] temps = new String[] {"1","2","?"};
 
         return new Object[] {nomUser, temps};
     }
