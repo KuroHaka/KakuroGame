@@ -878,8 +878,30 @@ public class Algoritme {
                         }
                     }
                 }
-                TaulerEnunciat t = new TaulerEnunciat(tauler);
-                return t;
+                if(numeroBlanquesEstablertes == 0) {
+                    TaulerEnunciat t = new TaulerEnunciat(tauler);
+                    ArrayList<TaulerComencat> atc = resoldreKakuro(t);
+                    if (atc.size() == 1) {return t;}
+                    else {return generarKakuro(rows, cols, numeroBlanques, numeroBlanquesEstablertes);}
+                }
+                else { 
+                    Casella[][] tauler2 = tauler;
+                    for(int c = 0; c < cols; ++c) {
+                        for(int r = 0; r < rows; ++r) {
+                            if(tcBuit.getCasella(c,r).getClass() == CasellaBlanca.class) {
+                                if(((CasellaBlanca)tcBuit.getCasella(c,r)).getValor() != null) {
+                                    ((CasellaBlanca)tcBuit.getCasella(c,r)).setValor(null);
+                                    tauler2[r][c] = new CasellaBlanca(c, r, null);
+                                }
+                            }
+                        }
+                    }
+                    TaulerEnunciat t2 = new TaulerEnunciat(tauler2);
+                    TaulerEnunciat t = new TaulerEnunciat(tauler);
+                    ArrayList<TaulerComencat> atc = resoldreKakuro(t2);
+                    if (atc.size() == 1) {return t;}
+                    else {return generarKakuro(rows, cols, numeroBlanques, numeroBlanquesEstablertes);}
+                }
             }
         }
         catch (StackOverflowError e) {return generarKakuro(rows, cols, numeroBlanques, numeroBlanquesEstablertes);}

@@ -40,7 +40,7 @@ public class Driver_Algoritme {
                     System.out.print("\tnumero de columnes: ");
                     y = sc.nextInt();
 
-                    System.out.print(algoritme.generarKakuroSimple(x,y,0).format_Estandard());
+                    //System.out.print(algoritme.generarKakuroSimple(x,y,0).format_Estandard());
                     System.out.print("\tnumero de caselles blanques totals(introdueix null si vols que sigui aleatori): ");
                     String b = sc.next();
                     Integer bint = b.equals("null")? null:Integer.parseInt(b);

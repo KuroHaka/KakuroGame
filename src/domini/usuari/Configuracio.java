@@ -47,7 +47,7 @@ public class Configuracio {
         this.numeroBlanques = nb;
         this.numeroBlanquesEstablertes = nbe;
         float f = (this.numeroBlanques - this.numeroBlanquesEstablertes)/((this.dimX - 1)* (this.dimY - 1));
-        if(f > 0.8) {this.dif = 3;}
+        if(f > 0.7) {this.dif = 3;}
         else if(f > 0.5) {this.dif = 2;}
         else {this.dif = 1;}
     }
