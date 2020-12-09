@@ -7,9 +7,7 @@ public class RankingFrame extends javax.swing.JFrame {
 
     ControladoraInterficie ctrl_interficie;
     
-    Object[] facil;
-    Object[] dificil;
-    Object[] expert;
+    Object[] rankings;
     
     public RankingFrame() {
         this.ctrl_interficie = null;
@@ -21,18 +19,34 @@ public class RankingFrame extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void inicia(Object[] facil, Object[] dificil, Object[] expert) {
+    public void inicia() {
         listenerQuanTanques();
-        this.facil = facil;
-        this.dificil = dificil;
-        this.expert = expert;
+        actualitzaRankings();
+        setDificultat(0); // Default shown: Fàcil
+    }
+    
+    public void actualitzaRankings() {
+        rankings = new Object[3];
+        rankings[0] = ctrl_interficie.getRankings(0);
+        rankings[1] = ctrl_interficie.getRankings(1);
+        rankings[2] = ctrl_interficie.getRankings(2);
     }
     
     private void setDificultat(int dificultat) {
-        Object[] ranks = ctrl_interficie.getRankings();
-        jLabelPrimer.setText("");
-        jLabelSegon .setText("");
-        jLabelTercer.setText("");
+        
+        Object[] ret = (Object[]) rankings[dificultat];// ctrl_interficie.getRankings(dificultat);
+        String[] nomUser = (String[]) ret[0];
+        String[] temps = (String[]) ret[1];
+        String[] t_verbose = new String[3];
+        
+        int aux;
+        aux=0; t_verbose[aux] = ((temps[aux]).equals("?")?"":"("+ctrl_interficie.deTimestampAVerbose((long)Integer.parseInt(temps[aux]))+")");
+        ++aux; t_verbose[aux] = ((temps[aux]).equals("?")?"":"("+ctrl_interficie.deTimestampAVerbose((long)Integer.parseInt(temps[aux]))+")");
+        ++aux; t_verbose[aux] = ((temps[aux]).equals("?")?"":"("+ctrl_interficie.deTimestampAVerbose((long)Integer.parseInt(temps[aux]))+")");
+        
+        aux=0; jLabelPrimer.setText("1. " + nomUser[aux] + " " + t_verbose[aux]);
+        ++aux; jLabelSegon .setText("2. " + nomUser[aux] + " " + t_verbose[aux]);
+        ++aux; jLabelTercer.setText("3. " + nomUser[aux] + " " + t_verbose[aux]);
     }
     
     public void reset() {
@@ -126,7 +140,7 @@ public class RankingFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboDifSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDifSelectActionPerformed
-        // TODO 
+        setDificultat(jComboDifSelect.getSelectedIndex());
     }//GEN-LAST:event_jComboDifSelectActionPerformed
 
     /**

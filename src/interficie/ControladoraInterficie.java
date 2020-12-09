@@ -66,6 +66,11 @@ public class ControladoraInterficie {
         playing = new PlayingFrame(this, ret);
     }
     
+/////////////////// RANKING
+    
+    public Object[] getRankings (int dificultat) {
+        return ctrl_persist.getRankings(dificultat);
+    }
     
 /////////////////// CANVIS DE FORMAT
     
