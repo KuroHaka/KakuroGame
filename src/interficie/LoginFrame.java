@@ -57,7 +57,6 @@ public class LoginFrame extends javax.swing.JFrame {
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0));
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jButtonRegistre1 = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -75,6 +74,7 @@ public class LoginFrame extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(colorPalet.getFons_Fosc());
+        jPanel1.setName(""); // NOI18N
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanel1MouseDragged(evt);
@@ -118,7 +118,8 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel_Incorrecte.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel_Incorrecte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_Incorrecte.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_Incorrecte.setText("Credencials Incorrectes");
 
         jButtonRegistre.setBackground(new java.awt.Color(0, 150, 136));
@@ -170,16 +171,6 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interficie/icones/icons8_user_24px.png"))); // NOI18N
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interficie/icones/icons8_password_24px.png"))); // NOI18N
-
-        jCheckBox1.setBackground(colorPalet.getFons_Fosc());
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jCheckBox1.setForeground(colorPalet.getText_Clar());
-        jCheckBox1.setText("Enrecorda'm");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
 
         jButtonRegistre1.setBackground(colorPalet.getText_Clar());
         jButtonRegistre1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -235,8 +226,7 @@ public class LoginFrame extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jTextUsuari, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jCheckBox1)
-                                                .addGap(18, 18, 18)
+                                                .addGap(109, 109, 109)
                                                 .addComponent(jButtonEntrar))
                                             .addComponent(jLabel_Incorrecte, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jButtonRegistre)
@@ -287,16 +277,14 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jButtonEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addComponent(jButtonEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel_Incorrecte)
                 .addGap(77, 77, 77)
                 .addComponent(jButtonRegistre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonRegistre1)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(filler4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -421,10 +409,6 @@ public class LoginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel1MousePressed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -470,7 +454,6 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonRegistre;
     private javax.swing.JButton jButtonRegistre1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -25,6 +25,7 @@ public class ControladoraInterficie {
     public RegistreFrame registre = new RegistreFrame(this);
     public PlayingFrame playing; // S'ha d'inicialitzar quan es comença la partida cada cop. // = new PlayingFrame(this);
     public RepositoriFrame repo = new RepositoriFrame(this);
+    public RankingFrame ranking = new RankingFrame(this);
     
     // Inicialització
     
