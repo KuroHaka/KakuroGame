@@ -1,5 +1,7 @@
 package interficie;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -23,6 +25,16 @@ public class IniciFrame extends javax.swing.JFrame {
         initComponents();
     }
     
+    private void listenerQuanTanques(){
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                System.out.println("(PLayingFrame) S'ha tancat amb la creu. Fent coses...");
+                ctrl_interficie.playing.setVisible(false);
+                ctrl_interficie.inici.setVisible(true);
+                // guarda coses ();
+            }
+        });
+    }
     // Testing only
     public IniciFrame() {
         this.ctrl_interficie = null;
