@@ -25,20 +25,16 @@ public class IniciFrame extends javax.swing.JFrame {
         initComponents();
     }
     
-    private void listenerQuanTanques(){
-        this.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e){
-                System.out.println("(PLayingFrame) S'ha tancat amb la creu. Fent coses...");
-                ctrl_interficie.playing.setVisible(false);
-                ctrl_interficie.inici.setVisible(true);
-                // guarda coses ();
-            }
-        });
-    }
     // Testing only
     public IniciFrame() {
         this.ctrl_interficie = null;
         initComponents();
+    }
+    
+    public void reset() {
+        actualitzaJList();
+        this.jComboBox_Dificultat.setSelectedItem(0); // Per defecte: "Personalitzat" Seleccionat
+        set_configuracio_seleccionada(conf_preferida, true);
     }
     
     public void inicia(String usuari) {
