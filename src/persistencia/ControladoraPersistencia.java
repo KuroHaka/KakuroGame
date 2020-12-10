@@ -447,7 +447,30 @@ public class ControladoraPersistencia {
         return elems;
     }
     
-    public boolean acabarPartida(String usuari, String id_partida, Integer temps) {
+    private String[] actualitzarRanking(String[] elemsEntrada, String usuari, Integer temps) {
+        int mida = Integer.parseInt(elemsEntrada[0]);
+        if (mida == 0) {
+            return new String[] {usuari + "," + temps};
+        }
+        String[] ret;
+        if (mida < 3) {
+            mida++;
+            ret = new String[mida + 1];
+            ret[0] = "" + mida;
+        }
+        else ret = elemsEntrada;
+        for (int i = 0; i < mida; i++) {
+            String[] llista = getLlista(elemsEntrada[i+1],",");
+            if (Integer.parseInt(llista[1]) > temps) {
+                ret[i] = usuari + "," + temps;
+            }
+            else ret[i] = elemsEntrada[i];
+        }
+        return ret;
+    }
+    
+    public boolean acabarPartida(String usuari, String id_partida, Integer temps, int dificultat) {
+        // Borrar de partides i agafar el idEnunciat
         String documentPartides = getDocument("partides");
         String[] llistaPartides = getLlista(documentPartides, "\n");
         Object[] partida = getUsuari(id_partida, llistaPartides);
@@ -456,17 +479,33 @@ public class ControladoraPersistencia {
         documentPartides = borrarElemLlista(llistaPartides, (int) partida[1]);
         reescriureDocument("partides", documentPartides);
         
+        // Actualitzar repositori
         String documentRepositori = getDocument("repositori");
         String[] repositori = getLlista(documentRepositori, "\n");
         Object[] enunciat = getUsuari(elemsPartida[1],repositori);
         String[] elemsEnunciat = getLlista((String) enunciat[0], ":");
         
         elemsEnunciat = actualitzarRep(elemsEnunciat, usuari, temps);
-        documentRepositori = prepararEscriptura(elemsEnunciat);
+        repositori = reescriureElemLlista(repositori, elemsEnunciat, (int) enunciat[1]);
+        
+        documentRepositori = prepararEscriptura(repositori);
         reescriureDocument("repositori", documentRepositori);
         
+        // Actualitzar ranking
+        String documentRanking = getDocument("ranking");
+        String[] ranking = getLlista(documentRanking, "\n");
+        String entrada = ranking[dificultat];
+        String[] elemsEntrada = getLlista(entrada, ":");
+        
+        elemsEntrada = actualitzarRanking(elemsEntrada, usuari, temps);
+        ranking = reescriureElemLlista(ranking, elemsEntrada, dificultat);
+        
+        documentRanking = prepararEscriptura(ranking);
+        reescriureDocument("ranking", documentRanking);
+        
+        // Borrar de shadow i la partida començada
         borrarPartidaComencada(id_partida, "comencada/");
-//##//  // TODO Falta borrar de shadow i actualitzar ranking
+        borrarPartidaShadow(usuari, id_partida);
         
         return true;
     }
