@@ -452,17 +452,20 @@ public class ControladoraPersistencia {
         if (mida == 0) {
             return new String[] {usuari + "," + temps};
         }
+        
         String[] ret;
-        if (mida < 3) {
-            mida++;
-            ret = new String[mida + 1];
-            ret[0] = "" + mida;
-        }
-        else ret = elemsEntrada;
-        for (int i = 0; i < mida; i++) {
-            String[] llista = getLlista(elemsEntrada[i+1],",");
-            if (Integer.parseInt(llista[1]) > temps) {
+        if (mida < 3) mida++;
+        ret = new String[mida + 1];
+        ret[0] = "" + mida;
+        
+        for (int i = 1; i <= mida; i++) {
+            String[] llista = getLlista(elemsEntrada[i],",");
+            
+            int tempsAux = Integer.parseInt(llista[1]);
+            if (tempsAux > temps) {
                 ret[i] = usuari + "," + temps;
+                usuari = llista[0];
+                temps = tempsAux;
             }
             else ret[i] = elemsEntrada[i];
         }
@@ -527,8 +530,19 @@ public class ControladoraPersistencia {
     
     public Object[] getRankings(int dificultat) {
         // TODO 
-        String[] nomUser = new String[]{"a","b","?"};
-        String[] temps = new String[] {"1","2","?"};
+        String[] nomUser = new String[]{"?","?","?"};
+        String[] temps = new String[] {"?","?","?"};
+        
+        String documentRanking = getDocument("ranking");
+        String[] ranking = getLlista(documentRanking, "\n");
+        String[] entrada = getLlista(ranking[dificultat], ":");
+        int mida = Integer.parseInt(entrada[0]);
+        
+        for (int i = 0; i < mida; i++) {
+            String[] record = getLlista(entrada[i+1], ",");
+            nomUser[i] = record[0];
+            temps[i] = record[1];
+        }
 
         return new Object[] {nomUser, temps};
     }
