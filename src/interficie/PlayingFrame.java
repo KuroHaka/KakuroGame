@@ -49,8 +49,8 @@ public class PlayingFrame extends javax.swing.JFrame {
         */
         
         // Proof of work (Se'n pot anar a la mierder)
+        
         popupTauler();
-
         initComponents();
     }
     
@@ -60,15 +60,17 @@ public class PlayingFrame extends javax.swing.JFrame {
         /**/
         /**/ String txt = "";
         /**/ try {
-        /**/     txt = Dades.carregaArxiu("dades/enunciats/enunciat2.txt");
+        /**/     txt = Dades.carregaArxiu("dades/enunciats/123.txt");
         /**/ } catch (NoSuchFileException ex) {
         /**/     Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
         /**/ }
         /**/ tc = new TaulerComencat(txt);
         /**/
         /* END */
+        tauler = tc.toFormatInterficie();
         
         this.ctrl_interficie = null;
+        popupTauler();
         initComponents();
     }
 
@@ -82,30 +84,30 @@ public class PlayingFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "\n [ Playing ]\n" + tauler_string, "Proof of work", JOptionPane.INFORMATION_MESSAGE);
     }
     
-    private void addCasellaNegra(JPanel panel, Integer x, Integer y){
+    private void addCasellaNegra(JPanel panel, String x){
         JLabel jLabel = new JLabel();
         jLabel.setOpaque(true);
         jLabel.setBackground(Color.BLACK);
         jLabel.setForeground(Color.WHITE);
         jLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        if(x!=null && y!=null)
-            jLabel.setText(x+"\\"+y);
-        else if(y!=null)
-            jLabel.setText(" \\"+y);
-        else if(x!=null)
-            jLabel.setText(x+"\\");
+        
+        if(!x.equals(" \\ "))
+            jLabel.setText(x);
+        
         jLabel.setHorizontalAlignment(JLabel.CENTER);
         jLabel.setVerticalAlignment(JLabel.CENTER);
         panel.add(jLabel);
     }
     
-    private void addCasellaBlanca(JPanel panel, Integer v){
+    private void addCasellaBlanca(JPanel panel, String v){
         JTextField field = new JTextField();
         field.setHorizontalAlignment(JTextField.CENTER);
         field.setFont(new Font("Arial", Font.PLAIN, 20));
-        if(v!=null){
+        
+        if(!v.equals("?")){
             field.setText(String.valueOf(v));
         }
+        
         field.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -193,16 +195,16 @@ public class PlayingFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.setLayout(new GridLayout(tc.getDimY(),tc.getDimX(),1,1));
+        jPanel1.setLayout(new GridLayout(tauler.length,tauler[0].length,1,1));
 
         // ADD TO GRID
-        for (int y = 0; y < tc.getDimY(); y++) {
-            for(int x = 0; x < tc.getDimX(); x++){
-                if(tc.esBlanca(x, y)){
-                    addCasellaBlanca(jPanel1, ((CasellaBlanca)tc.getCasella(x, y)).getValor());
+        for (String fila[] : tauler) {
+            for (String elem : fila){
+                if(elem.contains("\\")){
+                    addCasellaNegra(jPanel1,elem);
                 }
                 else{
-                    addCasellaNegra(jPanel1, ((CasellaNegra)tc.getCasella(x, y)).getColumna(),((CasellaNegra)tc.getCasella(x, y)).getFila());
+                    addCasellaBlanca(jPanel1, elem);
                 }
             }
         }

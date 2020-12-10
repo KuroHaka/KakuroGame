@@ -60,7 +60,7 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanel1">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jPanel1.setLayout(new GridLayout(tc.getDimY(),tc.getDimX(),1,1));&#xa;        &#xa;// ADD TO GRID&#xa;for (int y = 0; y &lt; tc.getDimY(); y++) {&#xa;    for(int x = 0; x &lt; tc.getDimX(); x++){&#xa;        if(tc.esBlanca(x, y)){&#xa;            addCasellaBlanca(jPanel1, ((CasellaBlanca)tc.getCasella(x, y)).getValor());&#xa;        }&#xa;        else{&#xa;            addCasellaNegra(jPanel1, ((CasellaNegra)tc.getCasella(x, y)).getColumna(),((CasellaNegra)tc.getCasella(x, y)).getFila());&#xa;        }&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jPanel1.setLayout(new GridLayout(tauler.length,tauler[0].length,1,1));&#xa;        &#xa;// ADD TO GRID&#xa;for (String fila[] : tauler) {&#xa;    for (String elem : fila){&#xa;        if(elem.contains(&quot;\\&quot;)){&#xa;            addCasellaNegra(jPanel1,elem);&#xa;        }&#xa;        else{&#xa;            addCasellaBlanca(jPanel1, elem);&#xa;        }&#xa;    }&#xa;}"/>
       </AuxValues>
 
       <Layout>
