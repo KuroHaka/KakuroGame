@@ -81,7 +81,6 @@ public class PlayFrame extends JFrame{
         });
         panel.add(field);
     }
-    
     public PlayFrame(){
         super("PlayFrame");
         Container container = getContentPane();

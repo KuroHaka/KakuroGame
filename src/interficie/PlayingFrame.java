@@ -15,6 +15,7 @@ import domini.tauler.casella.*;
 import domini.partida.Partida;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -30,7 +31,6 @@ public class PlayingFrame extends javax.swing.JFrame {
     
     String[][] tauler;
     int timestamp;
-    
     public PlayingFrame(ControladoraInterficie pres, Object[] params) {
         this.ctrl_interficie = pres;
         
@@ -50,7 +50,6 @@ public class PlayingFrame extends javax.swing.JFrame {
         
         // Proof of work (Se'n pot anar a la mierder)
         
-        popupTauler();
         initComponents();
     }
     
@@ -68,14 +67,24 @@ public class PlayingFrame extends javax.swing.JFrame {
         /**/
         /* END */
         tauler = tc.toFormatInterficie();
-        
+        timestamp = 321424535;
         this.ctrl_interficie = null;
-        popupTauler();
+        
         initComponents();
+        actualitzaCrono();
     }
 
     public void inicia(String usuari, String arxiuPartida){
         // Nothing here :)
+    }
+    private void actualitzaCrono(){
+        int seconds = timestamp;
+        long hours = TimeUnit.SECONDS.toHours(seconds);
+        long minute = TimeUnit.SECONDS.toMinutes(seconds) - (TimeUnit.SECONDS.toHours(seconds)* 60);
+        long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) *60);
+        String tot = "";
+        boolean first = true;
+        crono.setText(hours+":"+minute+":"+second);
     }
     
     private void popupTauler() {
