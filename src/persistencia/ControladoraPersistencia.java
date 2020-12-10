@@ -529,7 +529,6 @@ public class ControladoraPersistencia {
     }
     
     public Object[] getRankings(int dificultat) {
-        // TODO 
         String[] nomUser = new String[]{"?","?","?"};
         String[] temps = new String[] {"?","?","?"};
         
