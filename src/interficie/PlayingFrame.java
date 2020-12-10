@@ -49,8 +49,8 @@ public class PlayingFrame extends javax.swing.JFrame {
         */
         
         // Proof of work (Se'n pot anar a la mierder)
+        
         popupTauler();
-
         initComponents();
     }
     
@@ -60,15 +60,17 @@ public class PlayingFrame extends javax.swing.JFrame {
         /**/
         /**/ String txt = "";
         /**/ try {
-        /**/     txt = Dades.carregaArxiu("dades/enunciats/enunciat2.txt");
+        /**/     txt = Dades.carregaArxiu("dades/enunciats/123.txt");
         /**/ } catch (NoSuchFileException ex) {
         /**/     Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
         /**/ }
         /**/ tc = new TaulerComencat(txt);
         /**/
         /* END */
+        tauler = tc.toFormatInterficie();
         
         this.ctrl_interficie = null;
+        popupTauler();
         initComponents();
     }
 
@@ -82,30 +84,30 @@ public class PlayingFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "\n [ Playing ]\n" + tauler_string, "Proof of work", JOptionPane.INFORMATION_MESSAGE);
     }
     
-    private void addCasellaNegra(JPanel panel, Integer x, Integer y){
+    private void addCasellaNegra(JPanel panel, String x){
         JLabel jLabel = new JLabel();
         jLabel.setOpaque(true);
         jLabel.setBackground(Color.BLACK);
         jLabel.setForeground(Color.WHITE);
         jLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        if(x!=null && y!=null)
-            jLabel.setText(x+"\\"+y);
-        else if(y!=null)
-            jLabel.setText(" \\"+y);
-        else if(x!=null)
-            jLabel.setText(x+"\\");
+        
+        if(!x.equals(" \\ "))
+            jLabel.setText(x);
+        
         jLabel.setHorizontalAlignment(JLabel.CENTER);
         jLabel.setVerticalAlignment(JLabel.CENTER);
         panel.add(jLabel);
     }
     
-    private void addCasellaBlanca(JPanel panel, Integer v){
+    private void addCasellaBlanca(JPanel panel, String v){
         JTextField field = new JTextField();
         field.setHorizontalAlignment(JTextField.CENTER);
         field.setFont(new Font("Arial", Font.PLAIN, 20));
-        if(v!=null){
+        
+        if(!v.equals("?")){
             field.setText(String.valueOf(v));
         }
+        
         field.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -139,29 +141,52 @@ public class PlayingFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        pause = new javax.swing.JButton();
+        save = new javax.swing.JButton();
+        crono = new javax.swing.JLabel();
+        hint = new javax.swing.JButton();
+        solve = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kakuro ~ Jugant");
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1030, 640));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 797, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 403, Short.MAX_VALUE)
+            .addGap(0, 508, Short.MAX_VALUE)
         );
 
-        jButton1.setText("jButton1");
+        jPanel2.setLayout(new java.awt.GridLayout(0, 5));
 
-        jButton2.setText("jButton2");
+        pause.setText("pause");
+        jPanel2.add(pause);
 
-        jButton3.setText("jButton3");
+        save.setText("save");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+        jPanel2.add(save);
+
+        crono.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        crono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        crono.setText("00:00:00");
+        jPanel2.add(crono);
+
+        hint.setText("hint");
+        jPanel2.add(hint);
+
+        solve.setText("solve");
+        jPanel2.add(solve);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,45 +195,40 @@ public class PlayingFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 546, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 797, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel1.setLayout(new GridLayout(tc.getDimY(),tc.getDimX(),1,1));
+        jPanel1.setLayout(new GridLayout(tauler.length,tauler[0].length,1,1));
 
         // ADD TO GRID
-        for (int y = 0; y < tc.getDimY(); y++) {
-            for(int x = 0; x < tc.getDimX(); x++){
-                if(tc.esBlanca(x, y)){
-                    addCasellaBlanca(jPanel1, ((CasellaBlanca)tc.getCasella(x, y)).getValor());
+        for (String fila[] : tauler) {
+            for (String elem : fila){
+                if(elem.contains("\\")){
+                    addCasellaNegra(jPanel1,elem);
                 }
                 else{
-                    addCasellaNegra(jPanel1, ((CasellaNegra)tc.getCasella(x, y)).getColumna(),((CasellaNegra)tc.getCasella(x, y)).getFila());
+                    addCasellaBlanca(jPanel1, elem);
                 }
             }
         }
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveActionPerformed
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -242,9 +262,12 @@ public class PlayingFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel crono;
+    private javax.swing.JButton hint;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton pause;
+    private javax.swing.JButton save;
+    private javax.swing.JButton solve;
     // End of variables declaration//GEN-END:variables
 }

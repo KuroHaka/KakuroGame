@@ -209,8 +209,8 @@ public abstract class Tauler {
         String[][] ret = new String[dimY][dimX]; // x: Nfila; y: Ncolumna.
         for (int i = 0; i < dimY; ++i)
             for (int j = 0; j < dimX; ++j) {
-                if(tauler[i][j].getClass().equals(CasellaBlanca.class)){
-                    Integer v = getValor(i,j);
+                if(esBlanca(j, i)){
+                    Integer v = getValor(j,i);
                     ret[i][j] = "" + (v == null ? "?" : v);
                 } else {
                     CasellaNegra casella_negra = (CasellaNegra)tauler[i][j];

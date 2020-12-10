@@ -52,18 +52,21 @@ public class ControladoraInterficie {
         System.out.println("(CtrlInt) iniciar partida id=" + id_partida);
         Object[] ret = ctrl_domini.iniciaPartida(id_partida);
         playing = new PlayingFrame(this, ret);
+        playing.setVisible(true);
     }
 
     public void generaAndIniciaNovaPartida(int files, int cols, int valor, Integer blanques) {
         System.out.println("(CtrlInt) generar i iniciar nova partida");
         Object[] ret = ctrl_domini.generaIniciaNovaPartida(files, cols, valor, blanques);
         playing = new PlayingFrame(this, ret);
+        playing.setVisible(true);
     }
     
     public void iniciaNovaPartidaDesdeRepositori(String id_enunciat) {
         System.out.println("(CtrlInt) Iniciar partida desde Repositori");
         Object[] ret = ctrl_domini.iniciaNovaPartidaDesdeRepositori(id_enunciat);
         playing = new PlayingFrame(this, ret);
+        playing.setVisible(true);
     }
     
 /////////////////// RANKING
