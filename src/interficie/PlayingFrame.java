@@ -11,14 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import persistencia.Dades;
-import domini.tauler.casella.*;
 import domini.partida.Partida;
-import java.awt.BorderLayout;
-import java.awt.Container;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class PlayingFrame extends javax.swing.JFrame {
