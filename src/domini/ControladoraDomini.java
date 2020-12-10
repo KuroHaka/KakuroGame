@@ -139,7 +139,7 @@ public class ControladoraDomini {
         return ctrl_persist.guardaPartida(id_partida_actual, nom_usuari_actual, temps, tauler_fStd);
     }
     
-    public void acabaPartida (int temps) {
+    public void acabaPartida (boolean guardarAlRanking, int temps) {
         // String usuari, String id_partida, Integer temps, int dificultat
         ctrl_persist.acabarPartida(nom_usuari_actual, id_partida_actual, temps, -1);
     }
