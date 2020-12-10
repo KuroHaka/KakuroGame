@@ -134,8 +134,14 @@ public class ControladoraDomini {
         return ctrl_persist.borrarPartida(id_partida, usuari);
     }
     
-    public boolean guardaPartida(int temps, String tauler_fStd) {
+    public boolean guardaPartida(int temps, String[][] tauler_format_interficie) {
+        String tauler_fStd = matriuStrings_a_fStd(tauler_format_interficie);
         return ctrl_persist.guardaPartida(id_partida_actual, nom_usuari_actual, temps, tauler_fStd);
+    }
+    
+    public void acabaPartida (int temps) {
+        // String usuari, String id_partida, Integer temps, int dificultat
+        ctrl_persist.acabarPartida(nom_usuari_actual, id_partida_actual, temps, -1);
     }
     
     ////// Començar a jugar
@@ -208,5 +214,10 @@ public class ControladoraDomini {
     
     private String[][] tauler_a_MatriuStrings(Tauler tauler) {
         return tauler.toFormatInterficie();
+    }
+    
+    private String matriuStrings_a_fStd(String[][] mat) {
+        // TODO 
+        return null;
     }
 }

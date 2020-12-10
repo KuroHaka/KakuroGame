@@ -47,29 +47,37 @@ public class ControladoraInterficie {
     
         return true;
     }
+          
+    private void iniciarFramePlaying (Object[] ret) {
+        playing = new PlayingFrame(this, ret);
+        inici.setVisible(false);
+        playing.setVisible(true);
+    }
     
     public void iniciaPartida(String id_partida) {
         System.out.println("(CtrlInt) iniciar partida id=" + id_partida);
         Object[] ret = ctrl_domini.iniciaPartida(id_partida);
-        playing = new PlayingFrame(this, ret);
-        inici.setVisible(false);
-        playing.setVisible(true);
+        iniciarFramePlaying (ret);
     }
 
     public void generaAndIniciaNovaPartida(int files, int cols, int valor, Integer blanques) {
         System.out.println("(CtrlInt) generar i iniciar nova partida");
         Object[] ret = ctrl_domini.generaIniciaNovaPartida(files, cols, valor, blanques);
-        playing = new PlayingFrame(this, ret);
-        inici.setVisible(false);
-        playing.setVisible(true);
+        iniciarFramePlaying (ret);
     }
     
     public void iniciaNovaPartidaDesdeRepositori(String id_enunciat) {
         System.out.println("(CtrlInt) Iniciar partida desde Repositori");
         Object[] ret = ctrl_domini.iniciaNovaPartidaDesdeRepositori(id_enunciat);
-        playing = new PlayingFrame(this, ret);
-        inici.setVisible(false);
-        playing.setVisible(true);
+        iniciarFramePlaying (ret);
+    }
+    
+    public boolean guardaPartida(int temps, String[][] tauler_format_interficie) {
+        return ctrl_domini.guardaPartida(temps, tauler_format_interficie);
+    }
+        
+    public void acabaPartida (int temps) {
+        ctrl_domini.acabaPartida(temps);
     }
     
 /////////////////// RANKING
