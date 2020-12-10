@@ -7,38 +7,42 @@ public class Configuracio {
     private int numeroBlanques;
     private int dimX;
     private int dimY;
-    private int dif; //si dif == 1 --> Principiant, == 2 --> Intermig, == 3 --> Expert, == 0 --> No asignada
+    enum Dificultat {
+        FACIL,
+        DIFICIL,
+        EXPERT,
+        PERSONALITZAT
+    }
+    private Dificultat dif;
     
     //Constructoras
     public Configuracio() {
-        this.numeroBlanquesEstablertes = 10;
-        this.numeroBlanques = 20;
         this.dimX = 8;
         this.dimY = 8;
-        this.dif = 1;
+        this.numeroBlanquesEstablertes = 0;
+        this.numeroBlanques = 27;
+        this.dif = Dificultat.DIFICIL;
     }
-    
-    public Configuracio(Casella[][] c) {
-        this.dimX = c.length;
-        this.dimY = c[0].length;
-        int cont = 0;
-        int est = 0;
-        for(int i = 0; i < this.dimX; ++i) {
-            for(int j = 0; j < this.dimY; ++j) {
-                if(c[i][j].getClass() == (CasellaBlanca.class)) {
-                    ++cont;
-                    if(((CasellaBlanca)c[i][j]).getValor() != null) {
-                        ++est;
-                    }
-                }
-            }
+
+    public Configuracio(Dificultat dif) {
+        if(dif == Dificultat.FACIL) {
+            this.dimX = 5;
+            this.dimY = 5;
+            this.numeroBlanquesEstablertes = 4;
+            this.numeroBlanques = (int)((dimX - 1) * (dimY - 1) * 0.55);
         }
-        this.numeroBlanquesEstablertes = est;
-        this.numeroBlanques = cont;
-        float f = (this.numeroBlanques - this.numeroBlanquesEstablertes)/((this.dimX - 1)* (this.dimY - 1));
-        if(f > 0.8) {this.dif = 3;}
-        else if(f > 0.5) {this.dif = 2;}
-        else {this.dif = 1;}  //Establertes les normes de dificultat
+        else if(dif == Dificultat.DIFICIL) {
+            this.dimX = 8;
+            this.dimY = 8;
+            this.numeroBlanquesEstablertes = 0;
+            this.numeroBlanques = (int)((dimX - 1) * (dimY - 1) * 0.55);
+        }
+        if(dif == Dificultat.EXPERT) {
+            this.dimX = 12;
+            this.dimY = 12;
+            this.numeroBlanquesEstablertes = 0;
+            this.numeroBlanques = (int)((dimX - 1) * (dimY - 1) * 0.55);
+        }
     }
     
     public Configuracio(int dx, int dy, int nb, int nbe) {
@@ -46,16 +50,17 @@ public class Configuracio {
         this.dimY = dy;
         this.numeroBlanques = nb;
         this.numeroBlanquesEstablertes = nbe;
-        float f = (this.numeroBlanques - this.numeroBlanquesEstablertes)/((this.dimX - 1)* (this.dimY - 1));
-        if(f > 0.7) {this.dif = 3;}
-        else if(f > 0.5) {this.dif = 2;}
-        else {this.dif = 1;}
+        this.dif = Dificultat.PERSONALITZAT;
     }
     
     //Funciones
     
     public int getNumeroBlanques() {
         return numeroBlanques;
+    }
+
+    public int getNumeroBlanquesEstablertes() {
+        return numeroBlanquesEstablertes;
     }
     
     public int getDimX() {
@@ -65,18 +70,27 @@ public class Configuracio {
     public int getDimY() {
         return dimY;
     }
-    
-    public int getDificultat() {
-        return dif;
+
+    public void setNumeroBlanques(int nb) {
+        this.numeroBlanques = nb;
     }
-    
+
+    public void setNumeroBlanquesEstablertes(int nbe) {
+        this.numeroBlanquesEstablertes = nbe;
+    }
+
+    public void setDimX(int dimX) {
+        this.dimX = dimX;
+    }
+
+    public void setDimY(int dimY) {
+        this.dimY = dimY;
+    }
+
     public void print() {
         System.out.println("Numero Blanques: " + this.numeroBlanques);
         System.out.println("Numero Blanques Establertes: " + this.numeroBlanquesEstablertes);
         System.out.println("Dimensio X: " + this.dimX + " , Dimensio Y : " + this.dimY);
-        if(this.dif == 1) {System.out.println("Dificultat: Principiant");}
-        if(this.dif == 2) {System.out.println("Dificultat: Avançada");}
-        if(this.dif == 3) {System.out.println("Dificultat: Expert");}
     }
     
     
