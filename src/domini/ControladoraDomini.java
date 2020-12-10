@@ -218,6 +218,15 @@ public class ControladoraDomini {
     
     private String matriuStrings_a_fStd(String[][] mat) {
         // TODO 
+        String files = "" + mat.length;
+        String cols = "" + mat[0].length;
+        String body = "";
+        for (int i = 0; i < mat[0].length; ++i)
+            for (int j = 0; j < mat.length; ++j){
+                String sym = mat[i][j]; // TODO
+            }
+        // Per les negres: .split("\");
+        String fstd = files + "," + cols + "\n" + body;
         return null;
     }
 }
