@@ -76,8 +76,8 @@ public class ControladoraInterficie {
         return ctrl_domini.guardaPartida(temps, tauler_format_interficie);
     }
         
-    public void acabaPartida (int temps) {
-        ctrl_domini.acabaPartida(temps);
+    public void acabaPartida (boolean opt, int temps) {
+        ctrl_domini.acabaPartida(opt,temps);
     }
     
 /////////////////// RANKING

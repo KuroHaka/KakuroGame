@@ -2,13 +2,15 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Kakuro ~ Jugant"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -54,7 +56,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jPanel1.setLayout(new GridLayout(tauler.length,tauler[0].length,1,1));&#xa;        &#xa;// ADD TO GRID&#xa;for (String fila[] : tauler) {&#xa;    for (String elem : fila){&#xa;        if(elem.contains(&quot;\\&quot;)){&#xa;            addCasellaNegra(jPanel1,elem);&#xa;        }&#xa;        else{&#xa;            addCasellaBlanca(jPanel1, elem);&#xa;        }&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jPanel1.setLayout(new GridLayout(tauler.length,tauler[0].length,1,1));&#xa;        &#xa;// ADD TO GRID&#xa;for (int y = 0; y &lt; tauler.length; y++ ) {&#xa;    for (int x = 0; x &lt; tauler[0].length; x++){&#xa;        if(tauler[y][x].contains(&quot;\\&quot;)){&#xa;            addCasellaNegra(jPanel1,tauler[y][x]);&#xa;        }&#xa;        else{&#xa;            addCasellaBlanca(jPanel1, tauler[y][x], x, y);&#xa;        }&#xa;    }&#xa;}"/>
       </AuxValues>
 
       <Layout>
@@ -81,6 +83,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="pause"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pauseActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="save">
           <Properties>

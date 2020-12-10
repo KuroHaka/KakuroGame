@@ -221,12 +221,30 @@ public class ControladoraDomini {
         String files = "" + mat.length;
         String cols = "" + mat[0].length;
         String body = "";
-        for (int i = 0; i < mat[0].length; ++i)
-            for (int j = 0; j < mat.length; ++j){
-                String sym = mat[i][j]; // TODO
+        for (int j = 0; j < mat.length; ++j){
+            String line = "";
+            for (int i = 0; i < mat[0].length; ++i){
+                String sym = mat[j][i];
+                
+                if(sym.contains("\\")){
+                    if(sym.equals(" \\ ")){
+                        line+=",*";
+                    }
+                    else{
+                        line+=",";
+                        String[] split = sym.split("\\\\");
+                        if(!split[0].equals(" "))
+                            line+="C"+split[0];
+                        if(!split[1].equals(" "))
+                            line+="F"+split[1];
+                    }
+                }
+                else{
+                    line+=","+sym;
+                }
             }
-        // Per les negres: .split("\");
-        String fstd = files + "," + cols + "\n" + body;
-        return null;
+            body+=line.substring(1)+"\n";
+        }
+        return files + "," + cols + "\n" + body.substring(0, body.length()-1);
     }
 }

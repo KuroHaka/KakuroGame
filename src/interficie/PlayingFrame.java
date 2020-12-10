@@ -12,21 +12,39 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import persistencia.Dades;
 import domini.partida.Partida;
+import domini.tauler.casella.Casella;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class PlayingFrame extends javax.swing.JFrame {
 
-    ControladoraInterficie ctrl_interficie;
+    private ControladoraInterficie ctrl_interficie;
+    private String usuari; /* THIS SHOULD NOT BE HERE <3 */
+    private Partida partida; /* THIS SHOULD NOT BE HERE <3 */
+    private TaulerComencat tc;  /* THIS SHOULD NOT BE HERE <3 */
+    private Timer t;
+    private boolean running;
+    private String[][] tauler;
+    private int timestamp;
+    private int casellesDisponibles;
+    private List<JTextField> casellesBlanques = new ArrayList();
+    private boolean colorCambiat;
+    private ActionListener actCrono = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            timestamp++;
+            actualitzaCrono();
+        }
+    };
     
-    String usuari; /* THIS SHOULD NOT BE HERE <3 */
-    Partida partida; /* THIS SHOULD NOT BE HERE <3 */
-    TaulerComencat tc;  /* THIS SHOULD NOT BE HERE <3 */
-    
-    String[][] tauler;
-    int timestamp;
     public PlayingFrame(ControladoraInterficie pres, Object[] params) {
         this.ctrl_interficie = pres;
         
@@ -35,16 +53,6 @@ public class PlayingFrame extends javax.swing.JFrame {
         this.tauler = (String[][]) params[0];
         this.timestamp = (int) params[1];
         
-        /* 'tauler' Està en format : 
-        
-            - blanca valor  4
-            - blanca buida  ?
-            - negra coses   4\3  (columna\fila) * si no té valor hi ha un espai: ' '. Exemple: "4\ "
-            - negra buida   *
-        
-        */
-        
-        // Proof of work (Se'n pot anar a la mierder)
         
         initComponents();
     }
@@ -55,24 +63,30 @@ public class PlayingFrame extends javax.swing.JFrame {
         /**/
         /**/ String txt = "";
         /**/ try {
-        /**/     txt = Dades.carregaArxiu("dades/enunciats/123.txt");
+        /**/     txt = Dades.carregaArxiu("dades/enunciats/334.txt");
         /**/ } catch (NoSuchFileException ex) {
         /**/     Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
         /**/ }
         /**/ tc = new TaulerComencat(txt);
         /**/
         /* END */
-        tauler = tc.toFormatInterficie();
-        timestamp = 321424535;
-        this.ctrl_interficie = null;
         
+        tauler = tc.toFormatInterficie();
+        timestamp = 0;
+        this.ctrl_interficie = null;
+        casellesDisponibles = 0;
         initComponents();
-        actualitzaCrono();
+        t = new Timer(1000, actCrono);
+        running = true;
+        colorCambiat = false;
+        popupTauler();
+        t.start();
     }
 
     public void inicia(String usuari, String arxiuPartida){
         // Nothing here :)
     }
+    
     private void actualitzaCrono(){
         int seconds = timestamp;
         long hours = TimeUnit.SECONDS.toHours(seconds);
@@ -80,7 +94,7 @@ public class PlayingFrame extends javax.swing.JFrame {
         long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) *60);
         String tot = "";
         boolean first = true;
-        crono.setText(hours+":"+minute+":"+second);
+        crono.setText(String.format("%02d", hours)+":"+String.format("%02d", minute)+":"+String.format("%02d", second));
     }
     
     private void popupTauler() {
@@ -104,14 +118,17 @@ public class PlayingFrame extends javax.swing.JFrame {
         panel.add(jLabel);
     }
     
-    private void addCasellaBlanca(JPanel panel, String v){
+    private void addCasellaBlanca(JPanel panel, String v, int x, int y){
         JTextField field = new JTextField();
+        casellesBlanques.add(field);
         field.setHorizontalAlignment(JTextField.CENTER);
         field.setFont(new Font("Arial", Font.PLAIN, 20));
         
         if(!v.equals("?")){
             field.setText(String.valueOf(v));
         }
+        else
+            casellesDisponibles++;
         
         field.addKeyListener(new KeyListener() {
             @Override
@@ -123,8 +140,28 @@ public class PlayingFrame extends javax.swing.JFrame {
                 else if(c == KeyEvent.VK_0){
                     e.consume();
                 }
-                else
+                else if(c == KeyEvent.VK_BACK_SPACE && tauler[y][x].equals("?")){
+                    e.consume();
+                }
+                else if(c == KeyEvent.VK_BACK_SPACE && !tauler[y][x].equals("?")){
                     field.setText("");
+                    tauler[y][x] = "?";
+                    casellesDisponibles++;
+                }
+                else{
+                    if(tauler[y][x].equals("?")){
+                        casellesDisponibles--;
+                    }
+                    field.setText("");
+                    tauler[y][x] = String.valueOf(e.getKeyChar());
+                }
+                if(casellesDisponibles == 0){
+                    comprobarSolucio(field, String.valueOf(e.getKeyChar()));
+                }
+                else if(colorCambiat){
+                    for (JTextField casella : casellesBlanques)
+                        casella.setBackground(Color.WHITE);
+                }
             }
             @Override
             public void keyPressed(KeyEvent e) {
@@ -137,10 +174,33 @@ public class PlayingFrame extends javax.swing.JFrame {
         panel.add(field);
     }
     
+    private void comprobarSolucio(JTextField jf, String lastValue){
+        jf.setText(lastValue);
+        if(true/*COMPROVA SOLUCIO*/){
+            t.stop();
+            for (JTextField casella : casellesBlanques){
+                casella.setBackground(Color.GREEN);
+            }
+            Object[] opcions = { "Si", "No"};
+            int opt = JOptionPane.showOptionDialog(null, "HAS COMPLETAT EL KAKURO EN: "+this.crono.getText()+"\nVols enregistrar-la al rànking?" , "ENHORABONA",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, opcions, opcions[1]);
+            partidaAcabada(opt);
+        }
+        else{
+            for (JTextField casella : casellesBlanques)
+                casella.setBackground(Color.RED);
+        }
+        colorCambiat = true;
+    }
     
-    
-    
-    
+    private void partidaAcabada(int opt){
+        //ctrl_interficie.acabaPartida(opt==0,timestamp);
+        this.setVisible(false);
+        ctrl_interficie.inici.reset();
+        ctrl_interficie.inici.setVisible(true);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -153,8 +213,12 @@ public class PlayingFrame extends javax.swing.JFrame {
         hint = new javax.swing.JButton();
         solve = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kakuro ~ Jugant");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1030, 640));
 
@@ -172,6 +236,11 @@ public class PlayingFrame extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridLayout(0, 5));
 
         pause.setText("pause");
+        pause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseActionPerformed(evt);
+            }
+        });
         jPanel2.add(pause);
 
         save.setText("save");
@@ -217,23 +286,55 @@ public class PlayingFrame extends javax.swing.JFrame {
         jPanel1.setLayout(new GridLayout(tauler.length,tauler[0].length,1,1));
 
         // ADD TO GRID
-        for (String fila[] : tauler) {
-            for (String elem : fila){
-                if(elem.contains("\\")){
-                    addCasellaNegra(jPanel1,elem);
+        for (int y = 0; y < tauler.length; y++ ) {
+            for (int x = 0; x < tauler[0].length; x++){
+                if(tauler[y][x].contains("\\")){
+                    addCasellaNegra(jPanel1,tauler[y][x]);
                 }
                 else{
-                    addCasellaBlanca(jPanel1, elem);
+                    addCasellaBlanca(jPanel1, tauler[y][x], x, y);
                 }
             }
         }
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
+        /*
+        if(ctrl_interficie.guardaPartida(timestamp, tauler)){
+            JOptionPane.showMessageDialog(this, "\nNotificació\n" , "S'ha guardat correctament", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "\nNotificació\n" , "No s'ha pogut guardar", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        */
     }//GEN-LAST:event_saveActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        System.out.println("(PlayingFrame) S'ha tancat amb la creu. Fent coses...");
+        ctrl_interficie.playing.setVisible(false);
+        ctrl_interficie.inici.setVisible(true);
+        // guarda coses ();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void pauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseActionPerformed
+        // TODO add your handling code here:
+        if(running){
+            t.stop();
+            this.pause.setText("resume");
+        }
+        else{
+            t.start();
+            this.pause.setText("pause");
+        }
+        running = !running;
+        
+    }//GEN-LAST:event_pauseActionPerformed
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
