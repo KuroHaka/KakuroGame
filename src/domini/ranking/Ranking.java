@@ -1,44 +1,50 @@
 package domini.ranking;
 
-import domini.tauler.TaulerEnunciat;
-import domini.usuari.Usuari;
-
 import java.util.ArrayList;
-import java.util.Map;
+import domini.usuari.Configuracio;
 
 public class Ranking {
     //TODO
-    private ArrayList<RankingEntry> R;
-    private int size;
-    
+    private ArrayList< ArrayList <RankingEntry> > R;
+
     ///// Constructora /////
     public Ranking() {
-        this.R = new ArrayList<RankingEntry>();
+        this.R = new ArrayList <ArrayList <RankingEntry> > ();
+        for(int i = 0; i < 3; ++i) {
+            this.R.add(new ArrayList<RankingEntry>(3));
+        }
+        for(int i = 0; i < 3; ++i) {
+            for(int j = 0; j < 3; ++j) {
+                this.R.get(i).get(j).modificarEntry("BUIT", 0);
+            }
+        } //Omplim el ranking d'entrades buides
     }
-    
-    public void afegirEntry(int id, int temps) {
-        boolean exist = false;
-        for (int i = 0; i < size; i++) {
-            if (R.get(i).getId() == id) {
-                if (R.get(i).getTempsRecord() > temps) {
-                    R.get(i).modificarTemps(temps);
+
+    public void afegirEntry(String id, int temps, Configuracio.Dificultat dif) { //Afegira el entry al ranking si, i només si, es un temps més ràpid que algun dels top 3 en la dificultat esmentada
+        if(dif == Configuracio.Dificultat.FACIL) {
+            for(int i = 0; i < 3; ++i) {
+                if(this.R.get(0).get(i).getTempsRecord() > temps) {
+                    this.R.get(0).get(i).modificarEntry(id, temps);
+                    break;
                 }
-                exist = true;
-                break;
             }
         }
-        if (!exist) {
-            R.add(new RankingEntry(id, temps));
-            size++;
+        else if(dif == Configuracio.Dificultat.DIFICIL) {
+            for(int i = 0; i < 3; ++i) {
+                if(R.get(1).get(i).getTempsRecord() > temps) {
+                    this.R.get(1).get(i).modificarEntry(id, temps);
+                    break;
+                }
+            }
         }
-    }
-    
-    ///// Consultores /////
-    
-    public void print() {
-        System.out.println("Rànkings: ");
-        for (int i = 0; i < size; i++) {
-            R.get(i).printEntry();
+        else if(dif == Configuracio.Dificultat.EXPERT) {
+            for(int i = 0; i < 3; ++i) {
+                if(this.R.get(2).get(i).getTempsRecord() > temps) {
+                    this.R.get(2).get(i).modificarEntry(id, temps);
+                    break;
+                }
+            }
         }
+        else {return;}
     }
 }

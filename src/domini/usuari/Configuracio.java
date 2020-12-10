@@ -7,7 +7,7 @@ public class Configuracio {
     private int numeroBlanques;
     private int dimX;
     private int dimY;
-    enum Dificultat {
+    public enum Dificultat {
         FACIL,
         DIFICIL,
         EXPERT,

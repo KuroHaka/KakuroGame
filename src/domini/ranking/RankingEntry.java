@@ -2,34 +2,39 @@ package domini.ranking;
 
 public class RankingEntry extends Ranking{
     //TODO
-    private int id;
+    private String id;
     private int tempsRecord;
-    
+
     ///// Constructora /////
-    protected RankingEntry(int id, int tempsRecord) {
+    protected RankingEntry(String id, int tempsRecord) {
         this.id = id;
         this.tempsRecord = tempsRecord;
     }
-    
+
     ///// Consultores /////
-    
-    protected int getId() {
-        return id;
+
+    protected String getId() {
+        return this.id;
     }
-    
+
     protected int getTempsRecord() {
-        return tempsRecord;
+        return this.tempsRecord;
     }
-    
+
     public void printEntry() {
         System.out.println("ID = " + id);
         System.out.println("Durada = " + tempsRecord);
     }
-    
+
     ///// Modificadores /////
-    
+
     protected void modificarTemps(int temps) {
         this.tempsRecord = temps;
     }
-    
+
+    protected void modificarEntry(String idN, int temps) {
+        this.id = idN;
+        this.tempsRecord = temps;
+    }
+
 }
