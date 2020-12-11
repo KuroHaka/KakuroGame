@@ -60,9 +60,9 @@ public class ControladoraInterficie {
         iniciarFramePlaying (ret);
     }
 
-    public void generaAndIniciaNovaPartida(int files, int cols, int valor, Integer blanques) {
+    public void generaAndIniciaNovaPartida(int files, int cols, int valor, Integer blanques, int dificultat) {
         System.out.println("(CtrlInt) generar i iniciar nova partida");
-        Object[] ret = ctrl_domini.generaIniciaNovaPartida(files, cols, valor, blanques);
+        Object[] ret = ctrl_domini.generaIniciaNovaPartida(files, cols, valor, blanques, dificultat);
         iniciarFramePlaying (ret);
     }
     

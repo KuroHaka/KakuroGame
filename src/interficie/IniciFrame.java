@@ -2,8 +2,10 @@ package interficie;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class IniciFrame extends javax.swing.JFrame {
@@ -12,6 +14,7 @@ public class IniciFrame extends javax.swing.JFrame {
     
     String usuari = "<usuari>";
     Vector<String> llista_partides; // llista partides de l'usuari simple: nom + temps
+    ArrayList<Object[]> info_partides;
     
     Object[] conf_preferida; // Configuració per defecte de l'usuari
     // Configuracions diverses: numeroBlanquesEstablertes,numeroBlanques,Ncols(X),Nfiles(Y)
@@ -47,6 +50,7 @@ public class IniciFrame extends javax.swing.JFrame {
         
         // SET Llista de PARTIDES de l'Usuari
         llista_partides = ctrl_interficie.ctrl_domini.llistaPartidesUsuari(); //Vector<>();
+        info_partides = ctrl_interficie.ctrl_domini.getLlistaInfoPartides();
         actualitzaJList();
         
         // SET Configuracio Preferida Usuari
@@ -104,20 +108,51 @@ public class IniciFrame extends javax.swing.JFrame {
         this.jLabelArxiuGuardat.setText("");
     }
     
-    private void actualitzaJList() {
-        this.jListPartides.setListData(llista_partides);
-    }
-    
     private void preview_setPartidaSeleccionada(int posicio){
         if (posicio < 0){ 
             preview_capSeleccionada();
             return;
         }
-        String partida_id = llista_partides.get(posicio);
-        this.jLabel_id_partida.setText(partida_id);
-        Object[] ret = ctrl_interficie.ctrl_domini.getInfoPartida(partida_id);
-        this.jLabel_timestamp.setText("" + (int) ret[2]);
-        this.jLabelArxiuGuardat.setText((String) ret[1] + ".txt");
+        //String partida_id = llista_partides.get(posicio);
+        Object[] ret = info_partides.get(posicio);//ctrl_interficie.ctrl_domini.getInfoPartida(partida_id);
+        this.jLabel_id_partida.setText((String) ret[1]);
+        this.jLabelArxiuGuardat.setText("partides/" + (String) ret[1] + ".txt");
+        this.jLabel_timestamp.setText("" + ctrl_interficie.deTimestampAVerbose((int) ret[2]));
+        this.jLabelEnunciat.setText((String) ret[0]);
+    }
+    
+    private String dificultat(int d) {
+            if (d == 0) return "Fàcil";
+            if (d == 1) return "Difícil";
+            if (d == 2) return "Expert";
+            return "Personalitzada";
+    }
+    
+    private void actualitzaJList() {
+        Vector<String> show_list = new Vector<String>();
+        //{elemsPartida[1], elemsPartida[0], Integer.parseInt(elemsPartida[2]), elemsPartida[3]};
+
+        for (Object[] items : info_partides) {
+            String id_enunciat = (String) items[0];
+            String id = (String) items[1];
+            int time = (int) items[2];
+            String dif = (String) items[3];
+            String d = dificultat(Integer.parseInt(dif));
+            String linea = "["+id+"] "+d+"  ~  "+ctrl_interficie.deTimestampAVerbose(time);
+            show_list.add(linea);
+        }
+        this.jListPartides.setListData(show_list);
+        //OLD: this.jListPartides.setListData(llista_partides);
+    }
+    
+    private int getDificultatSeleccionada () {
+        String selected = (String) this.jComboBox_Dificultat.getSelectedItem();
+        
+        if (selected == "Personalitzat")    return 3;
+        else if (selected == "Fàcil")       return 0;
+        else if (selected == "Difícil")     return 1;
+        else if (selected == "Expert")      return 2;
+        return -1;
     }
   
     @SuppressWarnings("unchecked")
@@ -126,8 +161,8 @@ public class IniciFrame extends javax.swing.JFrame {
 
         jLabelUsuari = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButtonRepo = new javax.swing.JButton();
+        jButtonRankings = new javax.swing.JButton();
         jPanelConfig = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -156,8 +191,11 @@ public class IniciFrame extends javax.swing.JFrame {
         jLabel_id_partida = new javax.swing.JLabel();
         jButton_delete_partida = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabelEnunciat = new javax.swing.JLabel();
+        jButtonNovaPartida = new javax.swing.JButton();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jButtonProposa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kakuro ~ Principal");
@@ -180,18 +218,18 @@ public class IniciFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Repositori");
-        jButton4.setToolTipText("");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRepo.setText("Repositori");
+        jButtonRepo.setToolTipText("");
+        jButtonRepo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonRepoActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Rankings");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRankings.setText("Rankings");
+        jButtonRankings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButtonRankingsActionPerformed(evt);
             }
         });
 
@@ -242,10 +280,10 @@ public class IniciFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelConfigLayout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox_Dificultat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelConfigLayout.createSequentialGroup()
@@ -320,9 +358,10 @@ public class IniciFrame extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Partida Seleccionada");
 
-        jLabel4.setText("Id Partida:");
+        jLabel4.setText("ID de la Partida:");
 
-        jLabel5.setText("Timestamp:");
+        jLabel5.setText("Temps emprat:");
+        jLabel5.setToolTipText("");
 
         jLabel6.setText("Arxiu de guardat:");
 
@@ -346,6 +385,10 @@ public class IniciFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setText("Enunciat repositori:");
+
+        jLabelEnunciat.setText("?");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -355,27 +398,24 @@ public class IniciFrame extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_id_partida, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_timestamp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(81, 81, 81))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabelArxiuGuardat, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton_delete_partida, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jButton_delete_partida, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(26, 26, 26)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabelArxiuGuardat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel_timestamp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelEnunciat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel_id_partida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -384,7 +424,7 @@ public class IniciFrame extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -399,17 +439,28 @@ public class IniciFrame extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabelArxiuGuardat))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabelEnunciat))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_delete_partida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jButton6.setText("Nova Partida");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNovaPartida.setText("Nova Partida");
+        jButtonNovaPartida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jButtonNovaPartidaActionPerformed(evt);
+            }
+        });
+
+        jButtonProposa.setText("Proposa Kakuro");
+        jButtonProposa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonProposaActionPerformed(evt);
             }
         });
 
@@ -418,45 +469,51 @@ public class IniciFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelUsuari)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonRepo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonRankings, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonProposa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonNovaPartida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabelUsuari)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabelUsuari))
-                .addGap(18, 18, 18)
-                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6)
-                .addGap(7, 7, 7)
-                .addComponent(jPanelConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonRepo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonRankings)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonProposa)
+                                .addGap(8, 8, 8)
+                                .addComponent(jButtonNovaPartida))
+                            .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanelConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -510,6 +567,9 @@ public class IniciFrame extends javax.swing.JFrame {
 
     private void jButton_delete_partidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_delete_partidaActionPerformed
         
+        int index = this.jListPartides.getSelectedIndex();
+        if (index == -1) return;
+        
         Object[] opcions = { "Sí", "Cancel·la" };
         int opt = JOptionPane.showOptionDialog(null, "Segur que vols eliminar aquesta partida?", "Atenció",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
@@ -517,7 +577,6 @@ public class IniciFrame extends javax.swing.JFrame {
         System.out.println("(IniciFrame) Eliminar partida? " + opcions[opt]);
         if (opt != 0) return;
         
-        int index = this.jListPartides.getSelectedIndex();
         String id_partida = this.llista_partides.get(index);
         boolean ok = ctrl_interficie.ctrl_domini.borrarPartida(id_partida, this.usuari);
         if(ok) {
@@ -566,6 +625,7 @@ public class IniciFrame extends javax.swing.JFrame {
         int cols = (int) this.jSpinner_numCols.getValue();
         int blanques_amb_valor = (int) this.jSpinner_blanquesValor.getValue();
         Integer blanques = jCheckBox1.isSelected() ? (int)this.jSpinner_numBlanques.getValue() : null;
+        int dificultat = getDificultatSeleccionada();
         
         JOptionPane.showMessageDialog(this, ""
                 + "\n -- TODO --"
@@ -579,34 +639,52 @@ public class IniciFrame extends javax.swing.JFrame {
                 + "", "Creació d'una nova partida", JOptionPane.INFORMATION_MESSAGE);
         
         // GENERAR I OBRIR PARTIDA
-        ctrl_interficie.generaAndIniciaNovaPartida(files, cols, blanques_amb_valor, blanques);
+        ctrl_interficie.generaAndIniciaNovaPartida(files, cols, blanques_amb_valor, blanques, dificultat);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonRepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRepoActionPerformed
         
         // Obrir repositori
         ctrl_interficie.repo.inicia(this.usuari);
         this.setVisible(false);
         ctrl_interficie.repo.setVisible(true);
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonRepoActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jButtonNovaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovaPartidaActionPerformed
         
         jPanelConfig.setVisible(!jPanelConfig.isVisible());
         
         
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_jButtonNovaPartidaActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButtonRankingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRankingsActionPerformed
         
         // Obrir ranking
         ctrl_interficie.ranking.inicia();
         this.setVisible(false);
         ctrl_interficie.ranking.setVisible(true);
         
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jButtonRankingsActionPerformed
+
+    private void jButtonProposaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProposaActionPerformed
+        
+        JFileChooser chooser = new JFileChooser();
+        File f = null;
+        int ret = chooser.showOpenDialog( null );
+        
+        if( ret == JFileChooser.APPROVE_OPTION ) {
+               f = chooser.getSelectedFile() ;
+        }
+        if(f != null)
+        {
+            String path = f.getPath();
+            System.out.println("(IniciFrame) Presenta kakuro. Path = " + path);
+            // TODO 
+        }
+
+    }//GEN-LAST:event_jButtonProposaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -648,9 +726,10 @@ public class IniciFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButtonNovaPartida;
+    private javax.swing.JButton jButtonProposa;
+    private javax.swing.JButton jButtonRankings;
+    private javax.swing.JButton jButtonRepo;
     private javax.swing.JButton jButton_delete_partida;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox_Dificultat;
@@ -666,7 +745,9 @@ public class IniciFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelArxiuGuardat;
+    private javax.swing.JLabel jLabelEnunciat;
     private javax.swing.JLabel jLabelUsuari;
     private javax.swing.JLabel jLabel_id_partida;
     private javax.swing.JLabel jLabel_timestamp;

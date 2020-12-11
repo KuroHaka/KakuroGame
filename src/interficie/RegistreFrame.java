@@ -167,11 +167,12 @@ public class RegistreFrame extends javax.swing.JFrame {
             reset();
         }
         ctrl_interficie.login.setEnabled(true);
+        ctrl_interficie.login.setVisible(true);
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ctrl_interficie.login.setEnabled(true);
         this.setVisible(false);
+        ctrl_interficie.login.setEnabled(true);
         ctrl_interficie.login.setVisible(true);
         reset();
         

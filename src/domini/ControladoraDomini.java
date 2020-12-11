@@ -16,6 +16,7 @@ import interficie.ControladoraInterficie;
 import persistencia.ControladoraPersistencia;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Vector;
 
 public class ControladoraDomini {
@@ -32,8 +33,11 @@ public class ControladoraDomini {
     
     //Partides usuari
     private Vector<String> partides;
+    
+    //Partida actual
     private String id_partida_actual;
     private Partida partida_actual;
+    private int dificultat_actual;
     
     // Repositori
     private Vector<String> id_enunciats_repo;
@@ -81,9 +85,13 @@ public class ControladoraDomini {
     
 /////////////////// MÈTODES dins la capa de DOMINI
     
+    ////// Partides
+    
     public Vector<String> llistaPartidesUsuari() {
         return usuari_actual.getLlistaIdPartides();
     }
+    
+    ////// Repositori
     
     public Vector<String> llista_id_enunciats() {
         return ctrl_persist.llista_id_enunciats();
@@ -123,8 +131,19 @@ public class ControladoraDomini {
         return true;
     }
     
+    ////// Repositori
+    
+    public ArrayList<Object[]> getLlistaInfoEnunciats () {
+        return ctrl_persist.getLlistaInfoEnunciats();
+    }
     
     ////// Partides
+    
+    public ArrayList<Object[]> getLlistaInfoPartides () {
+        return ctrl_persist.getLlistaInfoPartides(this.nom_usuari_actual);
+        //ArrayList<Object[]> ip = ctrl_persist.getLlistaInfoPartides(this.nom_usuari_actual);
+        //return new Vector<Object[]>(ip);
+    }
     
     public Object[] getInfoPartida (String id_partida) {
         return ctrl_persist.getInfoPartida(id_partida);
@@ -136,12 +155,12 @@ public class ControladoraDomini {
     
     public boolean guardaPartida(int temps, String[][] tauler_format_interficie) {
         String tauler_fStd = matriuStrings_a_fStd(tauler_format_interficie);
-        return ctrl_persist.guardaPartida(id_partida_actual, nom_usuari_actual, temps, tauler_fStd);
+        return ctrl_persist.guardaPartida(id_partida_actual, nom_usuari_actual, temps, tauler_fStd, dificultat_actual);
     }
     
     public void acabaPartida (boolean guardarAlRanking, int temps) {
         // String usuari, String id_partida, Integer temps, int dificultat
-        ctrl_persist.acabarPartida(nom_usuari_actual, id_partida_actual, temps, -1);
+        ctrl_persist.acabarPartida(nom_usuari_actual, id_partida_actual, temps, dificultat_actual);
     }
     
     ////// Començar a jugar
@@ -155,6 +174,8 @@ public class ControladoraDomini {
         // CONSTRUIR Partida
         int timestamp = (int) ret[1];
         String formatStd = (String) ret[0];
+        int dificultat = (int) ret[2]; // TODO
+        
         TaulerEnunciat te = new TaulerEnunciat(formatStd);
         TaulerComencat tc = new TaulerComencat(te);
         Partida partida = new Partida(usuari_actual, te, tc, 0, false);
@@ -167,14 +188,15 @@ public class ControladoraDomini {
         return new Object[] {tauler, timestamp};
     }
     
-    public Object[] generaIniciaNovaPartida(int files, int cols, int valor, Integer blanques) {
+    public Object[] generaIniciaNovaPartida(int files, int cols, int valor, Integer blanques, int dificultat) {
         System.out.println("(CtrlDomini) generar nova partida");
         
         // GENERAR nova Partida
         TaulerEnunciat te = algoritme.generarKakuro(files, cols, blanques, valor);
         TaulerComencat tc = new TaulerComencat(te);
         String formatStd = tc.format_Estandard();
-        String nou_id = ctrl_persist.guardaNovaPartida(nom_usuari_actual, 0, formatStd);
+        
+        String nou_id = ctrl_persist.guardaNovaPartida(nom_usuari_actual, 0, formatStd, dificultat);
         partides.add(nou_id); // retorna un bool..
         
         // INICIAR
@@ -188,12 +210,13 @@ public class ControladoraDomini {
     public Object[] iniciaNovaPartidaDesdeRepositori(String id_enunciat) {
         System.out.println("(CtrlDomini) Iniciar partida desde Repositori");
         
-        // OBTENIR DADES
+        // OBTENIR DADES            // carrega i la guarda
         Object[] ret = ctrl_persist.carregaPartidaRepositori(Integer.parseInt(id_enunciat), this.nom_usuari_actual);
         
         // CONSTRUIR Partida
         String nou_id_partida = "" + ((int) ret[0]);
         String formatStd = (String) ret[1];
+        //int dificultat = (int) ret[2]; Not here...
         TaulerEnunciat te = new TaulerEnunciat(formatStd);
         TaulerComencat tc = new TaulerComencat(te);
         Partida partida = new Partida(usuari_actual, te, tc, 0, false);
