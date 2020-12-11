@@ -107,11 +107,13 @@
         <Component class="javax.swing.JButton" name="hint">
           <Properties>
             <Property name="text" type="java.lang.String" value="hint"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="solve">
           <Properties>
             <Property name="text" type="java.lang.String" value="solve"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

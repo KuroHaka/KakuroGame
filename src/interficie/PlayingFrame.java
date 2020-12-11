@@ -201,7 +201,7 @@ public class PlayingFrame extends javax.swing.JFrame {
     }
     
     private void partidaAcabada(int opt){
-        //ctrl_interficie.acabaPartida(opt==0,timestamp);
+        ctrl_interficie.acabaPartida(opt==0,timestamp);
         this.setVisible(false);
         ctrl_interficie.inici.reset();
         ctrl_interficie.inici.setVisible(true);
@@ -263,9 +263,11 @@ public class PlayingFrame extends javax.swing.JFrame {
         jPanel2.add(crono);
 
         hint.setText("hint");
+        hint.setEnabled(false);
         jPanel2.add(hint);
 
         solve.setText("solve");
+        solve.setEnabled(false);
         jPanel2.add(solve);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -309,15 +311,15 @@ public class PlayingFrame extends javax.swing.JFrame {
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
-        /*
+        t.stop();
         if(ctrl_interficie.guardaPartida(timestamp, tauler)){
             JOptionPane.showMessageDialog(this, "\nNotificació\n" , "S'ha guardat correctament", JOptionPane.INFORMATION_MESSAGE);
         }
         else{
             JOptionPane.showMessageDialog(this, "\nNotificació\n" , "No s'ha pogut guardar", JOptionPane.INFORMATION_MESSAGE);
         }
+        t.start();
         
-        */
     }//GEN-LAST:event_saveActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
