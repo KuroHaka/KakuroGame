@@ -2,6 +2,7 @@ package interficie;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
@@ -14,6 +15,7 @@ public class RepositoriFrame extends javax.swing.JFrame {
     // Atributs
     
     private Vector<String> llista_id_enunciats;
+    ArrayList<Object[]> info_enunciats;
     private String usuari;
     
     // Constructores
@@ -33,8 +35,13 @@ public class RepositoriFrame extends javax.swing.JFrame {
     public void inicia(String usu) {
         this.usuari = usu;
         llista_id_enunciats = ctrl_interficie.ctrl_domini.llista_id_enunciats(); //Vector<>();
+        info_enunciats = ctrl_interficie.ctrl_domini.getLlistaInfoEnunciats();
         actualitzaJList();
         listenerQuanTanques();
+    }
+    
+    public void actualitza () {
+        inicia(this.usuari);
     }
     
     // Exit (sortir)
@@ -56,8 +63,35 @@ public class RepositoriFrame extends javax.swing.JFrame {
     
     // Mètodes d'actualització de la llista
     
+    private String dificultat(int d) {
+            if (d == 0) return "Fàcil";
+            if (d == 1) return "Difícil";
+            if (d == 2) return "Expert";
+            if (d == 3) return "Personalitzat";
+            return "?"; // This should not happen
+    }
+    
     private void actualitzaJList() {
-        this.jListEnunciats.setListData(llista_id_enunciats);
+        Vector<String> show_list = new Vector<String>();
+        //Object[] items = new Object[] {"id","owner","diff","bool","user","time"};
+        for (Object[] items : info_enunciats) {
+            String id = (String) items[0];
+            String owner = (String) items[1];
+            String dif = (String) items[2];
+            String d = dificultat(Integer.parseInt(dif));
+            boolean hiHaRecord = (((String)items[3]).equals("1"));
+            
+            String record = "";
+            if (hiHaRecord){
+                String userTop = (String) items[4];
+                String timeTop = (String) items[5]; int time = Integer.parseInt(timeTop);
+                record = "  ~  Rècord: "+userTop+" en "+ctrl_interficie.deTimestampAVerbose(time);
+            }
+            String linea = "["+id+"] "+d+ record;
+            show_list.add(linea);
+        }
+        this.jListEnunciats.setListData(show_list);
+        // OLD: this.jListEnunciats.setListData(llista_id_enunciats);
     }
     
     // iniciar nova partida desde un enunciat
