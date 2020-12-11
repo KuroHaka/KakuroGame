@@ -129,6 +129,8 @@ public class IniciFrame extends javax.swing.JFrame {
     }
     
     private void actualitzaJList() {
+        llista_partides = ctrl_interficie.ctrl_domini.llistaPartidesUsuari(); //Vector<>();
+        info_partides = ctrl_interficie.ctrl_domini.getLlistaInfoPartides();
         Vector<String> show_list = new Vector<String>();
         //{elemsPartida[1], elemsPartida[0], Integer.parseInt(elemsPartida[2]), elemsPartida[3]};
 
@@ -580,7 +582,7 @@ public class IniciFrame extends javax.swing.JFrame {
         String id_partida = this.llista_partides.get(index);
         boolean ok = ctrl_interficie.ctrl_domini.borrarPartida(id_partida, this.usuari);
         if(ok) {
-            llista_partides.remove(index);
+            //llista_partides.remove(index);
             actualitzaJList();
             preview_capSeleccionada();
             this.jListPartides.setSelectedIndex(-1);
@@ -640,6 +642,7 @@ public class IniciFrame extends javax.swing.JFrame {
         
         // GENERAR I OBRIR PARTIDA
         ctrl_interficie.generaAndIniciaNovaPartida(files, cols, blanques_amb_valor, blanques, dificultat);
+        actualitzaJList();
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

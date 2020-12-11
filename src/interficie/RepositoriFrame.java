@@ -49,7 +49,6 @@ public class RepositoriFrame extends javax.swing.JFrame {
     private void tornaAlInici() {
         this.setVisible(false);
         ctrl_interficie.inici.setVisible(true);
-        // ctrl_interficie.inici.inicia();
     }
     
     private void listenerQuanTanques(){

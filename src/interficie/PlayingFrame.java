@@ -324,7 +324,9 @@ public class PlayingFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println("(PlayingFrame) S'ha tancat amb la creu. Fent coses...");
         ctrl_interficie.playing.setVisible(false);
+        ctrl_interficie.inici.reset();
         ctrl_interficie.inici.setVisible(true);
+        
         // guarda coses ();
     }//GEN-LAST:event_formWindowClosing
 
