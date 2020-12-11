@@ -128,17 +128,33 @@ public class ControladoraPersistencia {
         return ret;
     }
     
-    public Object[] getInfoPartida(String id_partida) {       
+    public Object[] getInfoPartida(String id_partida) {
+        // TODO dificultat
+        int dificultat = -1;
+        
         String partides = getDocument("partides");
         String[] files = getLlista(partides, "\n");
         
         Object[] partida = getUsuari(id_partida, files);
         String[] elemsPartida = getLlista((String) partida[0], ":");
         
-        return new Object[] {elemsPartida[1], elemsPartida[0], Integer.parseInt(elemsPartida[2])};
+        return new Object[] {elemsPartida[1], elemsPartida[0], Integer.parseInt(elemsPartida[2]), dificultat};
+    }
+    
+    public ArrayList<Object[]> getLlistaInfoPartides(String usuari) {
+        ArrayList<Object[]> ret = new ArrayList<>();
+        Vector<String> llista = llista_id_partides(usuari);
+        
+        for (String idPartida : llista) {
+            ret.add(getInfoPartida(idPartida));
+        }
+        return ret;
     }
     
     public Object[] carregaPartida (String id_partida) {
+        // TODO dificultat
+        int dificultat = 0;
+        
         String documentPartides = getDocument("partides");
         String[] llistaPartides = getLlista(documentPartides, "\n");
         
@@ -147,11 +163,14 @@ public class ControladoraPersistencia {
         String[] elemsPartida = getLlista((String) fila[0], ":");
         
         String documentComencada = getDocument("comencada/" + id_partida);
-        Object[] ret = new Object[] {documentComencada, Integer.parseInt(elemsPartida[2])};
+        Object[] ret = new Object[] {documentComencada, Integer.parseInt(elemsPartida[2]), dificultat};
         return ret;
     }
     
     public Object[] carregaPartidaRepositori(int idEnunciat, String usuari) {
+        // TODO dificultat
+        int dificultat = 0;
+        
         int id_partida = assignarId("partides");
         String id = "" + id_partida;
         guardarPartidaShadow(usuari, id);
@@ -160,7 +179,7 @@ public class ControladoraPersistencia {
         String tauler = getDocument("enunciats/" + idEnunciat);
         guardarPartidaDirs(id_partida, "comencada", tauler);
         
-        return new Object[] {id_partida, tauler};
+        return new Object[] {id_partida, tauler, dificultat};
     }
     
     //////////////////// PRIVADES RANDOM *GUARDAR ////////////////////
@@ -267,7 +286,8 @@ public class ControladoraPersistencia {
     
     //////////////////// GUARDAR PARTIDA ////////////////////
     
-    public String guardaNovaPartida (String usuari, Integer timestamp, String taulerFormatEstandard) {
+    public String guardaNovaPartida (String usuari, Integer timestamp, String taulerFormatEstandard, int dificultat) {
+        // TODO dificultat
         int id_partida = assignarId("partides");
         String id = "" + id_partida;
         guardarPartidaShadow(usuari, id);
