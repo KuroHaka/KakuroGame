@@ -53,8 +53,14 @@ public class PlayingFrame extends javax.swing.JFrame {
         this.tauler = (String[][]) params[0];
         this.timestamp = (int) params[1];
         
+        // popupTauler();
         
+        casellesDisponibles = 0;
         initComponents();
+        t = new Timer(1000, actCrono);
+        running = true;
+        colorCambiat = false;
+        t.start();
     }
     
     public PlayingFrame() {
