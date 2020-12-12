@@ -173,11 +173,13 @@ public class ControladoraDomini {
         
         // CONSTRUIR Partida
         int timestamp = (int) ret[1];
-        String formatStd = (String) ret[0];
-        int dificultat = (int) ret[2]; // TODO
+        String formatStdComencat = (String) ret[0];
+        int dificultat = (int) ret[2];
         
-        TaulerEnunciat te = new TaulerEnunciat(formatStd);
-        TaulerComencat tc = new TaulerComencat(te);
+        String formatStdEnunciat = ctrl_persist.getEnunciatDePartida(id_partida);
+        
+        TaulerEnunciat te = new TaulerEnunciat(formatStdEnunciat);
+        TaulerComencat tc = new TaulerComencat(formatStdComencat);
         Partida partida = new Partida(usuari_actual, te, tc, 0, false);
         
         // INICIAR

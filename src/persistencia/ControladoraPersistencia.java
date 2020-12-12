@@ -154,6 +154,13 @@ public class ControladoraPersistencia {
         return true;
     }
     
+    private int getDificultat(String idEnunciat) {
+        String documentRepositori = getDocument("repositori");
+        String[] repositori = getLlista(documentRepositori, "\n");
+        Object[] enunciat = getUsuari(idEnunciat, repositori);
+        return Integer.parseInt(getLlista((String) enunciat[0], ":")[2]);
+    }
+    
     public Object[] getInfoPartida(String id_partida) {
         String partides = getDocument("partides");
         String[] files = getLlista(partides, "\n");
@@ -191,7 +198,6 @@ public class ControladoraPersistencia {
     
     public Object[] carregaPartida (String id_partida) {
         // TODO dificultat
-        int dificultat = 0;
         
         String documentPartides = getDocument("partides");
         String[] llistaPartides = getLlista(documentPartides, "\n");
@@ -199,6 +205,8 @@ public class ControladoraPersistencia {
         Object[] fila;
         fila = getUsuari(id_partida, llistaPartides);
         String[] elemsPartida = getLlista((String) fila[0], ":");
+
+        int dificultat = getDificultat(elemsPartida[1]);
         
         String documentComencada = getDocument("comencada/" + id_partida);
         Object[] ret = new Object[] {documentComencada, Integer.parseInt(elemsPartida[2]), dificultat};
@@ -207,7 +215,8 @@ public class ControladoraPersistencia {
     
     public Object[] carregaPartidaRepositori(int idEnunciat, String usuari) {
         // TODO dificultat
-        int dificultat = 0;
+
+        int dificultat = getDificultat("" + idEnunciat);
         
         int id_partida = assignarId("partides");
         String id = "" + id_partida;
@@ -218,6 +227,11 @@ public class ControladoraPersistencia {
         guardarPartidaDirs(id_partida, "comencada", tauler);
         
         return new Object[] {id_partida, tauler, dificultat};
+    }
+    
+    public String getEnunciatDePartida(String id_partida) {
+        Object[] enunciat = getIdDocument(id_partida, "partides");
+        return getDocument("enunciats/" + (String) enunciat[1]);
     }
     
     //////////////////// PRIVADES RANDOM *GUARDAR ////////////////////
