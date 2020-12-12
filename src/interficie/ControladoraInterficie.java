@@ -80,6 +80,13 @@ public class ControladoraInterficie {
         ctrl_domini.acabaPartida(opt,temps);
     }
     
+/////////////////// CONFIGURACIÓ USUARI
+    
+    public boolean setConfigPreferida (int f,int c,int bv,int b) {
+        String[] config = new String[] {""+f, ""+c, ""+bv, ""+b};
+        return ctrl_domini.setConfigPreferida(config);
+    }
+    
 /////////////////// RANKING
     
     public Object[] getRankings (int dificultat) {

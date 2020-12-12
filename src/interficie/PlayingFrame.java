@@ -241,7 +241,8 @@ public class PlayingFrame extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.GridLayout(0, 5));
 
-        pause.setText("pause");
+        pause.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        pause.setText("Pausar");
         pause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pauseActionPerformed(evt);
@@ -249,7 +250,9 @@ public class PlayingFrame extends javax.swing.JFrame {
         });
         jPanel2.add(pause);
 
-        save.setText("save");
+        save.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        save.setText("Guardar");
+        save.setToolTipText("");
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveActionPerformed(evt);
@@ -262,11 +265,13 @@ public class PlayingFrame extends javax.swing.JFrame {
         crono.setText("00:00:00");
         jPanel2.add(crono);
 
-        hint.setText("hint");
+        hint.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        hint.setText("Pista");
         hint.setEnabled(false);
         jPanel2.add(hint);
 
-        solve.setText("solve");
+        solve.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        solve.setText("Resol");
         solve.setEnabled(false);
         jPanel2.add(solve);
 
@@ -311,14 +316,14 @@ public class PlayingFrame extends javax.swing.JFrame {
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
-        t.stop();
+        
         if(ctrl_interficie.guardaPartida(timestamp, tauler)){
             JOptionPane.showMessageDialog(this, "\nNotificació\n" , "S'ha guardat correctament", JOptionPane.INFORMATION_MESSAGE);
         }
         else{
             JOptionPane.showMessageDialog(this, "\nNotificació\n" , "No s'ha pogut guardar", JOptionPane.INFORMATION_MESSAGE);
         }
-        t.start();
+        
         
     }//GEN-LAST:event_saveActionPerformed
 
@@ -336,11 +341,11 @@ public class PlayingFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(running){
             t.stop();
-            this.pause.setText("resume");
+            this.pause.setText("Reprèn");
         }
         else{
             t.start();
-            this.pause.setText("pause");
+            this.pause.setText("Pausar");
         }
         running = !running;
         

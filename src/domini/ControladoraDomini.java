@@ -123,14 +123,15 @@ public class ControladoraDomini {
     }
     
     public Object[] getConfigPreferida (String usuari) {
-        return ctrl_persist.getConfiguracio(usuari);
+        Object[] aux = ctrl_persist.getConfiguracio(usuari);
+        if ((int)aux[1] == -1) aux[1] = null;
+        return aux;
     }
     
-    /* TODO */  public boolean setConfigPreferida (String usuari, Object[] conf) {
-        //return ctrl_persist.setConfiguracio(usuari, conf);
-        return true;
+    public boolean setConfigPreferida(String[] config) {
+        return ctrl_persist.setConfiguracio(this.nom_usuari_actual, config);
     }
-    
+   
     ////// Repositori
     
     public ArrayList<Object[]> getLlistaInfoEnunciats () {
@@ -160,7 +161,8 @@ public class ControladoraDomini {
     
     public void acabaPartida (boolean guardarAlRanking, int temps) {
         // String usuari, String id_partida, Integer temps, int dificultat
-        ctrl_persist.acabarPartida(nom_usuari_actual, id_partida_actual, temps, dificultat_actual);
+        if (dificultat_actual < 3 && dificultat_actual >= 0)
+            ctrl_persist.acabarPartida(nom_usuari_actual, id_partida_actual, temps, dificultat_actual);
     }
     
     ////// Començar a jugar

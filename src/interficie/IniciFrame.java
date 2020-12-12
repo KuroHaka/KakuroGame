@@ -21,7 +21,7 @@ public class IniciFrame extends javax.swing.JFrame {
     Object[] conf_facil     = new Object[] {4, null, 5, 5};
     Object[] conf_dificil   = new Object[] {0, null, 8, 8};
     Object[] conf_expert    = new Object[] {0, null, 12, 12};
-            
+    
     
     public IniciFrame(ControladoraInterficie pres) {
         this.ctrl_interficie = pres;
@@ -72,7 +72,7 @@ public class IniciFrame extends javax.swing.JFrame {
 
 // [x] Check box de Numero Blanques
         // SELECTED
-        jCheckBox1.setSelected((conf[1] != null));
+        jCheckBox1.setSelected((Integer) conf[1] != null);
         
         // ENABLED
         if(!es_personalitzat){
@@ -117,7 +117,7 @@ public class IniciFrame extends javax.swing.JFrame {
         //String partida_id = llista_partides.get(posicio);
         Object[] ret = info_partides.get(posicio);//ctrl_interficie.ctrl_domini.getInfoPartida(partida_id);
         this.jLabel_id_partida.setText((String) ret[1]);
-        this.jLabelArxiuGuardat.setText("partides/" + (String) ret[1] + ".txt");
+        this.jLabelArxiuGuardat.setText("comencada/" + (String) ret[1] + ".txt");
         this.jLabel_timestamp.setText("" + ctrl_interficie.deTimestampAVerbose((int) ret[2]));
         this.jLabelEnunciat.setText((String) ret[0]);
     }
@@ -156,6 +156,64 @@ public class IniciFrame extends javax.swing.JFrame {
         else if (selected == "Difícil")     return 1;
         else if (selected == "Expert")      return 2;
         return -1;
+    }
+    
+    private void popup (String msg) {
+        JOptionPane.showMessageDialog(this, msg , "Impossibilitat de generar", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private boolean check (int lim, int f, int c, int b, double ben) {
+        return (f+c > 28 && b > Math.round((f-1)*(c-1)*ben));
+    }
+    private boolean comprovaIdoneitatParametres(int files, int cols, int blanques_amb_valor, Integer blanques){
+        String errors = "";
+        
+        if (files < 2) errors += "- El número de files ha de ser mínim 2.\n";
+        if (cols < 2) errors += "- El número de columnes ha de ser mínim 2.\n";
+        if ((files > 15 && cols > 15) || files + cols > 30) errors += "- Les dimensions del tauler són massa altes. Proveu un 15x15.\n";
+        
+        if (blanques_amb_valor < 0) errors += "- Número de blanques amb valor ha de ser major de 0.\n";
+        if (blanques != null && blanques_amb_valor >= blanques ) errors += "- Número de blanques amb valor ha de ser menor.\n";
+        if (blanques == null && blanques_amb_valor >= (files-1)*(cols-1)*(0.54) ) errors += "- Número de blanques amb valor ha de ser menor.\n";
+        
+        if (blanques != null && blanques < 0) errors += "- El número de blanques totals ha de ser positiu!\n";
+        
+        if (blanques != null) {
+        
+            boolean nope = false;
+            //if (files+cols > 28 && blanques > Math.round((files-1)*(cols-1)*0.55)) errors += "\n";
+            if      (check(28, files, cols, blanques, 0.55)) nope = true;
+            else if (check(26, files, cols, blanques, 0.6)) nope = true;
+            else if (check(24, files, cols, blanques, 0.6)) nope = true;
+            else if (check(22, files, cols, blanques, 0.65)) nope = true;
+            else if (check(20, files, cols, blanques, 0.67)) nope = true;
+            else if (check(18, files, cols, blanques, 0.7)) nope = true;
+            else if (check(16, files, cols, blanques, 0.8)) nope = true;
+
+            else if (blanques > Math.round((files-1)*(cols-1)*0.85)) nope = true;
+
+            if (nope) errors += "- El número de blanques totals ha de ser més petit!\n";
+        
+        }
+            // 1 <= blanques <= (files-1)*(cols-1)*
+            /*
+                benchmark
+            
+            15x15 - (107) 0.55
+            14x14 - (101) 0.6
+            13x13 - (86) 0.6
+            12x12 - (78) 0.65
+            11x11 - (67) 0.67 (limit)
+            10x10 - (56) 0.7
+            9x9   - (51) 0.8
+            8x8   - (41) 0.85
+            7x7   - (31) 0.87
+            
+            */
+        
+        if (!errors.equals("")) popup (errors);
+        else return true;
+        return false;
     }
   
     @SuppressWarnings("unchecked")
@@ -253,9 +311,15 @@ public class IniciFrame extends javax.swing.JFrame {
 
         jLabel10.setText("# Caselles Blanques");
 
+        jSpinner_numBlanques.setModel(new javax.swing.SpinnerNumberModel(0, -1, 170, 1));
+
         jLabel11.setText("Número de Files");
 
+        jSpinner_numFiles.setModel(new javax.swing.SpinnerNumberModel(0, 0, 28, 1));
+
         jLabel12.setText("Número Columnes");
+
+        jSpinner_numCols.setModel(new javax.swing.SpinnerNumberModel(0, 0, 28, 1));
 
         jLabel13.setText("Blanques amb Valor");
 
@@ -265,6 +329,8 @@ public class IniciFrame extends javax.swing.JFrame {
             }
         });
 
+        jSpinner_blanquesValor.setModel(new javax.swing.SpinnerNumberModel(0, 0, 170, 1));
+
         jButton2.setText("Genera nova Partida");
         jButton2.setToolTipText("");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -273,8 +339,14 @@ public class IniciFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Guarda com a Preferit [TODO]");
+        jButton3.setText("Guarda com a Preferida");
         jButton3.setToolTipText("");
+        jButton3.setActionCommand("Guarda configuració Preferida");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelConfigLayout = new javax.swing.GroupLayout(jPanelConfig);
         jPanelConfig.setLayout(jPanelConfigLayout);
@@ -508,12 +580,12 @@ public class IniciFrame extends javax.swing.JFrame {
                                 .addComponent(jButtonRepo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonRankings)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonProposa)
-                                .addGap(8, 8, 8)
-                                .addComponent(jButtonNovaPartida))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonProposa))
                             .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonNovaPartida)
+                        .addGap(24, 24, 24)
                         .addComponent(jPanelConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(39, Short.MAX_VALUE))
@@ -539,7 +611,7 @@ public class IniciFrame extends javax.swing.JFrame {
 
         String verbose_timestamp = ctrl_interficie.deTimestampAVerbose(timestamp);
         
-        JOptionPane.showMessageDialog(this, ""
+        /*JOptionPane.showMessageDialog(this, ""
                 + "\n -- TODO --"
                 + "\n [ Obrir partida ]\n"
                 + "\n- Propietari: " + this.usuari + ""
@@ -547,7 +619,7 @@ public class IniciFrame extends javax.swing.JFrame {
                 + "\n- Arxiu d'enunciat: " + nomEnunciat
                 + "\n- Arxiu de partida: " + nomComencada
                 + "\n- Cronòmetre: " + verbose_timestamp, "Informació Partida id=" + id_partida_seleccionada, JOptionPane.INFORMATION_MESSAGE);
-        
+        */
         // OBRIR PARTIDA
         ctrl_interficie.iniciaPartida(id_partida_seleccionada);
         
@@ -630,7 +702,7 @@ public class IniciFrame extends javax.swing.JFrame {
         Integer blanques = jCheckBox1.isSelected() ? (int)this.jSpinner_numBlanques.getValue() : null;
         int dificultat = getDificultatSeleccionada();
         
-        JOptionPane.showMessageDialog(this, ""
+        /*JOptionPane.showMessageDialog(this, ""
                 + "\n -- TODO --"
                 + "\n [ Crear Partida ]\n"
                 + "\n Propietari: " + this.usuari + "\n"
@@ -640,6 +712,9 @@ public class IniciFrame extends javax.swing.JFrame {
                 + "\n- Num blanques amb valor: " + this.jSpinner_blanquesValor.getValue()
                 + "\n- Num blanques: " + (jCheckBox1.isSelected() ? this.jSpinner_numBlanques.getValue() : "null")
                 + "", "Creació d'una nova partida", JOptionPane.INFORMATION_MESSAGE);
+        */
+        boolean idoni = comprovaIdoneitatParametres(files, cols, blanques_amb_valor, blanques);
+        if (!idoni) return;
         
         // GENERAR I OBRIR PARTIDA
         ctrl_interficie.generaAndIniciaNovaPartida(files, cols, blanques_amb_valor, blanques, dificultat);
@@ -689,6 +764,26 @@ public class IniciFrame extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButtonProposaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        /*
+        
+        public boolean setConfiguracio(String usuari, String[] config) {
+        // numeroBlanquesEstablertes, numeroBlanques, dimX, dimY
+        
+        */
+        int files = (int) this.jSpinner_numFiles.getValue();
+        int cols = (int) this.jSpinner_numCols.getValue();
+        int blanques_amb_valor = (int) this.jSpinner_blanquesValor.getValue();
+        Integer blanques = jCheckBox1.isSelected() ? (int)this.jSpinner_numBlanques.getValue() : -1;
+        
+        //ctrl_interficie.setConfigPreferida(files, cols, blanques_amb_valor, blanques);
+        //conf_preferida = new Object[] {files, cols, blanques_amb_valor, blanques};
+        
+        ctrl_interficie.setConfigPreferida(blanques_amb_valor, blanques, cols, files);
+        conf_preferida = new Object[] {blanques_amb_valor, blanques, cols, files};
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
