@@ -46,10 +46,10 @@ public class ControladoraPersistencia {
         if (!Dades.existeixDirectori(root + "comencada")) Dades.ferDirectori(root + "comencada");
         if (!Dades.existeixDirectori(root + "enunciats")) Dades.ferDirectori(root + "enunciats");
         
-        if (!Dades.existeixArxiu(root + "shadow" + ext)) reescriureDocument(root + "shadow" + ext, "admin:x:0,0,0,0:0");
-        if (!Dades.existeixArxiu(root + "partides" + ext)) reescriureDocument(root + "partides" + ext, "0:0:0:3");
-        if (!Dades.existeixArxiu(root + "repositori" + ext)) reescriureDocument(root + "repositori" + ext, "0:admin:3:0:");
-        if (!Dades.existeixArxiu(root + "ranking" + ext)) reescriureDocument(root + "ranking" + ext, "0:admin:0:\n0:admin:0:\n0:admin:0:");
+        if (!Dades.existeixArxiu(root + "shadow" + ext)) reescriureDocument("shadow", "nologin:x:0,0,0,0:0");
+        if (!Dades.existeixArxiu(root + "partides" + ext)) reescriureDocument("partides", "0:0:0:0");
+        if (!Dades.existeixArxiu(root + "repositori" + ext)) reescriureDocument("repositori", "");
+        if (!Dades.existeixArxiu(root + "ranking" + ext)) reescriureDocument("ranking", "0:\n0:\n0:");
     }
        
     public ArrayList<String> llista_usuaris() {
@@ -186,6 +186,9 @@ public class ControladoraPersistencia {
         
         String document = getDocument("repositori");
         String[] llistaEnunciats = getLlista(document, "\n");
+        
+        // Per si el repositori està buit:
+        if (llistaEnunciats.length == 1 && llistaEnunciats[0].equals("")) return llista;
         
         for (String enunciat : llistaEnunciats) {
             Object[] info = new Object[] {"id","owner","diff","bool","user","time"};
@@ -343,7 +346,8 @@ public class ControladoraPersistencia {
     
     private void guardarNovaPartidaRep(String idEnunciat, String autor, int dificultat) {
         String document = getDocument("repositori");
-        String escriure = "\n" + idEnunciat + ":" + autor + ":" + dificultat + ":0:";
+        String escriure = idEnunciat + ":" + autor + ":" + dificultat + ":0:";
+        if (!document.equals("")) escriure = "\n" + escriure;
         reescriureDocument("repositori", document + escriure);
     }
     
@@ -524,7 +528,7 @@ public class ControladoraPersistencia {
             ret[mida] = usuari + ":" + temps;
             return ret;
         }
-        if (temps < Integer.parseInt(elems[4])) {
+        if (temps < Integer.parseInt(elems[5])) {
             elems[4] = usuari;
             elems[5] = "" + temps;
         }
@@ -537,11 +541,16 @@ public class ControladoraPersistencia {
             return new String[] {"1:" + usuari + "," + temps};
         }
         
+        boolean bool = false;
         String[] ret;
-        if (mida < 3) mida++;
+        if (mida < 3) {
+            mida++;
+            bool = true;
+        }
         ret = new String[mida + 1];
         ret[0] = "" + mida;
         
+        if (bool) mida--;
         for (int i = 1; i <= mida; i++) {
             String[] llista = getLlista(elemsEntrada[i],",");
             
@@ -553,6 +562,7 @@ public class ControladoraPersistencia {
             }
             else ret[i] = elemsEntrada[i];
         }
+        //ret[mida] = usuari + "," + temps;
         return ret;
     }
     
@@ -581,16 +591,18 @@ public class ControladoraPersistencia {
         reescriureDocument("repositori", documentRepositori);
         
         // Actualitzar ranking
-        String documentRanking = getDocument("ranking");
-        String[] ranking = getLlista(documentRanking, "\n");
-        String entrada = ranking[dificultat];
-        String[] elemsEntrada = getLlista(entrada, ":");
-        
-        elemsEntrada = actualitzarRanking(elemsEntrada, usuari, temps);
-        ranking = reescriureElemLlista(ranking, elemsEntrada, dificultat);
-        
-        documentRanking = prepararEscriptura(ranking);
-        reescriureDocument("ranking", documentRanking);
+        if (dificultat < 3) {
+            String documentRanking = getDocument("ranking");
+            String[] ranking = getLlista(documentRanking, "\n");
+            String entrada = ranking[dificultat];
+            String[] elemsEntrada = getLlista(entrada, ":");
+
+            elemsEntrada = actualitzarRanking(elemsEntrada, usuari, temps);
+            ranking = reescriureElemLlista(ranking, elemsEntrada, dificultat);
+
+            documentRanking = prepararEscriptura(ranking);
+            reescriureDocument("ranking", documentRanking);
+        }
         
         // Borrar de shadow i la partida començada
         borrarPartidaComencada(id_partida, "comencada/");

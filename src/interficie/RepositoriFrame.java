@@ -97,6 +97,7 @@ public class RepositoriFrame extends javax.swing.JFrame {
     
     private void novaPartida_Desde_EnunciatSeleccionat() {
         int index = this.jListEnunciats.getSelectedIndex();
+        if (index == -1) return;
         String id_enunciat_seleccionat = llista_id_enunciats.get(index);
         ctrl_interficie.iniciaNovaPartidaDesdeRepositori(id_enunciat_seleccionat);
         
@@ -164,7 +165,7 @@ public class RepositoriFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGeneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGeneraActionPerformed
-
+      
         novaPartida_Desde_EnunciatSeleccionat();
 
     }//GEN-LAST:event_jButtonGeneraActionPerformed
