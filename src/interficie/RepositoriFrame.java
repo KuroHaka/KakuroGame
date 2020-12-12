@@ -86,7 +86,7 @@ public class RepositoriFrame extends javax.swing.JFrame {
                 String timeTop = (String) items[5]; int time = Integer.parseInt(timeTop);
                 record = "  ~  Rècord: "+userTop+" en "+ctrl_interficie.deTimestampAVerbose(time);
             }
-            String linea = "["+id+"] "+d+ record;
+            String linea = "["+id+"] By " + owner + ": " + d + record;
             show_list.add(linea);
         }
         this.jListEnunciats.setListData(show_list);

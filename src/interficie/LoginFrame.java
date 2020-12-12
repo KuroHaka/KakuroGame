@@ -342,8 +342,8 @@ public class LoginFrame extends javax.swing.JFrame {
         
         // Anem a la pantalla Inici
         
-        ctrl_interficie.inici.inicia(usuari);
         ctrl_interficie.ctrl_domini.seleccionaUsuari(usuari);
+        ctrl_interficie.inici.inicia(usuari);
         this.setVisible(false); // ctrl_interficie.login.setVisible(false); 
         ctrl_interficie.inici.setVisible(true);
         

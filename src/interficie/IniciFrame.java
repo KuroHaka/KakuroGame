@@ -58,8 +58,8 @@ public class IniciFrame extends javax.swing.JFrame {
         
         // Seleccionar la primera partida per defecte
         if(llista_partides.size() > 0){
-        this.jListPartides.setSelectedIndex(0);
-        preview_setPartidaSeleccionada(0);
+            this.jListPartides.setSelectedIndex(0);
+            preview_setPartidaSeleccionada(0);
         } else preview_capSeleccionada();
               
         // SET Dificultat : Personalitzada
@@ -106,6 +106,7 @@ public class IniciFrame extends javax.swing.JFrame {
         this.jLabel_id_partida.setText("");
         this.jLabel_timestamp.setText("");
         this.jLabelArxiuGuardat.setText("");
+        this.jLabelEnunciat.setText("");
     }
     
     private void preview_setPartidaSeleccionada(int posicio){
@@ -582,7 +583,7 @@ public class IniciFrame extends javax.swing.JFrame {
         String id_partida = this.llista_partides.get(index);
         boolean ok = ctrl_interficie.ctrl_domini.borrarPartida(id_partida, this.usuari);
         if(ok) {
-            //llista_partides.remove(index);
+            llista_partides.remove(index);
             actualitzaJList();
             preview_capSeleccionada();
             this.jListPartides.setSelectedIndex(-1);

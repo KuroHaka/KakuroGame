@@ -231,7 +231,7 @@ public class ControladoraPersistencia {
     
     public String getEnunciatDePartida(String id_partida) {
         Object[] enunciat = getIdDocument(id_partida, "partides");
-        return getDocument("enunciats/" + (String) enunciat[1]);
+        return getDocument("enunciats/" + (int) enunciat[0]);
     }
     
     //////////////////// PRIVADES RANDOM *GUARDAR ////////////////////
@@ -515,17 +515,18 @@ public class ControladoraPersistencia {
     //////////////////// ELIMINAR PARTIDA FI ////////////////////
     
     private String[] actualitzarRep(String[] elems, String usuari, Integer temps) {
-        int numElems = Integer.parseInt(elems[2]);
+        int numElems = Integer.parseInt(elems[3]);
         if (numElems == 0) {
             int mida = elems.length;
             String[] ret = new String[mida + 1];
             System.arraycopy(elems, 0, ret, 0, mida);
+            ret[3] = "1";
             ret[mida] = usuari + ":" + temps;
             return ret;
         }
         if (temps < Integer.parseInt(elems[4])) {
-            elems[3] = usuari;
-            elems[4] = "" + temps;
+            elems[4] = usuari;
+            elems[5] = "" + temps;
         }
         return elems;
     }
@@ -533,7 +534,7 @@ public class ControladoraPersistencia {
     private String[] actualitzarRanking(String[] elemsEntrada, String usuari, Integer temps) {
         int mida = Integer.parseInt(elemsEntrada[0]);
         if (mida == 0) {
-            return new String[] {usuari + "," + temps};
+            return new String[] {"1:" + usuari + "," + temps};
         }
         
         String[] ret;
@@ -604,7 +605,7 @@ public class ControladoraPersistencia {
         try {shadow = Dades.carregaArxiu(root + "shadow.txt");}
         catch (NoSuchFileException ex) {}
         
-        String line = "\n" + usuari + ":" + hash + ":0,-1,5,5:";
+        String line = "\n" + usuari + ":" + hash + ":0,9,5,5:";
         
         String new_shadow = shadow + line;
         Dades.guardarArxiu(root + "shadow.txt", new_shadow);
