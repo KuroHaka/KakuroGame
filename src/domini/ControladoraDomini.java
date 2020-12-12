@@ -183,6 +183,7 @@ public class ControladoraDomini {
         // INICIAR
         this.partida_actual = partida;
         this.id_partida_actual = id_partida;
+        this.dificultat_actual = dificultat;
         
         String[][] tauler = tauler_a_MatriuStrings(tc);
         return new Object[] {tauler, timestamp};
@@ -202,6 +203,7 @@ public class ControladoraDomini {
         // INICIAR
         this.partida_actual = new Partida(usuari_actual, te, tc, 0, false);
         this.id_partida_actual = nou_id;
+        this.dificultat_actual = dificultat;
         
         String[][] tauler = tauler_a_MatriuStrings(tc);
         return new Object[] {tauler, 0}; // '0' ja que és una nova partida.
@@ -216,7 +218,7 @@ public class ControladoraDomini {
         // CONSTRUIR Partida
         String nou_id_partida = "" + ((int) ret[0]);
         String formatStd = (String) ret[1];
-        //int dificultat = (int) ret[2]; Not here...
+        int dificultat = (int) ret[2];
         TaulerEnunciat te = new TaulerEnunciat(formatStd);
         TaulerComencat tc = new TaulerComencat(te);
         Partida partida = new Partida(usuari_actual, te, tc, 0, false);
@@ -227,6 +229,7 @@ public class ControladoraDomini {
         // INICIAR
         this.partida_actual = new Partida(usuari_actual, te, tc, 0, false);
         this.id_partida_actual = nou_id_partida;
+        this.dificultat_actual = dificultat;
         
         String[][] tauler = tauler_a_MatriuStrings(tc);
         return new Object[] {tauler, 0}; // '0' ja que és una nova partida.

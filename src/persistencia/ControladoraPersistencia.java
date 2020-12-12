@@ -26,7 +26,7 @@ public class ControladoraPersistencia {
         arxius de comencada {"idPartida".txt...}
         arxius de enunciats {"idEnunciat".txt...}
         
-        shadow      --> usuari:hashPassword:{idPartida1,idPartida2...}
+        shadow      --> usuari:hashPassword:configuració:{idPartida1,idPartida2...}
         partides    --> idPartida:idEnunciat:temps:dificultat
         repositori  --> idEnunciat:usuariPropietari:dificultat:N:usuari:temps
             * N = bit boolea "hi ha record" (0 o 1)
@@ -46,7 +46,7 @@ public class ControladoraPersistencia {
         if (!Dades.existeixDirectori(root + "comencada")) Dades.ferDirectori(root + "comencada");
         if (!Dades.existeixDirectori(root + "enunciats")) Dades.ferDirectori(root + "enunciats");
         
-        if (!Dades.existeixArxiu(root + "shadow" + ext)) reescriureDocument(root + "shadow" + ext, "admin:x:0");
+        if (!Dades.existeixArxiu(root + "shadow" + ext)) reescriureDocument(root + "shadow" + ext, "admin:x:0,0,0,0:0");
         if (!Dades.existeixArxiu(root + "partides" + ext)) reescriureDocument(root + "partides" + ext, "0:0:0:3");
         if (!Dades.existeixArxiu(root + "repositori" + ext)) reescriureDocument(root + "repositori" + ext, "0:admin:3:0:");
         if (!Dades.existeixArxiu(root + "ranking" + ext)) reescriureDocument(root + "ranking" + ext, "0:admin:0:\n0:admin:0:\n0:admin:0:");
@@ -90,8 +90,8 @@ public class ControladoraPersistencia {
         for (String fila : files) {
             String[] elems = fila.split(":");
             if (elems[0].equals(usuari)) {
-                if (elems.length > 2) {
-                    llista.addAll(Arrays.asList(fila.split(":")[2].split(",")));
+                if (elems.length > 3) {
+                    llista.addAll(Arrays.asList(fila.split(":")[3].split(",")));
                 }
                 System.out.println("(Ctrl Persist) S'han extret partides de " + usuari);
                 return llista;
@@ -124,8 +124,34 @@ public class ControladoraPersistencia {
         int dimX = 8;
         int dimY = 8;
         
+        String document = getDocument("shadow");
+        String[] llistaUsuaris = getLlista(document, "\n");
+        Object[] fila = getUsuari(usuari, llistaUsuaris);
+        String[] elemsUsuari = getLlista((String) fila[0], ":");
+        String[] config = getLlista(elemsUsuari[2],",");
+        
+        numeroBlanquesEstablertes = Integer.parseInt(config[0]);
+        numeroBlanques  = Integer.parseInt(config[1]);
+        dimX = Integer.parseInt(config[2]);
+        dimY = Integer.parseInt(config[3]);
+        
         Object[] ret = new Object[] {numeroBlanquesEstablertes, numeroBlanques, dimX, dimY};
         return ret;
+    }
+    
+    public boolean setConfiguracio(String usuari, String[] config) {
+        // numeroBlanquesEstablertes, numeroBlanques, dimX, dimY
+        String document = getDocument("shadow");
+        String[] llistaUsuaris = getLlista(document, "\n");
+        Object[] fila = getUsuari(usuari, llistaUsuaris);
+        String[] elemsUsuari = getLlista((String) fila[0], ":");
+        
+        elemsUsuari[2] = config[0] + "," + config[1] + "," + config[2] + "," + config[3];
+        llistaUsuaris = reescriureElemLlista(llistaUsuaris, elemsUsuari, (int) fila[1]);
+        document = prepararEscriptura(llistaUsuaris);
+        reescriureDocument("shadow", document);
+        
+        return true;
     }
     
     public Object[] getInfoPartida(String id_partida) {
@@ -186,7 +212,7 @@ public class ControladoraPersistencia {
         int id_partida = assignarId("partides");
         String id = "" + id_partida;
         guardarPartidaShadow(usuari, id);
-        guardarPartidaPartides(id, 0, idEnunciat, dificultat);
+        guardarNovaPartidaPartides(id, 0, idEnunciat, dificultat);
         
         String tauler = getDocument("enunciats/" + idEnunciat);
         guardarPartidaDirs(id_partida, "comencada", tauler);
@@ -227,11 +253,11 @@ public class ControladoraPersistencia {
         return idPotencial+1;
     }
     
-    private int getIdDocument(String id_partida, String arxiu) {
+    private Object[] getIdDocument(String id_partida, String arxiu) {
         String document = getDocument(arxiu);
         String[] llistaPartides = getLlista(document, "\n");
         Object[] partida = getUsuari(id_partida, llistaPartides);
-        return Integer.parseInt(getLlista((String) partida[0], ":")[1]);
+        return new Object[] {Integer.parseInt(getLlista((String) partida[0], ":")[1]), partida[1]};
     }
     
     //////////////////// GUARDAR PARTIDA SHADOW ////////////////////
@@ -244,24 +270,25 @@ public class ControladoraPersistencia {
         fila = getUsuari(usuari, llistaUsuaris);
         String[] elemsUsuari = getLlista((String) fila[0], ":");
         
-        if (elemsUsuari.length == 2) {
-            String[] aux = new String[3];
+        if (elemsUsuari.length == 3) {
+            String[] aux = new String[4];
             aux[0] = elemsUsuari[0];
             aux[1] = elemsUsuari[1];
-            aux[2] = id;
+            aux[2] = elemsUsuari[2];
+            aux[3] = id;
             
             llistaUsuaris = reescriureElemLlista(llistaUsuaris, aux, (int) fila[1]);
             document = prepararEscriptura(llistaUsuaris);
             reescriureDocument("shadow", document);
         }
-        else if (elemsUsuari.length > 2) {
-            String[] partides = getLlista(elemsUsuari[2], ",");
+        else if (elemsUsuari.length > 3) {
+            String[] partides = getLlista(elemsUsuari[3], ",");
             boolean existeix = false;
 
             for (int i = 0; i < partides.length; i++) if (id.equals(partides[i])) existeix = true;
 
             if (!existeix) {
-                elemsUsuari[2] = elemsUsuari[2] + "," + id;
+                elemsUsuari[3] = elemsUsuari[3] + "," + id;
 
                 llistaUsuaris = reescriureElemLlista(llistaUsuaris, elemsUsuari, (int) fila[1]);
                 document = prepararEscriptura(llistaUsuaris);
@@ -272,11 +299,21 @@ public class ControladoraPersistencia {
     
     //////////////////// GUARDAR PARTIDA PARTIDES ////////////////////
     
-    private void guardarPartidaPartides(String id, Integer temps, int idEnunciat, int dificultat) {
+    private void guardarNovaPartidaPartides(String id, Integer temps, int idEnunciat, int dificultat) {
         String document = getDocument("partides");
         String[] llistaPartides = getLlista(document, "\n");
         
         llistaPartides = guardarElemLlista(llistaPartides, id, idEnunciat, temps, dificultat);
+        
+        document = prepararEscriptura(llistaPartides);
+        reescriureDocument("partides", document);
+    }
+    
+    private void guardarPartidaPartides(String id, Integer temps, String idEnunciat, int dificultat, int index) {
+        String document = getDocument("partides");
+        String[] llistaPartides = getLlista(document, "\n");
+        llistaPartides[index] = id + ":" + idEnunciat + ":" + temps + ":" + dificultat;
+        //llistaPartides = guardarElemLlista(llistaPartides, id, idEnunciat, temps, dificultat);
         
         document = prepararEscriptura(llistaPartides);
         reescriureDocument("partides", document);
@@ -290,9 +327,9 @@ public class ControladoraPersistencia {
     
     //////////////////// GUARDAR PARTIDA AL REPOSITORI ////////////////////
     
-    private void guardarNovaPartidaRep(String idEnunciat, String autor) {
+    private void guardarNovaPartidaRep(String idEnunciat, String autor, int dificultat) {
         String document = getDocument("repositori");
-        String escriure = "\n" + idEnunciat + ":" + autor + ":0:";
+        String escriure = "\n" + idEnunciat + ":" + autor + ":" + dificultat + ":0:";
         reescriureDocument("repositori", document + escriure);
     }
     
@@ -305,11 +342,11 @@ public class ControladoraPersistencia {
         guardarPartidaShadow(usuari, id);
         
         int idEnunciat = assignarIdDocument("enunciats");
-        guardarPartidaPartides(id, timestamp, idEnunciat, dificultat);
+        guardarNovaPartidaPartides(id, timestamp, idEnunciat, dificultat);
         
-        guardarPartidaDirs(idEnunciat, "comencada", taulerFormatEstandard);
-        guardarPartidaDirs(id_partida, "enunciats", taulerFormatEstandard);
-        guardarNovaPartidaRep("" + idEnunciat, usuari);
+        guardarPartidaDirs(id_partida, "comencada", taulerFormatEstandard);
+        guardarPartidaDirs(idEnunciat, "enunciats", taulerFormatEstandard);
+        guardarNovaPartidaRep("" + idEnunciat, usuari, dificultat);
         
         return id;
     }
@@ -317,10 +354,10 @@ public class ControladoraPersistencia {
     public boolean guardaPartida (String id_partida, String usuari, Integer timestamp, String taulerFormatEstandard, int dificultat) {
         guardarPartidaShadow(usuari, id_partida);
         
-        int idEnunciat = getIdDocument(id_partida, "partides");
-        guardarPartidaPartides(id_partida, timestamp, idEnunciat, dificultat);
+        Object[] enunciat = getIdDocument(id_partida, "partides");
+        guardarPartidaPartides(id_partida, timestamp, ""+enunciat[0], dificultat, (int) enunciat[1]);
         
-        guardarPartidaDirs(idEnunciat, "enunciats", taulerFormatEstandard);
+        //guardarPartidaDirs(idEnunciat, "enunciats", taulerFormatEstandard);
         guardarPartidaDirs(Integer.parseInt(id_partida), "comencada", taulerFormatEstandard);
         
         return true;
@@ -424,8 +461,8 @@ public class ControladoraPersistencia {
         fila = getUsuari(usuari, llistaUsuaris);
         String[] elemsUsuari = getLlista((String) fila[0], ":");
         
-        String[] partides = getLlista(elemsUsuari[2], ",");
-        elemsUsuari[2] = borrarPartidaUsuari(partides, id_partida);
+        String[] partides = getLlista(elemsUsuari[3], ",");
+        elemsUsuari[3] = borrarPartidaUsuari(partides, id_partida);
         
         llistaUsuaris = reescriureElemLlista(llistaUsuaris, elemsUsuari, (int) fila[1]);
         document = prepararEscriptura(llistaUsuaris);
@@ -553,7 +590,7 @@ public class ControladoraPersistencia {
         try {shadow = Dades.carregaArxiu(root + "shadow.txt");}
         catch (NoSuchFileException ex) {}
         
-        String line = "\n" + usuari + ":" + hash + ":";
+        String line = "\n" + usuari + ":" + hash + ":0,-1,5,5:";
         
         String new_shadow = shadow + line;
         Dades.guardarArxiu(root + "shadow.txt", new_shadow);
