@@ -11,7 +11,7 @@ public class Ranking {
     public Ranking() {
         this.R = new ArrayList <ArrayList <RankingEntry> > ();
         for(int i = 0; i < 3; ++i) {
-            this.R.add(new ArrayList<RankingEntry>(3));
+            this.R.add(new ArrayList<RankingEntry> (3));
         }
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 3; ++j) {
@@ -22,29 +22,46 @@ public class Ranking {
 
     public void afegirEntry(String id, int temps, Configuracio.Dificultat dif) { //Afegira el entry al ranking si, i només si, es un temps més ràpid que algun dels top 3 en la dificultat esmentada
         if(dif == Configuracio.Dificultat.FACIL) {
-            for(int i = 0; i < 3; ++i) {
-                if(this.R.get(0).get(i).getTempsRecord() > temps) {
-                    this.R.get(0).get(i).modificarEntry(id, temps);
-                    break;
+            int pos = -1;
+            for(int i = 2; i >= 0; ++i) {
+                if(this.R.get(0).get(i).getTempsRecord() > temps || this.R.get(0).get(i).getTempsRecord() == 0) {
+                    pos = i;
                 }
+            }
+            if(pos != -1) {
+                for (int i = 2; i != pos; --i) {
+                    this.R.get(0).get(i).modificarEntry(this.R.get(0).get(i-1).getId(), this.R.get(0).get(i-1).getTempsRecord());
+                }
+                this.R.get(0).get(pos).modificarEntry(id, temps);
             }
         }
         else if(dif == Configuracio.Dificultat.DIFICIL) {
-            for(int i = 0; i < 3; ++i) {
-                if(R.get(1).get(i).getTempsRecord() > temps) {
-                    this.R.get(1).get(i).modificarEntry(id, temps);
-                    break;
+            int pos = -1;
+            for(int i = 2; i >= 0; ++i) {
+                if(this.R.get(1).get(i).getTempsRecord() > temps || this.R.get(1).get(i).getTempsRecord() == 0) {
+                    pos = i;
                 }
+            }
+            if(pos != -1) {
+                for (int i = 2; i != pos; --i) {
+                    this.R.get(1).get(i).modificarEntry(this.R.get(1).get(i-1).getId(), this.R.get(1).get(i-1).getTempsRecord());
+                }
+                this.R.get(1).get(pos).modificarEntry(id, temps);
             }
         }
         else if(dif == Configuracio.Dificultat.EXPERT) {
-            for(int i = 0; i < 3; ++i) {
-                if(this.R.get(2).get(i).getTempsRecord() > temps) {
-                    this.R.get(2).get(i).modificarEntry(id, temps);
-                    break;
+            int pos = -1;
+            for(int i = 2; i >= 0; ++i) {
+                if(this.R.get(2).get(i).getTempsRecord() > temps || this.R.get(2).get(i).getTempsRecord() == 0) {
+                    pos = i;
                 }
             }
+            if(pos != -1) {
+                for (int i = 2; i != pos; --i) {
+                    this.R.get(2).get(i).modificarEntry(this.R.get(2).get(i-1).getId(), this.R.get(2).get(i-1).getTempsRecord());
+                }
+                this.R.get(2).get(pos).modificarEntry(id, temps);
+            }
         }
-        else {return;}
     }
 }
