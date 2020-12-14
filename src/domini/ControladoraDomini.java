@@ -194,10 +194,11 @@ public class ControladoraDomini {
     }
     
     public Object[] generaIniciaNovaPartida(int files, int cols, int valor, Integer blanques, int dificultat) {
-        System.out.println("(CtrlDomini) generar nova partida");
+        System.out.println("(CtrlDomini) generar nova partida: files="+files+" cols="+cols+" blanques="+blanques+" valor"+valor);
         
         // GENERAR nova Partida
         TaulerEnunciat te = algoritme.generarKakuro(files, cols, blanques, valor);
+        te.print();
         TaulerComencat tc = new TaulerComencat(te);
         String formatStd = tc.format_Estandard();
         

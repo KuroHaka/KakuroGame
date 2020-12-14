@@ -309,7 +309,7 @@ public class IniciFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("# Caselles Blanques");
+        jLabel10.setText("Blanques totals");
 
         jSpinner_numBlanques.setModel(new javax.swing.SpinnerNumberModel(0, -1, 170, 1));
 

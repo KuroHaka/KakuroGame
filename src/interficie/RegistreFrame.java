@@ -162,7 +162,7 @@ public class RegistreFrame extends javax.swing.JFrame {
             ctrl_interficie.login.reset();
             ctrl_interficie.login.setUsuariPassword(usuari ,passwd);
             this.setVisible(false);
-            reset();
+            reset(); 
             ctrl_interficie.login.setEnabled(true);
             ctrl_interficie.login.setVisible(true);
         } else {

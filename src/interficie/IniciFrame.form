@@ -251,7 +251,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
-            <Property name="text" type="java.lang.String" value="# Caselles Blanques"/>
+            <Property name="text" type="java.lang.String" value="Blanques totals"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinner_numBlanques">
