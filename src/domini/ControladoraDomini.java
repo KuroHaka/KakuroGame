@@ -161,8 +161,7 @@ public class ControladoraDomini {
     
     public void acabaPartida (boolean guardarAlRanking, int temps) {
         // String usuari, String id_partida, Integer temps, int dificultat
-        if (dificultat_actual < 3 && dificultat_actual >= 0)
-            ctrl_persist.acabarPartida(nom_usuari_actual, id_partida_actual, temps, dificultat_actual);
+        ctrl_persist.acabarPartida(nom_usuari_actual, id_partida_actual, temps, dificultat_actual);
     }
     
     ////// Començar a jugar
