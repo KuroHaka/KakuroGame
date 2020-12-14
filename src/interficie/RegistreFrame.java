@@ -159,15 +159,18 @@ public class RegistreFrame extends javax.swing.JFrame {
         boolean correcte = ctrl_interficie.ctrl_domini.registrarUsuari(usuari, passwd);
         if (correcte){
             JOptionPane.showMessageDialog(this, "S'ha registrat correctament l'usuari " + usuari + ".", "Ep! I diu...", JOptionPane.INFORMATION_MESSAGE);
+            ctrl_interficie.login.reset();
             ctrl_interficie.login.setUsuariPassword(usuari ,passwd);
             this.setVisible(false);
             reset();
+            ctrl_interficie.login.setEnabled(true);
+            ctrl_interficie.login.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "No s'ha pogut registrar l'usuari " + usuari + ":\n Ja existeix.", "Ep! I diu...", JOptionPane.WARNING_MESSAGE);
-            reset();
         }
-        ctrl_interficie.login.setEnabled(true);
-        ctrl_interficie.login.setVisible(true);
+        reset();
+        //ctrl_interficie.login.setEnabled(true);
+        //ctrl_interficie.login.setVisible(true);
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
