@@ -42,7 +42,9 @@ public class ControladoraInterficie {
     
     
 /////////////////// PARTIDES
-    
+    public boolean esSolucio(String[][] tauler){
+        return ctrl_domini.esSolucio(tauler);
+    }
     public boolean valor_canviat(int fila, int col, Integer valor){
     
         return true;

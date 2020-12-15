@@ -37,11 +37,16 @@ public class PlayingFrame extends javax.swing.JFrame {
     private int casellesDisponibles;
     private List<JTextField> casellesBlanques = new ArrayList();
     private boolean colorCambiat;
+    private int cronocont;
     private ActionListener actCrono = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            timestamp++;
-            actualitzaCrono();
+            if(cronocont>=10){
+                timestamp++;
+                actualitzaCrono();
+                cronocont=0;
+            }
+            cronocont++;
         }
     };
     
@@ -57,7 +62,7 @@ public class PlayingFrame extends javax.swing.JFrame {
         
         casellesDisponibles = 0;
         initComponents();
-        t = new Timer(1000, actCrono);
+        t = new Timer(100, actCrono);
         running = true;
         colorCambiat = false;
         t.start();
@@ -82,7 +87,7 @@ public class PlayingFrame extends javax.swing.JFrame {
         this.ctrl_interficie = null;
         casellesDisponibles = 0;
         initComponents();
-        t = new Timer(1000, actCrono);
+        t = new Timer(10, actCrono);
         running = true;
         colorCambiat = false;
         popupTauler();
@@ -165,8 +170,10 @@ public class PlayingFrame extends javax.swing.JFrame {
                     comprobarSolucio(field, String.valueOf(e.getKeyChar()));
                 }
                 else if(colorCambiat){
-                    for (JTextField casella : casellesBlanques)
+                    for (JTextField casella : casellesBlanques){
                         casella.setBackground(Color.WHITE);
+                        casella.setForeground(Color.BLACK);
+                    }
                 }
             }
             @Override
@@ -181,8 +188,8 @@ public class PlayingFrame extends javax.swing.JFrame {
     }
     
     private void comprobarSolucio(JTextField jf, String lastValue){
-        jf.setText(lastValue);
-        if(true/*COMPROVA SOLUCIO*/){
+        if(ctrl_interficie.esSolucio(tauler)){
+            jf.setText(lastValue);
             t.stop();
             for (JTextField casella : casellesBlanques){
                 casella.setBackground(Color.GREEN);
@@ -194,8 +201,10 @@ public class PlayingFrame extends javax.swing.JFrame {
             partidaAcabada(opt);
         }
         else{
-            for (JTextField casella : casellesBlanques)
+            for (JTextField casella : casellesBlanques){
                 casella.setBackground(Color.RED);
+                casella.setForeground(Color.WHITE);
+            }
         }
         colorCambiat = true;
     }
@@ -211,7 +220,7 @@ public class PlayingFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        gamePanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         pause = new javax.swing.JButton();
         save = new javax.swing.JButton();
@@ -226,20 +235,18 @@ public class PlayingFrame extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(1030, 640));
+        gamePanel.setPreferredSize(new java.awt.Dimension(1030, 640));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 797, Short.MAX_VALUE)
+        javax.swing.GroupLayout gamePanelLayout = new javax.swing.GroupLayout(gamePanel);
+        gamePanel.setLayout(gamePanelLayout);
+        gamePanelLayout.setHorizontalGroup(
+            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
+        gamePanelLayout.setVerticalGroup(
+            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 494, Short.MAX_VALUE)
         );
-
-        jPanel2.setLayout(new java.awt.GridLayout(0, 5));
 
         pause.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         pause.setText("Pausar");
@@ -248,7 +255,6 @@ public class PlayingFrame extends javax.swing.JFrame {
                 pauseActionPerformed(evt);
             }
         });
-        jPanel2.add(pause);
 
         save.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         save.setText("Guardar");
@@ -258,54 +264,72 @@ public class PlayingFrame extends javax.swing.JFrame {
                 saveActionPerformed(evt);
             }
         });
-        jPanel2.add(save);
 
         crono.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         crono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         crono.setText("00:00:00");
-        jPanel2.add(crono);
 
         hint.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         hint.setText("Pista");
         hint.setEnabled(false);
-        jPanel2.add(hint);
 
         solve.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         solve.setText("Resol");
         solve.setEnabled(false);
-        jPanel2.add(solve);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addComponent(pause, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(crono, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(hint, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(solve, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pause, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(crono, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(hint, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(solve, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 797, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
+            .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
         );
 
-        jPanel1.setLayout(new GridLayout(tauler.length,tauler[0].length,1,1));
+        gamePanel.setLayout(new GridLayout(tauler.length,tauler[0].length,1,1));
 
         // ADD TO GRID
         for (int y = 0; y < tauler.length; y++ ) {
             for (int x = 0; x < tauler[0].length; x++){
                 if(tauler[y][x].contains("\\")){
-                    addCasellaNegra(jPanel1,tauler[y][x]);
+                    addCasellaNegra(gamePanel,tauler[y][x]);
                 }
                 else{
-                    addCasellaBlanca(jPanel1, tauler[y][x], x, y);
+                    addCasellaBlanca(gamePanel, tauler[y][x], x, y);
                 }
             }
         }
@@ -340,11 +364,13 @@ public class PlayingFrame extends javax.swing.JFrame {
     private void pauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseActionPerformed
         // TODO add your handling code here:
         if(running){
+            gamePanel.setVisible(false);
             t.stop();
             this.pause.setText("Reprèn");
         }
         else{
             t.start();
+            gamePanel.setVisible(true);
             this.pause.setText("Pausar");
         }
         running = !running;
@@ -384,8 +410,8 @@ public class PlayingFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel crono;
+    private javax.swing.JPanel gamePanel;
     private javax.swing.JButton hint;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton pause;
     private javax.swing.JButton save;

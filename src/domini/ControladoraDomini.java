@@ -238,6 +238,11 @@ public class ControladoraDomini {
         String[][] tauler = tauler_a_MatriuStrings(tc);
         return new Object[] {tauler, 0}; // '0' ja que és una nova partida.
     }
+    
+    public boolean esSolucio(String[][] mat){
+        TaulerComencat tc = new TaulerComencat(matriuStrings_a_fStd(mat));
+        return algoritme.validaSolucio(tc);
+    }
         
         
 /////////////////// CANVIS DE FORMAT
