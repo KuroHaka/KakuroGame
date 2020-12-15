@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import persistencia.Dades;
 import domini.partida.Partida;
-import domini.tauler.casella.Casella;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -38,6 +37,9 @@ public class PlayingFrame extends javax.swing.JFrame {
     private List<JTextField> casellesBlanques = new ArrayList();
     private boolean colorCambiat;
     private int cronocont;
+    private ColorsPalet colorsPalet = new ColorsPalet();
+    private Image img;
+    
     private ActionListener actCrono = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -117,8 +119,8 @@ public class PlayingFrame extends javax.swing.JFrame {
     private void addCasellaNegra(JPanel panel, String x){
         JLabel jLabel = new JLabel();
         jLabel.setOpaque(true);
-        jLabel.setBackground(Color.BLACK);
-        jLabel.setForeground(Color.WHITE);
+        jLabel.setBackground(colorsPalet.getEnfasi_Fosc());
+        jLabel.setForeground(colorsPalet.getText_Clar());
         jLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         
         if(!x.equals(" \\ "))
@@ -131,6 +133,8 @@ public class PlayingFrame extends javax.swing.JFrame {
     
     private void addCasellaBlanca(JPanel panel, String v, int x, int y){
         JTextField field = new JTextField();
+        field.setBackground(colorsPalet.getFons_Clar());
+        field.setForeground(colorsPalet.getText_Fosc());
         casellesBlanques.add(field);
         field.setHorizontalAlignment(JTextField.CENTER);
         field.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -171,8 +175,8 @@ public class PlayingFrame extends javax.swing.JFrame {
                 }
                 else if(colorCambiat){
                     for (JTextField casella : casellesBlanques){
-                        casella.setBackground(Color.WHITE);
-                        casella.setForeground(Color.BLACK);
+                        casella.setBackground(colorsPalet.getFons_Clar());
+                        casella.setForeground(colorsPalet.getText_Fosc());
                     }
                 }
             }
@@ -203,7 +207,7 @@ public class PlayingFrame extends javax.swing.JFrame {
         else{
             for (JTextField casella : casellesBlanques){
                 casella.setBackground(Color.RED);
-                casella.setForeground(Color.WHITE);
+                casella.setForeground(colorsPalet.getText_Clar());
             }
         }
         colorCambiat = true;
@@ -249,7 +253,11 @@ public class PlayingFrame extends javax.swing.JFrame {
         );
 
         pause.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        pause.setText("Pausar");
+        pause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interficie/icones/icons8_play_48px.png"))); // NOI18N
+        pause.setBorder(null);
+        pause.setBorderPainted(false);
+        pause.setContentAreaFilled(false);
+        pause.setOpaque(false);
         pause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pauseActionPerformed(evt);
@@ -257,8 +265,11 @@ public class PlayingFrame extends javax.swing.JFrame {
         });
 
         save.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        save.setText("Guardar");
+        save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interficie/icones/icons8_save_52px.png"))); // NOI18N
         save.setToolTipText("");
+        save.setBorder(null);
+        save.setBorderPainted(false);
+        save.setContentAreaFilled(false);
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveActionPerformed(evt);
@@ -270,8 +281,12 @@ public class PlayingFrame extends javax.swing.JFrame {
         crono.setText("00:00:00");
 
         hint.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        hint.setText("Pista");
+        hint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interficie/icones/icons8_idea_48px.png"))); // NOI18N
+        hint.setBorder(null);
+        hint.setBorderPainted(false);
+        hint.setContentAreaFilled(false);
         hint.setEnabled(false);
+        hint.setFocusable(false);
 
         solve.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         solve.setText("Resol");
@@ -366,12 +381,12 @@ public class PlayingFrame extends javax.swing.JFrame {
         if(running){
             gamePanel.setVisible(false);
             t.stop();
-            this.pause.setText("Reprèn");
+            pause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interficie/icones/icons8_pause_48px.png")));
         }
         else{
             t.start();
             gamePanel.setVisible(true);
-            this.pause.setText("Pausar");
+            pause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interficie/icones/icons8_play_48px.png")));
         }
         running = !running;
         
