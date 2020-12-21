@@ -257,7 +257,6 @@ public class PlayingFrame extends javax.swing.JFrame {
         pause.setBorder(null);
         pause.setBorderPainted(false);
         pause.setContentAreaFilled(false);
-        pause.setOpaque(false);
         pause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pauseActionPerformed(evt);
@@ -291,6 +290,11 @@ public class PlayingFrame extends javax.swing.JFrame {
         solve.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         solve.setText("Resol");
         solve.setEnabled(false);
+        solve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                solveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -325,7 +329,7 @@ public class PlayingFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6))
-            .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
+            .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,6 +395,10 @@ public class PlayingFrame extends javax.swing.JFrame {
         running = !running;
         
     }//GEN-LAST:event_pauseActionPerformed
+
+    private void solveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_solveActionPerformed
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

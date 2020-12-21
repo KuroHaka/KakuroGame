@@ -55,14 +55,17 @@ public class RankingFrame extends javax.swing.JFrame {
         setDificultat(def);
     }
     
+    public void tornaAlInici(){
+        this.setVisible(false);
+        ctrl_interficie.inici.setVisible(true);
+        reset();
+    }
+    
     private void listenerQuanTanques(){
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                ctrl_interficie.ranking.setVisible(false);
-                ctrl_interficie.inici.setVisible(true);
-                reset();
-                //ctrl_interficie.login.setEnabled(true);
                 System.out.println("(RankingFrame) S'ha tancat amb la creu. Fent coses...");
+                tornaAlInici();
             }
         });
     }
@@ -79,6 +82,7 @@ public class RankingFrame extends javax.swing.JFrame {
         jLabelPrimer = new javax.swing.JLabel();
         jLabelSegon = new javax.swing.JLabel();
         jLabelTercer = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setTitle("Kakuto ~ Rànkings");
         setResizable(false);
@@ -103,26 +107,41 @@ public class RankingFrame extends javax.swing.JFrame {
         jLabelTercer.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabelTercer.setText("3. ?");
 
+        jButton1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        jButton1.setText("Torna a l'Inici");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(jComboDifSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabelPrimer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelSegon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelTercer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(87, 87, 87)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(jComboDifSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelPrimer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelSegon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelTercer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)))
                 .addGap(88, 88, 88))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(7, 7, 7)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboDifSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -142,6 +161,10 @@ public class RankingFrame extends javax.swing.JFrame {
     private void jComboDifSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDifSelectActionPerformed
         setDificultat(jComboDifSelect.getSelectedIndex());
     }//GEN-LAST:event_jComboDifSelectActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        tornaAlInici();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,6 +202,7 @@ public class RankingFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboDifSelect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelPrimer;
