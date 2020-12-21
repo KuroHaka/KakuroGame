@@ -239,6 +239,31 @@ public class ControladoraDomini {
         return new Object[] {tauler, 0}; // '0' ja que és una nova partida.
     }
     
+    public Object[] iniciaNovaPartidaDesdeArxiu(String path) {
+        System.out.println("(CtrlDomini) Iniciar partida desde Fitxer en Format Estandar");
+        
+        Object[] ret = ctrl_persist.carregaPartidaArxiuPath(path, this.nom_usuari_actual);
+        
+        // CONSTRUIR Partida
+        String nou_id_partida = "" + ((int) ret[0]);
+        String formatStd = (String) ret[1];
+        int dificultat = 3; // Personalitzat
+        TaulerEnunciat te = new TaulerEnunciat(formatStd);
+        TaulerComencat tc = new TaulerComencat(te);
+        Partida partida = new Partida(usuari_actual, te, tc, 0, false);
+        
+        // GENERAR nova Partida
+        partides.add(nou_id_partida); // retorna un bool..
+        
+        // INICIAR
+        this.partida_actual = new Partida(usuari_actual, te, tc, 0, false);
+        this.id_partida_actual = nou_id_partida;
+        this.dificultat_actual = dificultat;
+        
+        String[][] tauler = tauler_a_MatriuStrings(tc);
+        return new Object[] {tauler, 0}; // '0' ja que és una nova partida.
+    }
+            
     public boolean esSolucio(String[][] mat){
         TaulerComencat tc = new TaulerComencat(matriuStrings_a_fStd(mat));
         return algoritme.validaSolucio(tc);

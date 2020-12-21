@@ -756,12 +756,11 @@ public class IniciFrame extends javax.swing.JFrame {
         if( ret == JFileChooser.APPROVE_OPTION ) {
                f = chooser.getSelectedFile() ;
         }
-        if(f != null)
-        {
-            String path = f.getPath();
-            System.out.println("(IniciFrame) Presenta kakuro. Path = " + path);
-            // TODO 
-        }
+        if(f == null) return;
+        String path = f.getPath();
+        System.out.println("(IniciFrame) Presenta kakuro. Path = " + path);
+        
+        ctrl_interficie.iniciaNovaPartidaDesdeArxiu(path);
 
     }//GEN-LAST:event_jButtonProposaActionPerformed
 

@@ -74,6 +74,12 @@ public class ControladoraInterficie {
         iniciarFramePlaying (ret);
     }
     
+    public void iniciaNovaPartidaDesdeArxiu(String path) {
+        System.out.println("(CtrlInt) Iniciar partida desde Arxiu");
+        Object[] ret = ctrl_domini.iniciaNovaPartidaDesdeArxiu(path);
+        iniciarFramePlaying (ret);
+    }
+    
     public boolean guardaPartida(int temps, String[][] tauler_format_interficie) {
         return ctrl_domini.guardaPartida(temps, tauler_format_interficie);
     }
