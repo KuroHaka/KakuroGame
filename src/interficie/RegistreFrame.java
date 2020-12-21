@@ -156,6 +156,11 @@ public class RegistreFrame extends javax.swing.JFrame {
             System.out.println("(RegistreFrame) Usuari o Password buits");
             return;
         }
+        if (usuari.contains(" ") || passwd.contains(" ")){
+            JOptionPane.showMessageDialog(this, "L'Usuari i el Password no poden contenir cap espai.","Ep! I diu...", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("(RegistreFrame) Usuari o Password conté un espai");
+            return;
+        }
         boolean correcte = ctrl_interficie.ctrl_domini.registrarUsuari(usuari, passwd);
         if (correcte){
             JOptionPane.showMessageDialog(this, "S'ha registrat correctament l'usuari " + usuari + ".", "Ep! I diu...", JOptionPane.INFORMATION_MESSAGE);
