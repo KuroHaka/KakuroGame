@@ -217,8 +217,6 @@ public class ControladoraPersistencia {
     }
     
     public Object[] carregaPartidaRepositori(int idEnunciat, String usuari) {
-        // TODO dificultat
-
         int dificultat = getDificultat("" + idEnunciat);
         
         int id_partida = assignarId("partides");
@@ -235,6 +233,24 @@ public class ControladoraPersistencia {
     public String getEnunciatDePartida(String id_partida) {
         Object[] enunciat = getIdDocument(id_partida, "partides");
         return getDocument("enunciats/" + (int) enunciat[0]);
+    }
+    
+    public Object[] carregaPartidaArxiuPath(String path, String usuari) {
+        int id_partida = assignarId("partides");
+        String id = "" + id_partida;
+        
+        int idEnunciat = assignarIdDocument("enunciats");
+        
+        String arxiu = "";
+        try {arxiu = Dades.carregaArxiu(path);}
+        catch (NoSuchFileException ex) {}
+        
+        guardarPartidaShadow(usuari, id);
+        guardarNovaPartidaRep("" + idEnunciat, usuari, 3);
+        guardarPartidaDirs(id_partida, "comencada", arxiu);
+        guardarNovaPartidaPartides(id, 0, idEnunciat, 3);
+        
+        return new Object[] {id_partida, arxiu, 3};
     }
     
     //////////////////// PRIVADES RANDOM *GUARDAR ////////////////////
