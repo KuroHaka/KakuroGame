@@ -576,7 +576,7 @@ public class ControladoraPersistencia {
             }
             else ret[i] = elemsEntrada[i];
         }
-        //ret[mida] = usuari + "," + temps;
+        if (bool) ret[mida+1] = usuari + "," + temps;
         return ret;
     }
     
