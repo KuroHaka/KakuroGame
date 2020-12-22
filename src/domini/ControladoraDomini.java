@@ -43,8 +43,8 @@ public class ControladoraDomini {
     private Vector<String> id_enunciats_repo;
     private Repositori repositori;
     
-    // Ranking TODO
-    //private ArrayList<String> id_entrades_ranking; // ?????
+    // Ranking
+    //private ArrayList<String> id_entrades_ranking;
     private Ranking ranking;
     
     // Controladores

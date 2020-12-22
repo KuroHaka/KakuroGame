@@ -12,19 +12,62 @@
 		<br>
 		<br>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
-		<ul>
-			<li>ha</li>
-			<li>ha</li>
-			<li>ha</li>
-		</ul>
+		<h2>ControladoraDomini.java</h2>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
+			&nbsp;&nbsp;&nbsp;Només ha d'haver una única instància d'aquesta Controladora.<br>
+			&nbsp;&nbsp;&nbsp;Aquesta Controladora és inicialitzada per la controladora d'Interfície.<br><br>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
+			&nbsp;&nbsp;&nbsp;La controladora compta amb les estructures de dades de la capa de Domini. Atributs:<br><br>
+			
+			<h3># Algoritme</h3>
+		    <b>private Algoritme algoritme;</b><br>
+		    &nbsp;&nbsp;&nbsp;Instància única de la classe Algoritme
+		    
+		    <h3># Usuaris</h3>
+		    <b>private ArrayList&lt;String&gt; ids_usuaris;</b><br>
+		    &nbsp;&nbsp;&nbsp;És una llista que guarda els id dels usuaris que existeixen, per tal d'evitar tenir-los tots carregats a memòria. Quan s'inicia la sessió amb un usuari, es modifiquen els següents atributs:
+		    <br><br><b>private String nom_usuari_actual;</b><br>
+		    &nbsp;&nbsp;&nbsp;Guarda l'id del usuari actual. Si encara no s'ha fet log-in, és null.
+		    <br><br><b>private Usuari usuari_actual;</b><br>
+		    &nbsp;&nbsp;&nbsp;Conté l'instància de la classe Usuari actual. Si encara no s'ha fet log-in, és null.
+		    
+		   	<h3># Partides usuari</h3>
+		    <b>private Vector&lt;String&gt; partides;</b><br>
+		    &nbsp;&nbsp;&nbsp;És una llista que guarda els id de les partides començades de l'usuari actual.
+		   	
+		   	<h3># Partida actual</h3>
+		    <b>private String id_partida_actual;</b><br>
+		    &nbsp;&nbsp;&nbsp;Conté l'id de la partida actual, si està jugant-se alguna partida. Altrament és null.
+		    <br><br><b>private Partida partida_actual;</b><br>
+		    &nbsp;&nbsp;&nbsp;Conté l'instància de la classe Partida actual que s'està jugant. Si no s'està jugant cap partida, és null.
+		    
+		   	<h3># Repositori</h3>
+		    <b>private Vector&lt;String&gt; id_enunciats_repo;</b><br>
+		    	&nbsp;&nbsp;&nbsp;És un vector amb els id dels enunciats del repositori.
+		    <br><br><b>private Repositori repositori;</b><br>
+		    	&nbsp;&nbsp;&nbsp;Conté l'instància de la classe Repositori.
+		    
+		   	<h3># Ranking</h3>
+		    <b>private Ranking ranking;</b><br>
+		    	&nbsp;&nbsp;&nbsp;Conté l'instància de la classe Ranking.
+		    
+		    
+		    <br><br><br>
+		    <h3>Mètodes d'inicialització de la Controladora:</h3>
 
+			<b>public ControladoraDomini (ControladoraInterficie ci, ControladoraPersistencia persist)</b><br>
+			&nbsp;&nbsp;&nbsp;Rep una instància de les dues controladores de les altres dues capes.
+
+			<br><br><b>public void inicia()</b><br>
+			&nbsp;&nbsp;&nbsp;Inicia les estructures de dades bàsiques per el funcionament d'aquesta controladora en l'inici del programa:<br>
+			<ul>
+				<li>La llista de id de usuaris</li>
+				<li>La informació del repositori</li>
+			</ul>
+			&nbsp;&nbsp;&nbsp;Altres informacions s'obtenen un cop l'usuari ha fet log-in, ja que en són dependents.<br>
+			&nbsp;&nbsp;&nbsp;Aquesta funció s'ha de cridar un únic cop quan es vulgui inicialitzar el domini del programa.
+
+			<br><br><br><br><br><br>
 	</body>
+
 </html>
