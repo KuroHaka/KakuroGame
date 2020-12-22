@@ -106,9 +106,7 @@ public class ControladoraInterficie {
     public boolean presentaManualFrame(String [][] tauler_format_interficie) {
         System.out.println("(CtrlInt) Iniciar partida desde Manual");
         Object[] ret = ctrl_domini.afegeixPartidaManual(tauler_format_interficie);
-        // Només afegeix la partida. No es posa a Jugar-la.
-        //iniciarFramePlaying (ret);
-        JOptionPane.showMessageDialog(manual, "S'ha afegit el tauler a les teves partides!", "Entra un Kakuro manualment", JOptionPane.INFORMATION_MESSAGE);
+        if (ret[0] == null) return false; // Vaia kakuro de merda. No és vàlid
         manual.setVisible(false);
         return true;
     }

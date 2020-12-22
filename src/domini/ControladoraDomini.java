@@ -270,6 +270,10 @@ public class ControladoraDomini {
         TaulerComencat tc = new TaulerComencat(te);
         te.print();
         
+        // COmprovar legalitat
+        ArrayList<TaulerComencat> solucions = algoritme.resoldreKakuro(te);
+        if (solucions == null || solucions.size() < 1) return new Object[] {null};
+        
         int dificultat = 3; // Personalitzat
         String nou_id = ctrl_persist.guardaNovaPartida(nom_usuari_actual, 0, tauler_fStd, dificultat);
         partides.add(nou_id);
