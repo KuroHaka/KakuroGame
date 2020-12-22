@@ -1,0 +1,7 @@
+Documentació dels jocs de prova del cas d'ús de redefinir la configuració per defecte d'un usuari (botó "Guardar com a preferida" de UsuariFrame).
+
+Cas d'ús de redifinir la configuració per defecte d'un usuari. Donats uns valors de files, columnes, numeroBlanques i numeroBlanquesEstablertes es canvia la configuració per defecte de l'usuari per la indicada. El pròxim cop que un usuari li dongui al botó de "Nova partida" haurà de carregar-se la configuració per defecte automàticament, llesta per tenir una partida creada. 
+
+Joc de Prova 001: Guardem una configuració per defecte qualsevol i tanquem sessió i tornem a iniciar-la per comprovar que es carrega automaticament la nova configuració per defecte. Al fer el joc de prova, ens adonem que es carrega la nova configuració per defecte al tornar a iniciar sessió correctament. Per tant, el cas d'ús esta implementat correctament.
+
+Nota: guardem configuracions incorrectes (com amb un nombre de numeroBlanques > (rows-1)*(Cols-1)) ja que la validessa de la configuració escollida es comprova a "Genera Nova Partida".
