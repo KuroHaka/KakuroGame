@@ -24,6 +24,7 @@ public class ControladoraInterficie {
     public IniciFrame inici = new IniciFrame(this);
     public RegistreFrame registre = new RegistreFrame(this);
     public PlayingFrame playing; // S'ha d'inicialitzar quan es comença la partida cada cop. // = new PlayingFrame(this);
+    public ManualFrame manual;
     public RepositoriFrame repo = new RepositoriFrame(this);
     public RankingFrame ranking = new RankingFrame(this);
     
@@ -82,6 +83,13 @@ public class ControladoraInterficie {
         System.out.println("(CtrlInt) Iniciar partida desde Arxiu");
         Object[] ret = ctrl_domini.iniciaNovaPartidaDesdeArxiu(path);
         iniciarFramePlaying (ret);
+    }
+    
+    public void iniciaManualFrame(int files, int cols) {
+        System.out.println("(CtrlInt) files: " + files + "; columnes: " + cols);
+        manual = new ManualFrame(files, cols);
+        inici.setVisible(false);
+        manual.setVisible(true);
     }
     
     public boolean guardaPartida(int temps, String[][] tauler_format_interficie) {

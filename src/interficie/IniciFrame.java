@@ -822,10 +822,11 @@ public class IniciFrame extends javax.swing.JFrame {
         myPanel.add(Jcolumnes);
 
         int result = JOptionPane.showConfirmDialog(null, myPanel,
-            "Entra el número de files i columnes del nou Kakuro", JOptionPane.OK_CANCEL_OPTION);
+            "Número de files i columnes", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
-          System.out.println("files: " + Jfiles.getValue());
-          System.out.println("columnes: " + Jcolumnes.getValue());
+          System.out.println("(Popup) files: " + Jfiles.getValue());
+          System.out.println("(Popup) columnes: " + Jcolumnes.getValue());
+          ctrl_interficie.iniciaManualFrame((int)Jfiles.getValue(), (int)Jcolumnes.getValue());
         }
         
     }//GEN-LAST:event_jButton4ActionPerformed
