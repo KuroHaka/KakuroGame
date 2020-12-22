@@ -13,9 +13,13 @@
 		<br>
 
 
-		<h2>Controladora de Persistència</h2>
+		<h2>ControladoraPersistència.java</h2>
 
-		<b>public void inicia()</b><br>
+		Només ha d'haver una única instància d'aquesta Controladora.
+		Aquesta Controladora és inicialitzada per la controladora de Domini.
+
+
+		<br><br><b>public void inicia()</b><br>
 		&nbsp;&nbsp;&nbsp;Inicia tots els elements de la Persistència.
 		<ul>
 			<li>Si no existeix algun dels directoris "dades", "comencada" o "enunciats", els genera.</li>
@@ -33,7 +37,7 @@
 		&nbsp;&nbsp;&nbsp;Genera un nou usuari amb la seva contrasenya i retorna un boleà que significa que s'ha fet l'usuari sense problemes.
 
 		<br><br><b>public String getHashPassword(String usuari)</b><br>
-		&nbsp;&nbsp;&nbsp;Retorna el hash de l'usuari.
+		&nbsp;&nbsp;&nbsp;Retorna el hash de la contrasenya de l'usuari.
 		<ul>
 			<li>Si no existeix l'usuari retorna "no_existeix_usuari".</li>
 		</ul>
@@ -82,10 +86,10 @@
 		&nbsp;&nbsp;&nbsp;Retorna el tauler enunciat d'un kakuro començat.
 
 
-		<br><br><br><h3>Generar nova partida</h3>
+		<br><br><br><h3>Generar nova partida:</h3>
 
 		<b>public String guardaNovaPartida (String usuari, Integer timestamp, String taulerFormatEstandard, int dificultat)</b><br>
-		&nbsp;&nbsp;&nbsp;Genera una nova partida del tauler per a l'usuari, amb temps i dificultat respectius, i retorna l'id de la partida.
+		&nbsp;&nbsp;&nbsp;Genera una nova partida del tauler per a l'usuari, amb temps i dificultat respectius, i retorna el nou id per a la partida.
 
 		<br><br><b>public Object[] carregaPartidaRepositori(int idEnunciat, String usuari)</b><br>
 		&nbsp;&nbsp;&nbsp;Genera una nova partida i retorna les dades de l'enunciat del repositori.
@@ -100,13 +104,13 @@
 		</ul>
 
 
-		<br><h3>Guardar partida</h3>
+		<br><h3>Guardar partida:</h3>
 
 		<b>public boolean guardaPartida (String id_partida, String usuari, Integer timestamp, String taulerFormatEstandard, int dificultat)</b><br>
 		&nbsp;&nbsp;&nbsp;Sobreescriu les dades de la partida de l'usuari amb aquest id i retorna un boleà que significa que tot s'ha fet correctament.
 
 
-		<br><br><br><h3>Carregar partida</h3>
+		<br><br><br><h3>Carregar partida:</h3>
 
 		<b>public Object[] carregaPartida (String id_partida)</b><br>
 		&nbsp;&nbsp;&nbsp;Retorna les dades de la partida.
@@ -115,13 +119,13 @@
 		</ul>
 
 
-		<br><h3>Borrar partida</h3>
+		<br><h3>Borrar partida:</h3>
 
 		<b>public boolean borrarPartida(String id_partida, String usuari)</b><br>
 		&nbsp;&nbsp;&nbsp;Borra la partida de l'usuari amb aquest id i retorna un boleà que significa que s'ha borrat correctament.
 
 
-		<br><br><br><h3>Acabar partida</h3>
+		<br><br><br><h3>Acabar partida:</h3>
 
 		<b>public boolean acabarPartida(String usuari, String id_partida, Integer temps, int dificultat)</b><br>
 		&nbsp;&nbsp;&nbsp;Fa tot el procés d'acabament de la partida i retorna un boleà que significa que tot s'ha fet correctament.
@@ -132,7 +136,7 @@
 		</ul>
 
 
-		<br><h3>Consultora ranking</h3>
+		<br><h3>Consultora ranking:</h3>
 
 		<b>public Object[] getRankings(int dificultat)</b><br>
 		&nbsp;&nbsp;&nbsp;Retorna el ranking de partides de la dificultat corresponent.
@@ -140,6 +144,37 @@
 			<li>El ranking és format per 3 entrades per dificultat.</li>
 			<li>Cada entrada té un usuari i el seu temps, els que el fan ser el rècord.</li>
 		</ul>
+
+
+
+		<br><h2>Dades.java</h2>
+
+		
+		<h3>Constructores i consultores de directoris:</h3>
+
+		<b>public static boolean existeixDirectori(String dir)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna un boleà que significa l'existència o no existència del directori.
+
+		<br><br><b>public static boolean ferDirectori(String dir)</b><br>
+		&nbsp;&nbsp;&nbsp;Genera una carpeta amb el nom "dir" i retorna un boleà que vol dir que s'ha generat correctament.
+
+		<br><br><b>public static String[] llistaArxius(String dir)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna una llista dels arxius del directori.
+
+		
+		<br><br><br><h3>Constructores i consultores d'arxius:</h3>
+
+		<b>public static boolean existeixArxiu(String arxiu)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna un boleà que significa l'existència o no existència de l'arxiu.
+
+		<br><br><b>public static String carregaArxiu(String arxiu)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna el contingut de l'arxiu.
+
+		<br><br><b>public static void guardarArxiu(String arxiu, String bufferedData)</b><br>
+		&nbsp;&nbsp;&nbsp;Guarda el contingut del buffer a l'arxiu.
+
+		<br><br><b>public static boolean borrarArxiu(String arxiu)</b><br>
+		&nbsp;&nbsp;&nbsp;Borra l'arxiu i retorna un boleà significant la correcció de l'esborrat.
 
 	</body>
 </html>
