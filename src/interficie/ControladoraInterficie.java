@@ -105,7 +105,13 @@ public class ControladoraInterficie {
     
     public boolean presentaManualFrame(String [][] tauler_format_interficie) {
         System.out.println("(CtrlInt) Iniciar partida desde Manual");
-        Object[] ret = ctrl_domini.afegeixPartidaManual(tauler_format_interficie);
+        Object[] ret = null;
+        try{
+            ret = ctrl_domini.afegeixPartidaManual(tauler_format_interficie);
+        }
+        catch(Exception e){
+            return false;
+        }
         if (ret[0] == null) return false; // Vaia kakuro de merda. No és vàlid
         manual.setVisible(false);
         inici.reset();

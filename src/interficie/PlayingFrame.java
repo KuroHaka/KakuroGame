@@ -193,6 +193,7 @@ public class PlayingFrame extends javax.swing.JFrame {
     
     private void actualitzaTauler(){
         this.gamePanel.removeAll();
+        casellesDisponibles = 0;
         for (int y = 0; y < tauler.length; y++ ) {
             for (int x = 0; x < tauler[0].length; x++){
                 if(tauler[y][x].contains("\\")){
@@ -451,24 +452,28 @@ public class PlayingFrame extends javax.swing.JFrame {
 
     private void hintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintActionPerformed
         // TODO add your handling code here:
-        Object[] values = this.ctrl_interficie.getAjuda(tauler);
-        if(values.length > 2){
-            tauler[(int) values[0]][(int) values[1]] = ""+(int) values[2];
-        }
-        else{
-            int cont = 0;
-            for (int y = 0; y < tauler.length; y++ ) {
-                for (int x = 0; x < tauler[0].length; x++){
-                    if(!tauler[y][x].contains("\\")){
-                        cont++;
-                        if(x == (int) values[0] && y == (int) values[1]){
-                            casellesBlanques.get(cont).setBackground(Color.red);
+        System.out.println(casellesDisponibles);
+        if(casellesDisponibles>1){
+            casellesDisponibles=0;
+            Object[] values = this.ctrl_interficie.getAjuda(tauler);
+            if(values.length > 2){
+                tauler[(int) values[0]][(int) values[1]] = ""+(int) values[2];
+            }
+            else{
+                int cont = 0;
+                for (int y = 0; y < tauler.length; y++ ) {
+                    for (int x = 0; x < tauler[0].length; x++){
+                        if(!tauler[y][x].contains("\\")){
+                            cont++;
+                            if(x == (int) values[0] && y == (int) values[1]){
+                                casellesBlanques.get(cont).setBackground(Color.red);
+                            }
                         }
                     }
                 }
             }
+            actualitzaTauler();
         }
-        actualitzaTauler();
     }//GEN-LAST:event_hintActionPerformed
     
     public static void main(String args[]) {

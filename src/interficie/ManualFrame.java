@@ -13,11 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -41,6 +44,7 @@ public class ManualFrame extends javax.swing.JFrame {
     public ManualFrame(){
     }
     public ManualFrame(ControladoraInterficie ci, int f, int c) {
+        listenerQuanTanques();
         this.ci = ci;
         y = f;
         x = c;
@@ -60,11 +64,24 @@ public class ManualFrame extends javax.swing.JFrame {
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ci.presentaManualFrame(tauler);
+                if(!ci.presentaManualFrame(tauler)){
+                    JOptionPane.showMessageDialog(ci.manual, "Aquest kakuro no és vàlid. \nNo s'afegirà a les partides.", "Entra un Kakuro manualment", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
         getContentPane().add(grid,BorderLayout.CENTER);
         getContentPane().add(save,BorderLayout.SOUTH);
+    }
+    
+    private void listenerQuanTanques(){
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                ci.manual.setVisible(false);
+                ci.inici.setVisible(true);
+                //ctrl_interficie.login.setEnabled(true);
+                System.out.println("(ManualFrame) S'ha tancat amb la creu. Fent coses...");
+            }
+        });
     }
     
     private void addCasella(JPanel frame, int index){

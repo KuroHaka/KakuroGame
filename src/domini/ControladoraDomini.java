@@ -266,6 +266,7 @@ public class ControladoraDomini {
     
     public Object[] afegeixPartidaManual(String [][] tauler_format_interficie) {
         String tauler_fStd = matriuStrings_a_fStd(tauler_format_interficie);
+        System.out.println(tauler_fStd);
         TaulerEnunciat te = new TaulerEnunciat(tauler_fStd);
         TaulerComencat tc = new TaulerComencat(te);
         te.print();
