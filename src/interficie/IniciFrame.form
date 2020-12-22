@@ -529,7 +529,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonProposa">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Proposa Kakuro"/>
+        <Property name="text" type="java.lang.String" value="Proposa Kakuro Arxiu"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonProposaActionPerformed"/>
@@ -537,8 +537,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton4"/>
+        <Property name="text" type="java.lang.String" value="Proposa Kakuro Manual"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

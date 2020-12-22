@@ -1,12 +1,22 @@
 package interficie;
 
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.Box;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 public class IniciFrame extends javax.swing.JFrame {
 
@@ -536,14 +546,19 @@ public class IniciFrame extends javax.swing.JFrame {
             }
         });
 
-        jButtonProposa.setText("Proposa Kakuro");
+        jButtonProposa.setText("Proposa Kakuro Arxiu");
         jButtonProposa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonProposaActionPerformed(evt);
             }
         });
 
-        jButton4.setText("jButton4");
+        jButton4.setText("Proposa Kakuro Manual");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -791,6 +806,29 @@ public class IniciFrame extends javax.swing.JFrame {
         conf_preferida = new Object[] {blanques_amb_valor, blanques, cols, files};
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        //JTextField Jfiles = new JTextField(5);
+        //JTextField Jcolumnes = new JTextField(5);
+        JSpinner Jfiles = new JSpinner(new SpinnerNumberModel(2, 2, 15, 1));
+        JSpinner Jcolumnes = new JSpinner(new SpinnerNumberModel(2, 2, 15, 1));
+        //Jfiles.set
+        JPanel myPanel = new JPanel();
+        myPanel.add(new JLabel("files:"));
+        myPanel.add(Jfiles);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("columnes:"));
+        myPanel.add(Jcolumnes);
+
+        int result = JOptionPane.showConfirmDialog(null, myPanel,
+            "Entra el número de files i columnes del nou Kakuro", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+          System.out.println("files: " + Jfiles.getValue());
+          System.out.println("columnes: " + Jcolumnes.getValue());
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
