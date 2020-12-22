@@ -1,0 +1,42 @@
+Nota: El valor de numeroBlanquesEstablertes serà sempre 0 en els jocs de prova doncs la única restricció que té es que no pot ser < 0 i no pot ser < numeroBlanques, totes dues condicions ja comprovades a la interfície.
+Nota: A més, les blanquesEstablertes s'omplen desde la trucada a generarKakuro a interficie (el generador retorna sempre numeroBlanquesEstablertes = 0)
+
+Estructura:
+
+Joc Prova X: FilesxColumnes, NumeroBlanques(%caselles blanques sense comptar la primera fila i columna on totes son negres), numeroBlanquesEstablertes: Objectiu i resultat del joc de proves
+
+Joc Prova 1: 16x16, 124 (0,55), 0: per començar, l’objectiu d’aquest joc de prova era esbrinar si el nostre generador era capaç d’arribar a generar 16x16, ja que com hem comentat anteriorment, a la primera entrega només arribava a 15x15. El resultat va ser que no era capaç de generar kakuros 16x16 de 0.55, per tant vam decidir descartar els 16x16 o més grans ja que la proporció de caselles blanques en front de les negres seria excessivament petita i faria que la partida sigués únicament omplir kakuros amb masses files i columnes de 1 o 2 valors.
+
+Joc Prova 2: 15x15, 108( 0.55), 0: en aquest cas volíem comprobar si el generador, després d’implementar les millores, encara era capaç de generar un kakuro 15x15 igual que a la primera entrega. El resultat va ser que sí que era capaç i a més a més, ara garanteix la solució única.
+
+Joc Prova 3: 15x15, 118(0.6), 0: un cop vam esbrinar que sí que era capaç de generar el kakuro 15x15 amb un 55% de caselles blanques, vam procedir a estudiar si podia generar-lo amb un 60% de caselles blanques. El resultat va ser que no era capaç de generar-lo, de manera que vam trobar el límit de les dimensions 15x15.
+
+Joc Prova 4: 20x10, 94 (0.55), 0: l’objectiu d’aquest joc de prova era esbrinar si, un cop demostrat que pot generar 15x15 amb 55% de caselles blanques, podem extrapolar aquest límit del 55% a tots els kakuros on la suma de files i columnes sigui = 30 (com en aquest cas el 20x10 o en el següent el 14x16). El resultat va ser que sí que generava el kakuro, resposta esperada ja que al final hi havia menys caselles blanques que al 15x15, sent aquest el quadrat i per tant el cas extrem.
+
+Joc Prova 5: 14x16, 107 (0.55), 0: la intenció d’aquest joc de prova era confirmar que es pot extrapolar que si CxR on R=C i R+C = S amb un determinat percentatge de caselles blanques pot ser generat, totes les combinacions on R != C i R+C=S amb el mateix percentatge de caselles blanques poden ser generades també. El resultat va ser afirmatiu, generant un kakuro amb solució única de 14x16 amb un 55% de caselles blanques.
+
+Joc Prova 6: 14x14, 110 (0.65), 0: un cop trobat el límit del 15x15, volem trobar el límit del 14x14 i, per tant, de tots els kakuros on el nombre de files + columnes = 28. Per començar executem el generador amb un 65% de caselles blanques, un test bastant optimista vist el límit trobat anteriorment. El resultat va ser que no podia amb aquest percentatge de caselles blanques.
+
+Joc Prova 7: 14x14 101(0.6), 0: per seguir buscant el límit del 14x14, el següent valor de percentatge de caselles blanques era un 60%. El resultat va ser positiu, generant un kakuro 14x14 amb un 60% de caselles en un temps negligible. 
+
+Joc Prova 8: 13x13 94(0.65), 0: un cop trobat el límit del 14x14, volem trobar el límit del 13x13 i, per tant, de tots els kakuros on el nombre de files + columnes = 26. Per començar, vam executar el generador amb un 65% de caselles blanques, un test lleugerament optimista vist el límit trobat anteriorment. El resultat va ser que no podia amb aquest percentatge de caselles blanques.
+
+Joc Prova 9: 13x13 86(0.6), 0: per seguir buscant el límit del 13x13, el següent valor de percentatge de caselles blanques era un 60%. El resultat va ser positiu, generant un kakuro 13x13 amb un 60% de caselles en un temps negligible. Aquest límit va ser una mica decepcionant doncs és el mateix que en el 14x14. Potser que haguem trobat el límit per totes les dimensions de kakuros? Comprovem-ho al 12x12. 
+
+Joc Prova 10: 12x12 79(0.65): un cop trobat el límit del 13x13, volem trobar el límit del 12x12 i, per tant, de tots els kakuros on el nombre de files + columnes = 26. Per començar, vam executar el generador amb un 65% de caselles blanques, un test lleugerament optimista vist el límit trobat anteriorment, desitjant descartar la hipòtesi que ens vam formular anteriorment (que el límit de totes les dimensions era el 60% de caselles blanques). El resultat va ser positiu i vam poder descartar la hipòtesi anterior, que hagués implicat un cop considerablement fort a l’eficiència del nostre generador de kakuros de solució única.
+
+Joc Prova 11: 12x12 85(0.7), 0: per confirmar que el límit del 12x12 era el 65%, vam fer una prova amb el 70% que va tenir un resultat negatiu ja que no es va generar cap kakuro.
+
+Joc Prova 12: 11x11 70(0.7), 0: un cop trobat el límit del 12x12, volem trobar el límit del 11x11 i, per tant, de tots els kakuros on el nombre de files + columnes = 22. Per començar, vam executar el generador amb un 70% de caselles blanques. El resultat va ser que podia generar aquest kakuro però tardava massa temps com per fer esperar a l’usuari tant temps.
+
+Joc Prova 13: 11x11 67(0.67), 0: per seguir buscant el límit vam establir que el límit de caselles blanques fos un 67%, aconseguint la generació d’un 11x11 amb solució única en un temps quasi negligible. Es sorprenent veure com 3 caselles blanques poden suposar una diferència de temps tant significant en la generació (òbviament es deu a una distribució exponencial del temps de generació).
+
+Joc Prova 14: 10x10  57(0.7), 0:  un cop trobat el límit del 11x11, volem trobar el límit del 10x10 i, per tant, de tots els kakuros on el nombre de files + columnes = 20. Per començar, vam executar el generador amb un 70% de caselles blanques. El resultat va ser que podia generar aquest kakuro en un temps negligible així que vam decidir provar amb un percentatge més elevat.
+
+Joc Prova 15: 10x10 61(0.75), 0: ara, amb un 75%, era capaç de generar-lo però en un temps no adient a la quantitat de temps que creiem que es pot tenir esperant a l’usuari per al seu kakuro (< 1 segon). Per tant, establim el límit del 10x10 en el 70%
+
+Joc Prova 16: 9x9, 48(0.75), 0: un cop trobat el límit del 10x10, volem trobar el límit del 9x9 i, per tant, de tots els kakuros on el nombre de files + columnes = 18. Per començar, vam executar el generador amb un 75% de caselles blanques. El resultat va ser que podia generar aquest kakuro en un temps negligible així que vam decidir provar amb un percentatge més elevat.
+
+Joc Prova 17: 9x9 54(0.85), 0: ara, per veure fins a on pot arribar el 9x9, saltem directament al 85% de caselles blanques. Sorprenentment, el generador va ser capaç de crear un kakuro 9x9 amb el 85% de caselles blanques. D’aquesta forma, el límit del 9x9 queda establert al 85% (54 caselles blanques).
+
+En conclusió, aquests jocs de prova ens han permès conèixer tots els límits del nostre generador. Amb aquests 18 casos hem establert els límits de percentatge de caselles blanques (sense comptar la primera fila i columna)  a cada suma de F+C (FxC). Aquests límits seran comprovats a l’IniciFrame de la interfície (quan el usuari premi el botó de nova partida amb la seva configuració escollida). D’aquesta forma, aconseguim que el generador sempre pugui generar el kakuro demanat per l’usuari ja que la configuració que aquest dóna haurà d’estar dins dels límits trobats en aquests jocs de proves.
