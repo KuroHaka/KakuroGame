@@ -263,7 +263,25 @@ public class ControladoraDomini {
         String[][] tauler = tauler_a_MatriuStrings(tc);
         return new Object[] {tauler, 0}; // '0' ja que és una nova partida.
     }
-            
+    
+    public Object[] afegeixPartidaManual(String [][] tauler_format_interficie) {
+        String tauler_fStd = matriuStrings_a_fStd(tauler_format_interficie);
+        TaulerEnunciat te = new TaulerEnunciat(tauler_fStd);
+        TaulerComencat tc = new TaulerComencat(te);
+        te.print();
+        
+        int dificultat = 3; // Personalitzat
+        String nou_id = ctrl_persist.guardaNovaPartida(nom_usuari_actual, 0, tauler_fStd, dificultat);
+        partides.add(nou_id);
+        
+        // INICIAR
+        this.partida_actual = new Partida(usuari_actual, te, tc, 0, false);
+        this.id_partida_actual = nou_id;
+        this.dificultat_actual = dificultat;
+        
+        return new Object[] {tauler_format_interficie, 0}; // '0' ja que és una nova partida.
+    }
+    
     public boolean esSolucio(String[][] mat){
         TaulerComencat tc = new TaulerComencat(matriuStrings_a_fStd(mat));
         return algoritme.validaSolucio(tc);
