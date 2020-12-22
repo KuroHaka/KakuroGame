@@ -1,0 +1,9 @@
+Documentació dels jocs de prova del cas d'ús de guardar una partida (el botó de guardar del Playing Frame)
+
+Donada una partida en joc, cliquem el botó de guardar partida. El comportament esperat és que ens mantengui al Playing Frame i es guardi la partida. No hi ha restriccions sobre aquest cas d'ús tot i que el pla inicial (així esta plasmat als casos d'ús de la primera entrega) era fer que si no hi havia canvis no es guardés. No vam implementar aquesta restricció ja que al final no vam trobar que solucionés cap problema existent, era inutil.
+
+Joc prova 001: Guardem una partida comencada, sortim de la partida i la tornem a carregar. Amb aquest joc de prova pretenem comprobar el correcte funcionament de la funcionalitat de guardar partida. El resultat es positiu ja que la partida queda guardada i està mostrada a la llista de "Les teves partides" de l'usuari frame.
+
+Joc prova 002: Guardem una partida posteriorment guardada i carregada (cal haver fet abans el joc prova 001) per comprobar que es sobreescriuen els canvis a la partida guardada. El resultat es que sí que es sobreescriuen els canvis i, al tornar a jugar la partida, surt la útlima versió guardada de la partida. No es dupliquen les partides ni cap problema relacionat.
+
+En conclusió, aquest cas d'ús queda ben implementat.

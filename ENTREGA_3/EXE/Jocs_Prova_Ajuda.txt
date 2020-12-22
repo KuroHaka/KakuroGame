@@ -1,0 +1,13 @@
+Joc de prova del cas d'ús de Demana Ajuda.
+
+Aquest cas d'ús té com objectiu que, al demanar ajuda, s'ompli una casella blanca amb el valor que té a la solució. Per tant, si una casella blanca té un valor incorrecte es possible que es canvii aquest valor pel correcte. Excepcions:
+
+- Es la ultima casella blanca i el kakuro es termina perque ja es la solució
+
+Joc de prova 001: Tenim una partida amb el kakuro buit i demanem ajuda (s'haura d'emplenar una casella blanca amb el valor correcte). Creem la partida i li donem al botó de demanar ajuda: si que s'omple la casella blanca amb el valor correcte.
+
+Joc de prova 002: Tenim una partida amb un kakuro 2x2 on la única casella blanca té un valor incorrecte. Li donem al botó de ajuda. L'objectiu és comprobar si és capaç de canviar el valor de la casella blanca per el valor correcte. El resultat és que sí que es canvia el valor de la casella.
+
+Joc de prova 003: Tenim una partida (dóna igual si les casellse blanqeus tenen o no valor) i cliquem el botó de demanar ajuda sense parar per veure si arriva a aconseguir la solució. L'objectiu es comprovar si pot fer això ja que hauria de ser capaç. El resultat es que sí que aconsegueix arribar a la solucio.
+
+Per tant, la funcionalitat cobreix tots els casos necessaris i per tant pot donar ajuda sempre que l'usuari la necesiti. El cas d'ús està correctament implementat.
