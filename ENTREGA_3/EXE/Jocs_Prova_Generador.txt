@@ -29,7 +29,7 @@ Joc Prova 11: 12x12 85(0.7), 0: per confirmar que el límit del 12x12 era el 65%
 
 Joc Prova 12: 11x11 70(0.7), 0: un cop trobat el límit del 12x12, volem trobar el límit del 11x11 i, per tant, de tots els kakuros on el nombre de files + columnes = 22. Per començar, vam executar el generador amb un 70% de caselles blanques. El resultat va ser que podia generar aquest kakuro però tardava massa temps com per fer esperar a l’usuari tant temps.
 
-Joc Prova 13: 11x11 67(0.67), 0: per seguir buscant el límit vam establir que el límit de caselles blanques fos un 67%, aconseguint la generació d’un 11x11 amb solució única en un temps quasi negligible. Es sorprenent veure com 3 caselles blanques poden suposar una diferència de temps tant significant en la generació (òbviament es deu a una distribució exponencial del temps de generació).
+Joc Prova 13: 11x11 65(0.65), 0: per seguir buscant el límit vam establir que el límit de caselles blanques fos un 65%, aconseguint la generació d’un 11x11 amb solució única en un temps quasi negligible. No hem aconseguit cap millora d'eficiencia...
 
 Joc Prova 14: 10x10  57(0.7), 0:  un cop trobat el límit del 11x11, volem trobar el límit del 10x10 i, per tant, de tots els kakuros on el nombre de files + columnes = 20. Per començar, vam executar el generador amb un 70% de caselles blanques. El resultat va ser que podia generar aquest kakuro en un temps negligible així que vam decidir provar amb un percentatge més elevat.
 
