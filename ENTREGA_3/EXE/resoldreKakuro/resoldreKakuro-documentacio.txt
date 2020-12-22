@@ -1,0 +1,29 @@
+Documentacio dels jocs de proves del solver
+
+
+Per realitzar els jocs de prova: Iniciar sessió al IniciFrame -> accedir a l'Usuari Frame -> clicar a "Proposa Kakuro" -> escollir un dels arxius .in en funció de quin es el joc de prova que volem fer (els .in són a la carpeta EXE/resoldreKakuro).
+
+Tots els jocs de prova venen amb un .in del kakuro del joc de prova a solucionar i un .out de una solució del kakuro solucionat amb aquest solver.
+
+Joc de prova 001: Tauler petit de 3x3 amb un sol resultat. L'objectiu d'aquest primer joc de prova es sencillament veure si el solver es capaç de trobar la solució única d'un kakuro petit. El resultat obviament va ser positiu. Al arxiu.out hi és la única solució possible, generada per aquest solver.
+
+Joc de prova 002: Tauler sencill de 6x6 amb bastantes caselles blanques i múltiples solucions per comprovar que el solver pot solucionar kakuros amb proporcions altes de caselles blanques. El resultat va ser positiu. Al arxiu.out hi ha una solució d'aquest kakuro específic obtinguda amb aquest solver.
+
+Joc de prova 003: Tauler una mica més gran que en el cas 2 (8x8) per comprobar si arriva a resoldre kakuros de 8x8 i donar les seves solucions. Logicament també funciona ja que un increment tan petit de les dimensions no hauria de fer que el solver deixés de funcionar. A l'arxiu .out hi ha una solució d'aquest kakuro específic obtinguda amb aquest solver.
+
+Joc de prova 004: Tauler una mica més gran que en el cas 2 (10x10) per comprobar si arriva a resoldre kakuros de 10x10 i donar les seves solucions. Logicament també funciona ja que un increment tan petit de les dimensions no hauria de fer que el solver deixés de funcionar. A l'arxiu .out hi ha una solució d'aquest kakuro específic obtinguda amb aquest solver.
+
+Joc de prova 005: Test de dimensions analogues al cas 004 per confirmar la resolucio correcta i eficient de 10x10.A l'arxiu .out hi ha una solució d'aquest kakuro específic obtinguda amb aquest solver.
+
+Joc de prova 006: Tauler una mica de cas "extrem" de 2x17 per comprobar que no hi ha cap comporament estrany quan només hi ha 2 files. El resultat va ser la correcta execucio, confirmant que el solver es coherent i no té comportaments rars quan ha de tractar amb una unica fila de caselles blanques (és a dir que no hi ha problemes a loops on es pugui sortir "out of bounds" de la matriu de caselles per algun motiu particular). A l'arxiu .out hi ha una solució d'aquest kakuro específic obtinguda amb aquest solver.
+
+Joc de prova 007: Un nou cas que vam utilitzar per asegurarnos que diferents distribucions de caselles blanques dins d'un kakuro eren resoltes pel solver. En aquest cas es tracta d'un kakuro 9x9 que el solver no va tenir problemes en resoldre.A l'arxiu .out hi ha una solució d'aquest kakuro específic obtinguda amb aquest solver.
+
+Joc de prova 008: Kakuro trivial de 2x2 per comprobar que l'algorisme podia resoldre fins i tot el kakuro mes simple. Un cas semblant al del joc de prova 006. Amb aquest joc de prova ens assegurem que el solver no tindrà mai problemes amb kakuros petits pel fet de ser petits.
+
+
+Joc de prova 009: Tauler de 10x20 per veure si el solver pot resoldre un dels kakuros amb major tamany que pot generar el nostre generador. Cal tenir en compte que aquest es un kakuro generat pel nostre generador i per tant només té una solució. El resultat del joc de prova es positiu ja que el solver es capaç de trobar la única solució possible (dins l'arxiu .out està).
+
+Joc de prova 010: Tauler de 15x15 per veure si el solver pot resoldre el kakuros amb major tamany que pot generar el nostre generador (es el de major tamany ja que, com està explicat als jocs de proves del generador, no generarem mai kakuros on el valor de files + columnes > 30, per tant al ser el cas quadrat on F+C = 30 és el cas amb major nombre de caselles blanques possibles hi ha). Cal tenir en compte que aquest es un kakuro generat pel nostre generador i per tant només té una solució. El resultat del joc de prova es positiu ja que el solver es capaç de trobar la única solució possible (dins l'arxiu .out està). Per tant, el solver podrà solucionar tots els kakuros generats pel generador amb el botó de "Nova partida".
+
+D'aquesta manera concluim que el solver pot solucionar qualsevol kakuro que es generi pel generador, i per tant compleix el requisit prinicipal per a confirmar la seva validessa, objectiu principal dels jocs de prova.
