@@ -99,7 +99,12 @@ public class ManualFrame extends javax.swing.JFrame {
         v.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                tauler[index/x][index%x]=""+e.getKeyChar();
+                char c = e.getKeyChar();
+                if(c == KeyEvent.VK_BACK_SPACE ||c== KeyEvent.VK_DELETE){
+                    tauler[index/x][index%x]="?";
+                }
+                else
+                    tauler[index/x][index%x]=""+c;
             }
 
             @Override
