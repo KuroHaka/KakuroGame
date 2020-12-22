@@ -1,0 +1,45 @@
+
+domini
+  |- ControladoraDomini	- Marc Bofill
+  |- Algoritme         	- (entre tots)
+  |   |- generador     	- Cristian
+  |   |- solver        	- Zhensheng Chen
+  |   |- validaSolucio 	- Marc Bofill
+  |   |- validaFormat  	- Marc Bofill
+  |- Driver_Algoritme  	- Xavier Girbau i Zhensheng Chen
+  |- Combinacions      	- Zhensheng Chen
+  |- Driver_Combinacions  - Zhensheng Chen
+  |- Repositori	       	- Cristian
+  |- Tauler	       	- Marc Bofill
+  |   |- TaulerComençat
+  |   |- TaulerEnunciat
+  |- Driver_Tauler     	- Zhensheng Chen
+  |- JUnitTest_Tauler  	- Xavier Girbau
+  |- Casella	       	- Zhensheng Chen i Marc Bofill
+  |   |- CasellaBlanca
+  |   |- CasellaNegra
+  |- Driver_Casella    	- Zhensheng Chen
+  |- Configuracio      	- Cristian
+  |- Usuari	       	- Cristian
+
+
+interficie
+  |- ControladoraInterficie  - Marc Bofill
+  |- ColorsPalet	- Zhensheng Chen
+  |- LoginFrame		- Zhensheng Chen
+  |- RegistreFrame     	- Marc Bofill
+  |- IniciFrame		- Marc Bofill
+  |- RankingFrame	- Marc Bofill
+  |- RepositoriFrame	- Marc Bofill
+  |- PlayingFrame	- Zhensheng Chen
+
+
+persistencia
+  |- ControladoraPersistencia  - Xavier Girbau
+  |- Dades	       - Marc Bofill
+
+
+jocs de proves         - Xavier Girbau
+  |- resoldreKakuro
+  |- validaFormat
+  |- validaSolucio
