@@ -9,6 +9,10 @@ Els casos d'us:
 - Reanudar Partida
 
 - Veure Kakuros Repositori
+
+- Veure Ranking
  
 
-No tenen joc de proves ja que es considera trivial al ser simplement clicar un botó, sense que aquest tingui cap restricció de quan no pot ser clicat. Estan tots correctament implementats.
+No tenen joc de proves ja que es considera trivial al ser simplement clicar un botó, sense que aquest tingui cap restricció de quan no pot ser clicat. 
+
+Estan tots correctament implementats. Per comprobar el seu funcionanment basta amb clicar els seus botons.

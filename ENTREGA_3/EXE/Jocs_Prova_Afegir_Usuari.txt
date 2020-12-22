@@ -1,4 +1,4 @@
-Documentació dels jocs de prova del cas d'ús d'afegir/crear un nou usuari (el botó de enregistrar-se de l'IniciFrame)
+Documentació dels jocs de prova del cas d'ús d'afegir/crear un nou usuari (el botó de enregistrar-se de l'IniciFrame i després el de Registrar del Register Frame)
 
 Cas d'ús d'afegir usuari. Donats un nom d'usuari i una contrasenya s'haurà de crear un nou usuari amb el nom i la contrasenya indicats. Les excepcions que voldrem comprovar seran:
 - que no s'haurà de crear un usuari nou si el nom d'usuari que vol ja el té un altre usuari ja creat 
