@@ -114,6 +114,8 @@ public class ControladoraInterficie {
         }
         if (ret[0] == null) return false; // Vaia kakuro de merda. No és vàlid
         manual.setVisible(false);
+        inici.reset();
+        inici.setVisible(true);
         return true;
     }
     

@@ -1,0 +1,13 @@
+Documentació dels jocs de prova del cas d'ús de proposar un kakuro manual (el botó de proposar kakuro manual del Usuari Frame)
+
+Els 2 casos que s'hauran de cobrir són: 
+
+- Crear un kakuro vàlid
+- Crear un kakuro invàlid
+
+Joc de Prova 001: Farem un kakuro vàlid que compleixi amb el format correcte (primera fila de caselles negres, primera columna de caselles negres...). Introduim un kakuro 2x2 amb una única casella blanca abaix a la dreta (es un kakuro vàlid) i el Manual Frame ens l'accepta al clicar a "Save".
+
+Joc de Prova 002: Farem un kakuro vàlid que nocompleixi amb el format correcte. Introduim un kakuro 2x2 amb totes les caselles blanques (es un kakuro no vàlid) i el Manual Frame no ens l'accepta al clicar a "Save", emet un missatge d'error. 
+
+Així concluim que no ens accepta el kakuro si no té un format vàlid. En conclusió, el cas d'ús està correctament implementat.
+
