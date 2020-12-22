@@ -2,6 +2,7 @@ package interficie;
 
 import domini.ControladoraDomini;
 import java.util.concurrent.TimeUnit;
+import javax.swing.JOptionPane;
 import persistencia.ControladoraPersistencia;
 
 public class ControladoraInterficie {
@@ -107,6 +108,8 @@ public class ControladoraInterficie {
         Object[] ret = ctrl_domini.afegeixPartidaManual(tauler_format_interficie);
         // Només afegeix la partida. No es posa a Jugar-la.
         //iniciarFramePlaying (ret);
+        JOptionPane.showMessageDialog(manual, "S'ha afegit el tauler a les teves partides!", "Entra un Kakuro manualment", JOptionPane.INFORMATION_MESSAGE);
+        manual.setVisible(false);
         return true;
     }
     
