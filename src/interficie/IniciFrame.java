@@ -189,7 +189,7 @@ public class IniciFrame extends javax.swing.JFrame {
             else if (check(26, files, cols, blanques, 0.6)) nope = true;
             else if (check(24, files, cols, blanques, 0.6)) nope = true;
             else if (check(22, files, cols, blanques, 0.65)) nope = true;
-            else if (check(20, files, cols, blanques, 0.67)) nope = true;
+            else if (check(20, files, cols, blanques, 0.65)) nope = true;
             else if (check(18, files, cols, blanques, 0.7)) nope = true;
             else if (check(16, files, cols, blanques, 0.8)) nope = true;
 
@@ -206,7 +206,7 @@ public class IniciFrame extends javax.swing.JFrame {
             14x14 - (101) 0.6
             13x13 - (86) 0.6
             12x12 - (78) 0.65
-            11x11 - (67) 0.67 (limit)
+            11x11 - (67) 0.65
             10x10 - (56) 0.7
             9x9   - (51) 0.8
             8x8   - (41) 0.85
