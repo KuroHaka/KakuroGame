@@ -2,6 +2,7 @@ package interficie;
 
 import domini.ControladoraDomini;
 import java.util.concurrent.TimeUnit;
+import javax.swing.JOptionPane;
 import persistencia.ControladoraPersistencia;
 
 public class ControladoraInterficie {
@@ -85,6 +86,16 @@ public class ControladoraInterficie {
         iniciarFramePlaying (ret);
     }
     
+    public boolean guardaPartida(int temps, String[][] tauler_format_interficie) {
+        return ctrl_domini.guardaPartida(temps, tauler_format_interficie);
+    }
+        
+    public void acabaPartida (boolean opt, int temps) {
+        ctrl_domini.acabaPartida(opt,temps);
+    }
+    
+/////////////////// ENTRA UNA PARTIDA MANUAL
+    
     public void iniciaManualFrame(int files, int cols) {
         System.out.println("(CtrlInt) files: " + files + "; columnes: " + cols);
         manual = new ManualFrame(files, cols);
@@ -92,12 +103,14 @@ public class ControladoraInterficie {
         manual.setVisible(true);
     }
     
-    public boolean guardaPartida(int temps, String[][] tauler_format_interficie) {
-        return ctrl_domini.guardaPartida(temps, tauler_format_interficie);
-    }
-        
-    public void acabaPartida (boolean opt, int temps) {
-        ctrl_domini.acabaPartida(opt,temps);
+    public boolean presentaManualFrame(String [][] tauler_format_interficie) {
+        System.out.println("(CtrlInt) Iniciar partida desde Manual");
+        Object[] ret = ctrl_domini.afegeixPartidaManual(tauler_format_interficie);
+        // Només afegeix la partida. No es posa a Jugar-la.
+        //iniciarFramePlaying (ret);
+        JOptionPane.showMessageDialog(manual, "S'ha afegit el tauler a les teves partides!", "Entra un Kakuro manualment", JOptionPane.INFORMATION_MESSAGE);
+        manual.setVisible(false);
+        return true;
     }
     
 /////////////////// CONFIGURACIÓ USUARI
