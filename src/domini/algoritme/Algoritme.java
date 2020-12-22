@@ -916,26 +916,26 @@ public class Algoritme {
         
         for (int i = 0; i < comencat.getDimX(); i++) {
             for (int j = 0; j < comencat.getDimY(); j++) {
-                Integer valor = comencat.getValor(i, j);
+                Integer valor = comencat.getValor(j, i);
                 
                 if (valor != null && valor != -1) {
-                    Integer valorSol = solucio.getValor(i, j);
+                    Integer valorSol = solucio.getValor(j, i);
                     if (valor != valorSol) {
                         return new Object[] {i, j, valorSol};
                     }
                 }
-                else {
+                else if (valor == null){
                     vec.add(new Object[] {i,j});
                     mida++;
                 }
             }
         }
         
-        int aux = (int) random() % mida;
+        int aux = (int) (Math.random() * mida);
         
         int i = (int) vec.get(aux)[0];
         int j = (int) vec.get(aux)[1];
-        return new Object[] {i, j, solucio.getValor(i, j)};
+        return new Object[] {i, j, solucio.getValor(j, i)};
     }
 
 }
