@@ -1,0 +1,5 @@
+Joc de prova del cas d'ús de  Proposa Kakuro.
+
+Nota: convindria que es realitzes abans els jocs de prova del resoldreKakuro
+
+Com als jocs de prova del resoldreKakuro utilitzem el botó de ProposaKakuro, ja hem demostrat que el cas d'ús està ben implementat ja que utilitzem el botó 10 vegades amb 10 kakuros diferents i per tots els llegeix bé. Cal notar que es un prerrequisit que el kakuro proposat compleixi el format adequat.

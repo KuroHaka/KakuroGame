@@ -1,0 +1,24 @@
+Documentació dels jocs de prova del cas d'ús de generar nova partida (el botó de "Genera Nova Partida" del Usuari Frame)
+
+Cas d'ús de crear una partida. Donats uns valors de Files, Columnes, NumeroBlanques i NumeroBlanquesEstablertes. Les excepcions que voldrem comprovar seran (no es poden complir):
+- Files >= 2 i Columnes >= 2
+- el valor de numeroBlanquesEstablertes >= numeroBlanques
+- Files+Columnes > 30
+- Percentatge de caselles blanques > 0.85 (numeroBlanques/((rows-1)*(cols-1)) > 0.85)
+- Percentatge de caselles blanques es l'adecuat en funció de les dimensions de files i columnes. Totes les restriccions de dimensions (limits del generador) es poden trobar explicats als jocs de prova del generador.
+
+Joc de Prova XXX, Files, Columnes, numeroBlanques, numeroBlanquesEstablertes: Explicació del joc de prova.
+
+Joc de Prova 001, 8, 8, 26, 0: Cas base. No s'incompleix cap restricció de les mencionades abans, aquest es un cas base per comprobar que es genera una partida amb el kakuro de les condicions escollides. Després de donar al botó de "Genera Nova Partida" amb la configuració escollida implementada, ens transportem al Playing Frame on hi ha una partida amb un kakuro de la configuració escollida correctament. Per tant deduïm que els casos base funcionen, només cal comprovar les restriccions.
+
+Joc de Prova 002, 1, 1, 0, 0: Volem confirmar que es comprova que els valors de les files i les columnes no poden ser mes petits que 2. Amb aquesta configuracio, el resultat resulta ser que no es genera la partida perque surt un missatge de error que diu "El nombre de files ha de ser major que 2" i "El nombre de columnes ha de ser major que 2". Per tant, la "Excepcio" es comprova.
+
+Joc de Prova 003, 16, 16, null, 0: Volem comprobar que es comprova que files+columnes <= 30. Amb aquesta configuracio, el resultat es que surt un missatge d'error que diu "Les dimensions del tauler son massa grans. Proveu amb un 15x15." i no ens transporta al Playing Frame per jugar la partida. Per tant, si que es comprova la restricció.
+
+Joc de Prova 004, 11, 11, 90, 0: Volem comprobar que es comprova que numeroBlanques/((rows-1)*(cols-1)) <= 0.85 (en aquest cas es 0.9). Amb aquesta configuracio, el resultat es que surt un missatge d'error que diu "El numero de blanques totals han de ser més petites!" i no ens transporta al Playing Frame per jugar la partida. Per tant, si que es comprova la restricció.
+
+Joc de Prova 005, 11, 11, 50, 50: Volem comprobar que es comprova que numeroBlanques>numeroBlanquesEstablertes. Amb aquesta configuracio, el resultat es que surt un missatge d'error que diu "El numero de blanques amb valor ha de ser menor" i no ens transporta al Playing Frame per jugar la partida. Per tant, si que es comprova la restricció.
+
+Joc de Prova 006, 11, 11, 70, 0: Volem comprobar que es comprova que numeroBlanques/((rows-1)*(cols-1)) <= x per a un kakuro de dimensions FxC. En aquest cas tenim un kakuro 11x11 i per tant el percentatge de blanques no podrà ser >0.65 (amb la configuracio que posem es de 0.7), per tant, no s'haura de generar la partida. Amb aquesta configuracio, el resultat es que surt un missatge d'error. Per tant, si que es comprova la restricció. Amb aquesta comprovació podem extrapolar a totes les dimensions que si es comproba la restricció. 
+
+Per tant, totes les restriccions estan comprobades i hem fet un riguros estudi dels limits del nostre generador, de manera que a partir d'ara només es generaran partides on la configuracio del kakuro demanada compleixi amb els limits del nostre generador (d'aquesta forma mai entrarem a un bucle infinit intentant generar un kakuro que el generador no  serà capaç de generar).

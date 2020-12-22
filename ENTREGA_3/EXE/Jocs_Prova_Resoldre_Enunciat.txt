@@ -1,0 +1,7 @@
+Joc de prova pel cas d'ús "Soluciona Kakuro de la Partida" (Botó "soluciona" al Playing Frame). 
+
+Nota: cal llegir abans el joc de prova de resoldreKakuro ja que aquest botó es a tots els efectes una trucada a aquesta funció.
+
+Com al joc de prova de resoldreKakuro hem comprobat que el solver pot resoldre tots els kakuros que el nostre generador es capaç de generar, sabem que si es capaç de resoldre un kakuro de una partida generat pel generador, serà capaç de resoldre tots els altres.
+
+Joc de Prova 001: Creem una partida amb un kakuro 15x15 sense assignar un numero de blanques específic i amb numeroBlanquesEstablertes = 0. Li donem al botó "Soluciona" i ens retorna la solució del kakuro. Per tant, aquest botó funciona bé i el cas d'ús està correctament cobert.

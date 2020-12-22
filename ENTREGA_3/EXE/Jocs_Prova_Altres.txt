@@ -1,0 +1,14 @@
+Els casos d'us:
+
+- Tancar sessió
+
+- Carregar enunciat repositori
+
+- Pausar Partida
+
+- Reanudar Partida
+
+- Veure Kakuros Repositori
+ 
+
+No tenen joc de proves ja que es considera trivial al ser simplement clicar un botó, sense que aquest tingui cap restricció de quan no pot ser clicat. Estan tots correctament implementats.

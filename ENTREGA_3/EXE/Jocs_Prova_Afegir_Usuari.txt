@@ -1,0 +1,17 @@
+Documentació dels jocs de prova del cas d'ús d'afegir/crear un nou usuari (el botó de enregistrar-se de l'IniciFrame)
+
+Cas d'ús d'afegir usuari. Donats un nom d'usuari i una contrasenya s'haurà de crear un nou usuari amb el nom i la contrasenya indicats. Les excepcions que voldrem comprovar seran:
+- que no s'haurà de crear un usuari nou si el nom d'usuari que vol ja el té un altre usuari ja creat 
+- que no hi hagi espais al nom d'usuari o la contrasenya, es a dir, "Cristian Izquierdo" no serà un nom d'usuari vàlid.
+
+Joc de Prova XXX Nom d'usuari, contrasenya: Explicacio joc de prova
+
+Joc de Prova 001 Cristian, ExempleContrasenya: Primer joc de prova amb l'ojectiu de comprovar que es crea l'usuari amb nom Cristian i contrasenya ExempleContrasenya correctament. Cas base per a poder posar-nos a comprovar "excepcions". El resultat es positiu, es crea el usuari correctament.
+
+Joc de Prova 002 Cristian, ExempleContrasenya2: Segon joc de prova (necessari que s'hagi fet el primer joc de prova abans) amb l'objectiu de comprobar que no es crearà un segon usuari amb el nom d'usuari Cristian (és una excepció comentada abans). Al intentar crear un segon usuari amb nom d'usuari Cristian al Register Frame, ens surt un missatge d'error indicant-nos que ja existeix un usuari amb nom Cristian i no ens deixar crear l'usuari. Per tant, la "excepció" es compleix.
+
+Joc de Prova 003 Cristian Izquierdo, ExempleContrasenya: Joc de prova amb l'objectiu de comprobar que no es podrà crear un usuari amb un espai al nom d'usuari. Aquesta és una altra "excepció" que cal cobrir. Al itnentar crear aquest usuari ens surt un missatge de error que indica que el nom d'usuari o la contrasenya tenen un espai. Per tant, no es crea l'usuari i la excepció està coberta.
+
+Joc de Prova 004 Cristian, Exemple Contrasenya: Joc de prova amb l'objectiu de comprobar que no es podrà crear un usuari amb un espai a la contrasenya. Aquesta és una altra "excepció" que cal cobrir. Al itnentar crear aquest usuari ens surt un missatge de error que indica que el nom d'usuari o la contrasenya tenen un espai. Per tant, no es crea l'usuari i la excepció està coberta.
+
+Es compleix el cas d'ús quan escau i es respecten les restriccions, per tant, el cas d'ús està correctament implementat.

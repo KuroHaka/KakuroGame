@@ -39,8 +39,6 @@ persistencia
   |- Dades	       - Marc Bofill
 
 
-jocs de proves         - Xavier Girbau
-  |- resoldreKakuro - Cristian
-  |- generarKakuro - Cristian
-  |- validaFormat
-  |- validaSolucio
+jocs de proves     1era entrega    - Xavier Girbau i Cristian
+
+jocs de proves finals - Cristian

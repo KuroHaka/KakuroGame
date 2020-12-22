@@ -1,0 +1,17 @@
+Documentació dels jocs de prova del cas d'ús d'iniciar sessió amb un usuari (el botó d'entrar de l'IniciFrame)
+
+Cas d'ús d'iniciar sessió. Donats un nom d'usuari i una contrasenya s'haurà d'iniciar sessió en usuari amb el nom i la contrasenya indicats. Les excepcions que voldrem comprovar seran:
+- que no s'inicii sessió si el nom d'usuari no existeix
+- que no s'inicii sessió si la contrasenya no correspon al nom d'usuari indicat
+
+Per als jocs de prova asumim que existeix un Usuari amb nom d'usuari: Nom i contrasenya: Contra
+
+Joc de prova XXX Nom d'usuari, Contrasenya: Explicació del joc de prova
+
+Joc de prova 001 Nom, Contra: Joc de prova inicial que comprova que si les dades de l'inici de sessio son correctes s'inicia sessió sense problemes. Al executar comprovem que s'inicia sessió correctament ja que ens transporta de l'IniciFrame al Usuari Frame de l'usuari indicat (en aquest cas de Nom). Case base que s'ha de complir per passar a comprovar les "excepcions".
+
+Joc de prova 002 Nom, Contra2: Joc de prova que preten comprovar que no s'inicia sessió quan la contrasenya del usuari no es la que correspon al Usuari amb el nom d'usuari indicat. Al executar-lo, ens adonem que surt un missatge  d'error que indica "Credencials Incorrectes" i no ens transporta al Usuari Frame. Per tant, no s'inicia sessió i es compleix la restricció.
+
+Joc de prova 003 Nom2, Contra: Joc de prova per comprovar que no s'inicia sessió quan el nom d'usuari indicat no existeix. Al executar-lo, ens adonem que surt un missatge  d'error que indica "Credencials Incorrectes" i no ens transporta al Usuari Frame. Per tant, no s'inicia sessió i es compleix la restricció.
+
+Es compleixen totes les restriccions i s'inicia sessió quan les dades són correctes, per tant, el cas d'ús es correcte.
