@@ -12,19 +12,109 @@
 		<br>
 		<br>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
-		<ul>
-			<li>ha</li>
-			<li>ha</li>
-			<li>ha</li>
-		</ul>
+		<h2>ControladoraInterfície.java</h2>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
+			Només ha d'haver una única instància d'aquesta Controladora.<br>
+			Aquesta Controladora és l'encarregada de inicialitzar les altres dos: la de Persistència i la de Domini.<br><br>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
+			<b>public ControladoraInterficie()</b><br>
+			&nbsp;&nbsp;&nbsp;Instancia les dues controladores de les altres capes:
+			<ul>
+				<li>ControladoraPersistencia</li>
+				<li>ControladoraDomini</li>
+			</ul>
+
+			<b>public void inicia()</b><br>
+			&nbsp;&nbsp;&nbsp;Inicia les estructures bàsiques de dades per el funcionament d'aquesta controladora.<br>
+			&nbsp;&nbsp;&nbsp;Inicia les instàncies de les dues controladores de les altres capes:
+			<ul>
+				<li>ctrl_persist.inicia();</li>
+				<li>ctrl_domini.inicia();</li>
+			</ul>
+			&nbsp;&nbsp;&nbsp;Instancia tots els Frames inicials de la capa d'interfície:
+			<ul>
+				<li>Inicia el LoginFrame</li>
+				<li>Inicia el RegistreFrame</li>
+			</ul>
+			&nbsp;&nbsp;&nbsp;Finalment inicia i fa visible el LoginFrame, que és el primer Frame que es mostra al obrir el programa: <br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;login.inicia();<br>
+        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;login.setVisible(true);<br>
+			&nbsp;&nbsp;&nbsp;Aquesta funció s'ha de cridar un únic cop quan es vulgui inicialitzar la interfície del programa.
+
+			<br><br><b>public void reset()</b><br>
+			&nbsp;&nbsp;&nbsp;Fa reset de tots els elements de la interfície.
+
+		<br><br><h2>LoginFrame.java</h2>
+
+			<b>public void inicia()</b><br>
+			&nbsp;&nbsp;&nbsp;Inicia tots els elements de la interfície.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar només al iniciar-la per primer cop. Els següents, s'ha de cridar a reset()
+
+			<br><br><b>public void reset()</b><br>
+			&nbsp;&nbsp;&nbsp;Fa reset de tots els elements de la interfície.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar sempre que es re-obri el Frame.<br>
+			&nbsp;&nbsp;&nbsp;Només es pot cridar un cop iniciada la interfície mitjançant inicia()
+
+		<br><br><h2>RegistreFrame.java</h2>
+
+			<b>public void inicia()</b><br>
+			&nbsp;&nbsp;&nbsp;Inicia tots els elements de la interfície de registre.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar només al iniciar-la per primer cop. Els següents, s'ha de cridar a reset()
+
+			<br><br><b>public void reset()</b><br>
+			&nbsp;&nbsp;&nbsp;Fa reset de tots els elements de la interfície.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar sempre que es re-obri el Frame des del Login<br>
+			&nbsp;&nbsp;&nbsp;Només es pot cridar un cop iniciada la interfície mitjançant inicia() d'aquest mateix frame.
+
+		<br><br><h2>IniciaFrame.java</h2>
+
+			<b>public void inicia(String usuari)</b><br>
+			&nbsp;&nbsp;&nbsp;Inicia tots els elements de la interfície de registre:<br>
+			<ul>
+				<li>Crida a la controladora per rebre informació de les partides de l'usuari</li>
+				<li>Crida a la controladora per rebre la configuració preferida de l'usuari</li>
+				<li>Personalitza la interfície (label de benvinguda...)</li>
+			</ul>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar només al iniciar-la per primer cop. Els següents, s'ha de cridar a reset()
+
+			<br><br><b>public void reset()</b><br>
+			&nbsp;&nbsp;&nbsp;Fa reset de tots els elements de la interfície.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar sempre que es re-obri el Frame des del Login<br>
+			&nbsp;&nbsp;&nbsp;Només es pot cridar un cop iniciada la interfície mitjançant inicia() d'aquest mateix frame.
+
+		<br><br><h2>RankingFrame.java</h2>
+
+			<b>public void inicia(String usuari)</b><br>
+			&nbsp;&nbsp;&nbsp;Inicia tots els elements de la interfície del rànking:<br>
+			&nbsp;&nbsp;&nbsp;Demana a la controladora les dades dels rànkings per cada una de les tres dificultats.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar només al iniciar-la per primer cop. Els següents, s'ha de cridar a actualitzaRankings()
+
+			<br><br><b>public void actualitzaRankings()</b><br>
+			&nbsp;&nbsp;&nbsp;Actualitza la informació mostrada dels rànkings.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar sempre que es re-obri el Frame des del IniciFrame<br>
+			&nbsp;&nbsp;&nbsp;Només es pot cridar un cop iniciada la interfície mitjançant inicia() d'aquest mateix frame.
+
+		<br><br><h2>RepositoriFrame.java</h2>
+
+			<b>public void inicia(String usuari)</b><br>
+			&nbsp;&nbsp;&nbsp;Inicia tots els elements de la interfície del repositori:<br>
+			&nbsp;&nbsp;&nbsp;Demana a la controladora la informació de tots els enunciats del repositori.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar només al iniciar-la per primer cop. Els següents, s'ha de cridar a la funció actualitza()
+
+			<br><br><b>public void actualitza()</b><br>
+			&nbsp;&nbsp;&nbsp;Actualitza la informació dels enunciats del Repositori.<br>
+			&nbsp;&nbsp;&nbsp;S'ha de cridar sempre que es re-obri el Frame des del IniciFrame<br>
+			&nbsp;&nbsp;&nbsp;Només es pot cridar un cop iniciada la interfície mitjançant inicia() d'aquest mateix frame.
+
+		<br><br><h2>PlayingFrame.java</h2>
+
+			<b>public PlayingFrame(Object[] params)</b><br>
+			&nbsp;&nbsp;&nbsp;Extreu dels paràmetres tota la informació del tauler i el temps (timestamp) de la partida.<br>
+			&nbsp;&nbsp;&nbsp;Seguidament inicia tots els elements de la interfície del repositori:<br>
+			&nbsp;&nbsp;&nbsp;Inicia tots els botons i l'entorn gràfic on es juga.<br>
+
+			<p>Nota 1: PlayingFrame no té funció de inicia() perquè ja es fa implícitament en la constructora. Això és degut a que algunes funcions s'han de fer abans d'inicialitzar els elements d'interfície amb la funció implícita de initComponents()</p>
+			<p>Nota 2: PlayingFrame no té funció de reset() perquè cada cop que s'usa se n'ha de fer una nova instància: el cost de reaprofitarla no surt a compte: requereix certes inicialitzacions prèvies (veure Nota 1).</p>
 
 	</body>
 </html>
