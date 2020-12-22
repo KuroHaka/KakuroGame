@@ -272,7 +272,11 @@ public class ControladoraDomini {
     public String[][] getSolucio(){
         return tauler_a_MatriuStrings(partida_actual.getSolucio());
     }
+    
+    public Object[] getAjuda(String[][] caselles){
         
+        return partida_actual.getAjuda(new TaulerComencat(matriuStrings_a_fStd(caselles)));
+    }
         
         
 /////////////////// CANVIS DE FORMAT

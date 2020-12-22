@@ -122,5 +122,9 @@ public class ControladoraInterficie {
             return tot;
     }
     
+    public Object[] getAjuda(String[][] caselles){
+        return ctrl_domini.getAjuda(caselles);
+    }
+    
     
 }

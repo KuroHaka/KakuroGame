@@ -44,7 +44,8 @@ public class Partida {
         return comencat.setValor(x, y, valor);
     }
     
-    public Object[] getAjuda() {
+    public Object[] getAjuda(TaulerComencat tc) {
+        this.comencat = tc;
         Object[] ret = algoritme.getAjuda(comencat, solucio);
         return ret;
     }

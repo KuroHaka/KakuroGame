@@ -191,6 +191,20 @@ public class PlayingFrame extends javax.swing.JFrame {
         panel.add(field);
     }
     
+    private void actualitzaTauler(){
+        this.gamePanel.removeAll();
+        for (int y = 0; y < tauler.length; y++ ) {
+            for (int x = 0; x < tauler[0].length; x++){
+                if(tauler[y][x].contains("\\")){
+                    addCasellaNegra(gamePanel,tauler[y][x]);
+                }
+                else{
+                    addCasellaBlanca(gamePanel, tauler[y][x], x, y);
+                }
+            }
+        }
+    }
+    
     private void comprobarSolucio(JTextField jf, String lastValue){
         if(ctrl_interficie.esSolucio(tauler)){
             jf.setText(lastValue);
@@ -286,7 +300,6 @@ public class PlayingFrame extends javax.swing.JFrame {
         hint.setBorder(null);
         hint.setBorderPainted(false);
         hint.setContentAreaFilled(false);
-        hint.setEnabled(false);
         hint.setFocusable(false);
         hint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -432,23 +445,30 @@ public class PlayingFrame extends javax.swing.JFrame {
     private void solveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveActionPerformed
         // TODO add your handling code here:
         this.tauler = ctrl_interficie.getSolucio();
-        this.gamePanel.removeAll();
-        for (int y = 0; y < tauler.length; y++ ) {
-            for (int x = 0; x < tauler[0].length; x++){
-                if(tauler[y][x].contains("\\")){
-                    addCasellaNegra(gamePanel,tauler[y][x]);
-                }
-                else{
-                    addCasellaBlanca(gamePanel, tauler[y][x], x, y);
-                }
-            }
-        }
+        actualitzaTauler();
         toolbar.setVisible(false);
     }//GEN-LAST:event_solveActionPerformed
 
     private void hintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintActionPerformed
         // TODO add your handling code here:
-        
+        Object[] values = this.ctrl_interficie.getAjuda(tauler);
+        if(values.length > 2){
+            tauler[(int) values[0]][(int) values[1]] = ""+(int) values[2];
+        }
+        else{
+            int cont = 0;
+            for (int y = 0; y < tauler.length; y++ ) {
+                for (int x = 0; x < tauler[0].length; x++){
+                    if(!tauler[y][x].contains("\\")){
+                        cont++;
+                        if(x == (int) values[0] && y == (int) values[1]){
+                            casellesBlanques.get(cont).setBackground(Color.red);
+                        }
+                    }
+                }
+            }
+        }
+        actualitzaTauler();
     }//GEN-LAST:event_hintActionPerformed
     
     public static void main(String args[]) {
