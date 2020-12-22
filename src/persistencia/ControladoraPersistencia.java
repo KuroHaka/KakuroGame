@@ -118,7 +118,6 @@ public class ControladoraPersistencia {
     }
     
     public Object[] getConfiguracio (String usuari) {
-        // TODO
         int numeroBlanquesEstablertes = 10;
         int numeroBlanques = 20;
         int dimX = 8;
@@ -370,7 +369,6 @@ public class ControladoraPersistencia {
     //////////////////// GUARDAR PARTIDA ////////////////////
     
     public String guardaNovaPartida (String usuari, Integer timestamp, String taulerFormatEstandard, int dificultat) {
-        // TODO dificultat
         int id_partida = assignarId("partides");
         String id = "" + id_partida;
         guardarPartidaShadow(usuari, id);
@@ -583,8 +581,6 @@ public class ControladoraPersistencia {
     }
     
     public boolean acabarPartida(String usuari, String id_partida, Integer temps, int dificultat) {
-        // TODO dificultat
-        
         // Borrar de partides i agafar el idEnunciat
         String documentPartides = getDocument("partides");
         String[] llistaPartides = getLlista(documentPartides, "\n");

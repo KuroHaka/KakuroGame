@@ -12,19 +12,134 @@
 		<br>
 		<br>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
+
+		<h2>Controladora de Persistència</h2>
+
+		<b>public void inicia()</b><br>
+		&nbsp;&nbsp;&nbsp;Inicia tots els elements de la Persistència.
 		<ul>
-			<li>ha</li>
-			<li>ha</li>
-			<li>ha</li>
+			<li>Si no existeix algun dels directoris "dades", "comencada" o "enunciats", els genera.</li>
+			<li>Si no existeix algun dels arxius "shadow", "partides", "repositori" o "ranking", els genera.</li>
+			<li>Inicia els arxius, en cas que no hi fossin, amb dades predefinides.</li>
 		</ul>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
+		
+		<br><h3>Constructores i consultores d'usuaris:</h3>
 
-		<br><br><b>public void hahahha()</b><br>
-		coses
+		<b>public ArrayList<String> llista_usuaris()</b><br>
+		&nbsp;&nbsp;&nbsp;Llista tots els usuaris que existeixen.
+
+		<br><br><b>public boolean addUser(String usuari, String hash)</b><br>
+		&nbsp;&nbsp;&nbsp;Genera un nou usuari amb la seva contrasenya i retorna un boleà que significa que s'ha fet l'usuari sense problemes.
+
+		<br><br><b>public String getHashPassword(String usuari)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna el hash de l'usuari.
+		<ul>
+			<li>Si no existeix l'usuari retorna "no_existeix_usuari".</li>
+		</ul>
+
+		<b>public boolean setConfiguracio(String usuari, String[] config)</b><br>
+		&nbsp;&nbsp;&nbsp;Modifica la configuració per defecte de l'usuari.
+
+		<br><br><b>public Object[] getConfiguracio (String usuari)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna la configuració per defecte de l'usuari.
+
+
+		<br><br><br><h3>Consultores repositori:</h3>
+
+		<b>public Vector<String> llista_id_enunciats()</b><br>
+		&nbsp;&nbsp;&nbsp;Llista tots els enunciats que existeixen al repositori.
+
+		<br><br><b>public ArrayList<Object[]> getLlistaInfoEnunciats()</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna la informació de tots els enunciats del repositori.
+		<ul>
+			<li>Informació: id de l'enunciat, usuari generador, dificultat, usuari rècord i temps.</li>
+			<li>Si no hi ha enunciats al repositori retorna una llista buïda.</li>
+		</ul>
+
+
+		<br><h3>Constructores i consultores de partides:</h3>
+
+		<b>public Vector<String> llista_id_partides(String usuari)</b><br>
+		&nbsp;&nbsp;&nbsp;Llista els ids de les partides de l'usuari.
+		<ul>
+			<li>Si no existeix l'usuari retorna null.</li>
+		</ul>
+
+		<b>public Object[] getInfoPartida(String id_partida)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna la informació de la partida.
+		<ul>
+			<li>Informació: id de l'enunciat, temps i dificultat.</li>
+		</ul>
+
+		<b>public ArrayList<Object[]> getLlistaInfoPartides(String usuari)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna la informació de totes les partides de l'usuari.
+		<ul>
+			<li>Informació: id de l'enunciat, temps i dificultat.</li>
+		</ul>
+
+		<b>public String getEnunciatDePartida(String id_partida)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna el tauler enunciat d'un kakuro començat.
+
+
+		<br><br><br><h3>Generar nova partida</h3>
+
+		<b>public String guardaNovaPartida (String usuari, Integer timestamp, String taulerFormatEstandard, int dificultat)</b><br>
+		&nbsp;&nbsp;&nbsp;Genera una nova partida del tauler per a l'usuari, amb temps i dificultat respectius, i retorna l'id de la partida.
+
+		<br><br><b>public Object[] carregaPartidaRepositori(int idEnunciat, String usuari)</b><br>
+		&nbsp;&nbsp;&nbsp;Genera una nova partida i retorna les dades de l'enunciat del repositori.
+		<ul>
+			<li>Dades: nou id per a la partida, tauler i dificultat.</li>
+		</ul>
+
+		<b>public Object[] carregaPartidaArxiuPath(String path, String usuari)</b><br>
+		&nbsp;&nbsp;&nbsp;Genera una nova partida i retorna les dades de l'arxiu.
+		<ul>
+			<li>Dades: nou id per a la partida, tauler i dificultat (personalitzada).</li>
+		</ul>
+
+
+		<br><h3>Guardar partida</h3>
+
+		<b>public boolean guardaPartida (String id_partida, String usuari, Integer timestamp, String taulerFormatEstandard, int dificultat)</b><br>
+		&nbsp;&nbsp;&nbsp;Sobreescriu les dades de la partida de l'usuari amb aquest id i retorna un boleà que significa que tot s'ha fet correctament.
+
+
+		<br><br><br><h3>Carregar partida</h3>
+
+		<b>public Object[] carregaPartida (String id_partida)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna les dades de la partida.
+		<ul>
+			<li>Dades: tauler, temps que porta al kakuro i dificultat.</li>
+		</ul>
+
+
+		<br><h3>Borrar partida</h3>
+
+		<b>public boolean borrarPartida(String id_partida, String usuari)</b><br>
+		&nbsp;&nbsp;&nbsp;Borra la partida de l'usuari amb aquest id i retorna un boleà que significa que s'ha borrat correctament.
+
+
+		<br><br><br><h3>Acabar partida</h3>
+
+		<b>public boolean acabarPartida(String usuari, String id_partida, Integer temps, int dificultat)</b><br>
+		&nbsp;&nbsp;&nbsp;Fa tot el procés d'acabament de la partida i retorna un boleà que significa que tot s'ha fet correctament.
+		<ul>
+			<li>S'actualitza el rècord del millor temps del repositori de l'enunciat corresponent.</li>
+			<li>S'actualitza el ranking, si és personalitzada no n'hi ha.</li>
+			<li>Es borra la partida de l'usuari.</li>
+		</ul>
+
+
+		<br><h3>Consultora ranking</h3>
+
+		<b>public Object[] getRankings(int dificultat)</b><br>
+		&nbsp;&nbsp;&nbsp;Retorna el ranking de partides de la dificultat corresponent.
+		<ul>
+			<li>El ranking és format per 3 entrades per dificultat.</li>
+			<li>Cada entrada té un usuari i el seu temps, els que el fan ser el rècord.</li>
+		</ul>
 
 	</body>
 </html>
