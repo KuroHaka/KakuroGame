@@ -1,6 +1,7 @@
 package domini.partida;
 
 import domini.algoritme.Algoritme;
+import domini.tauler.Tauler;
 import domini.tauler.TaulerComencat;
 import domini.tauler.TaulerEnunciat;
 import domini.usuari.Usuari;
@@ -47,4 +48,8 @@ public class Partida {
         Object[] ret = algoritme.getAjuda(comencat, solucio);
         return ret;
     }
+    
+    public Tauler getSolucio(){
+        return this.solucio;
+    } 
 }

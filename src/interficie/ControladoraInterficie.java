@@ -42,6 +42,10 @@ public class ControladoraInterficie {
     
     
 /////////////////// PARTIDES
+    public String[][] getSolucio(){
+        return ctrl_domini.getSolucio();
+    }
+    
     public boolean esSolucio(String[][] tauler){
         return ctrl_domini.esSolucio(tauler);
     }
