@@ -98,7 +98,7 @@ public class ControladoraInterficie {
     
     public void iniciaManualFrame(int files, int cols) {
         System.out.println("(CtrlInt) files: " + files + "; columnes: " + cols);
-        manual = new ManualFrame(files, cols);
+        manual = new ManualFrame(this, files, cols);
         inici.setVisible(false);
         manual.setVisible(true);
     }
